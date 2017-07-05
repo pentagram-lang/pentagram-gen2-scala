@@ -3,7 +3,7 @@ scalaVersion := "2.12.1"
 logBuffered in Test := false
 
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
+  "com.lihaoyi" %% "fastparse" % "0.4.3",
   "org.jline" % "jline-reader" % "3.3.1",
   "org.scalatest" %% "scalatest" % "3.0.3" % Test,
   "com.github.dwickern" %% "scala-nameof" % "1.0.3" % Provided)

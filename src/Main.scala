@@ -14,7 +14,10 @@ object Main {
     def loop: Unit = {
       try {
         val line = reader.readLine(prompt)
-        println(SourceParser.parse(line))
+        SourceParser.parse(line) match {
+          case Left(errors) => println(s"${errors.length} errors!")
+          case Right(result) => println(result)
+        }
       }
       catch {
         case _: UserInterruptException => ()

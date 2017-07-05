@@ -1,28 +1,88 @@
 package tacit
 
-import scala.util.parsing.combinator.{RegexParsers, PackratParsers}
+import fastparse.all._
 
-sealed trait SourceTerm
-case class SourceTermLiteral(value: Int) extends SourceTerm
-case class SourceTermPlus() extends SourceTerm
+object SourceParser {
+  case class Error(index: Int, length: Int, message: String)
 
-object SourceParser extends RegexParsers with PackratParsers {
-  override def skipWhitespace = false
+  sealed trait SourceTerm
+  case class SourceTermLiteral(index: Int, text: String) extends SourceTerm {
+    val value = text.toInt
+  }
+  case class SourceTermPlus(index: Int, text: String) extends SourceTerm {
+    def operation(x: Int, y: Int) = x + y
+  }
 
-  lazy val whitespace: PackratParser[Unit] =
-    raw"[ ]+".r ^^^ { () }
+  sealed trait UnknownSourceTerm
+  case class ValidSourceTerm(term: SourceTerm) extends UnknownSourceTerm
+  case class InvalidSourceTermLiteralWithSuffix(index: Int, text: String) extends UnknownSourceTerm
+  case class InvalidSourceTermOther(index: Int, text: String) extends UnknownSourceTerm
 
-  lazy val number: PackratParser[SourceTermLiteral] =
-    raw"\d+".r ^^ { text => SourceTermLiteral(text.toInt) }
+  val whitespace: P[Unit] = P(
+    CharIn(" ").rep(1)
+      .map(_ => ()))
 
-  lazy val operator: PackratParser[SourceTermPlus] =
-    literal("+") ^^^ SourceTermPlus()
+  def text[T](p: P[Unit], f: (Int, String) => T) =
+    (Index ~ p.!) map { case (index, text) => f(index, text) }
 
-  lazy val term: PackratParser[SourceTerm] =
-    number | operator
+  val termEnd: P[Unit] = P(
+    CharIn(" ") | End)
 
-  lazy val expression: PackratParser[List[SourceTerm]] =
-    rep1sep(term, whitespace)
+  val notTermEnd: P[Unit] = P(
+    !(termEnd) ~ AnyChar)
 
-  def parse(in: String) = parseAll(expression, in)
+  def validTerm(p: P[SourceTerm]): P[ValidSourceTerm] =
+    (p ~ &(termEnd)).map(ValidSourceTerm)
+
+  val number = P(text(
+    CharIn('0' to '9').rep(1),
+    SourceTermLiteral))
+
+  val invalidNumber = P(text(
+    CharIn('0' to '9').rep(1) ~ notTermEnd.rep(1),
+    InvalidSourceTermLiteralWithSuffix))
+
+  val invalidOther = P(text(
+    notTermEnd.rep(1),
+    InvalidSourceTermOther))
+
+  val operator = P(text(
+    CharIn("+"),
+    SourceTermPlus))
+
+  val unknownTerm = P(
+    validTerm(number)
+    | validTerm(operator)
+    | invalidNumber
+    | invalidOther)
+
+  val expression = P(
+    Start
+    ~ whitespace.?
+    ~ unknownTerm.rep(1, whitespace)
+    ~ whitespace.?
+    ~ End)
+
+  def checkExpression(result: Parsed[Seq[UnknownSourceTerm]]): Either[Seq[Error], Seq[SourceTerm]] =
+    result.fold(
+      (failedParser, index, _) => Left(Seq(
+        Error(index, 1, s"Failed to parse $failedParser"))),
+      (unknownExpression, _) => {
+        def errors = unknownExpression collect {
+          case InvalidSourceTermLiteralWithSuffix(index, text) =>
+            Error(index, text.length, s"Invalid suffix on number")
+          case InvalidSourceTermOther(index, text) =>
+            Error(index, text.length, s"Invalid term")
+        }
+
+        if (errors.nonEmpty) {
+          Left(errors)
+        } else {
+          Right(unknownExpression collect {
+            case ValidSourceTerm(term) => term
+          })
+        }
+      })
+
+  def parse(in: String) = checkExpression(expression.parse(in))
 }
