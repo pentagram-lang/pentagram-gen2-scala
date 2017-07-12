@@ -59,7 +59,7 @@ object SourceParser {
   val expression = P(
     Start
     ~ whitespace.?
-    ~ unknownTerm.rep(1, whitespace)
+    ~ unknownTerm.rep(0, whitespace)
     ~ whitespace.?
     ~ End)
 

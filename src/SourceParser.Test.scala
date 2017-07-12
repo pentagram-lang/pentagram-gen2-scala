@@ -92,8 +92,15 @@ class SourceParserSpec extends FreeSpec {
             ValidSourceTerm(SourceTermPlus(12, "+")),
             ValidSourceTerm(SourceTermPlus(15, "+"))))
       }
-      "does not parse nothing" in {
-        check.negative("")
+      "parses nothing" in {
+        check.positive(
+          "",
+          Seq())
+      }
+      "parses whitespace" in {
+        check.positive(
+          "   ",
+          Seq())
       }
       "does not parse when whitespace missing" in {
         check.positive(
