@@ -6,7 +6,7 @@ lazy val bench = (project in file("."))
   .configs(Bench)
   .settings(inConfig(Bench)(Defaults.testSettings))
 
-ivyConfigurations += Bench
+ivyConfigurations += Bench extend(Provided)
 resolvers += Resolver.sonatypeRepo("releases")
 
 libraryDependencies ++= Seq(
@@ -14,8 +14,7 @@ libraryDependencies ++= Seq(
   "org.jline" % "jline-reader" % "3.3.1",
   "org.scalatest" %% "scalatest" % "3.0.3" % Test,
   "com.storm-enroute" %% "scalameter" % "0.8.2" % Bench,
-  "com.github.dwickern" %% "scala-nameof" % "1.0.3" % Provided,
-  "com.github.dwickern" %% "scala-nameof" % "1.0.3" % Bench)
+  "com.github.dwickern" %% "scala-nameof" % "1.0.3" % Provided)
 
 scalaSource in Compile := baseDirectory.value / "src"
 scalaSource in Test := baseDirectory.value / "src"
