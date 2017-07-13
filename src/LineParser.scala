@@ -2,21 +2,21 @@ package tacit
 
 import fastparse.all._
 
-object SourceParser {
+object LineParser {
   case class Error(index: Int, length: Int, message: String)
 
-  sealed trait SourceTerm
-  case class SourceTermLiteral(index: Int, text: String) extends SourceTerm {
+  sealed trait Term
+  case class TermLiteral(index: Int, text: String) extends Term {
     val value = text.toInt
   }
-  case class SourceTermPlus(index: Int, text: String) extends SourceTerm {
+  case class TermPlus(index: Int, text: String) extends Term {
     def operation(x: Int, y: Int) = x + y
   }
 
-  sealed trait UnknownSourceTerm
-  case class ValidSourceTerm(term: SourceTerm) extends UnknownSourceTerm
-  case class InvalidSourceTermLiteralWithSuffix(index: Int, text: String) extends UnknownSourceTerm
-  case class InvalidSourceTermOther(index: Int, text: String) extends UnknownSourceTerm
+  sealed trait UnknownTerm
+  case class ValidTerm(term: Term) extends UnknownTerm
+  case class InvalidTermLiteralWithSuffix(index: Int, text: String) extends UnknownTerm
+  case class InvalidTermOther(index: Int, text: String) extends UnknownTerm
 
   val whitespace: P[Unit] = P(
     CharIn(" ").rep(1)
@@ -31,24 +31,24 @@ object SourceParser {
   val notTermEnd: P[Unit] = P(
     !(termEnd) ~ AnyChar)
 
-  def validTerm(p: P[SourceTerm]): P[ValidSourceTerm] =
-    (p ~ &(termEnd)).map(ValidSourceTerm)
+  def validTerm(p: P[Term]): P[ValidTerm] =
+    (p ~ &(termEnd)).map(ValidTerm)
 
   val number = P(text(
     CharIn('0' to '9').rep(1),
-    SourceTermLiteral))
+    TermLiteral))
 
   val invalidNumber = P(text(
     CharIn('0' to '9').rep(1) ~ notTermEnd.rep(1),
-    InvalidSourceTermLiteralWithSuffix))
+    InvalidTermLiteralWithSuffix))
 
   val invalidOther = P(text(
     notTermEnd.rep(1),
-    InvalidSourceTermOther))
+    InvalidTermOther))
 
   val operator = P(text(
     CharIn("+"),
-    SourceTermPlus))
+    TermPlus))
 
   val unknownTerm = P(
     validTerm(number)
@@ -63,15 +63,15 @@ object SourceParser {
     ~ whitespace.?
     ~ End)
 
-  def checkExpression(result: Parsed[Seq[UnknownSourceTerm]]): Either[Seq[Error], Seq[SourceTerm]] =
+  def checkExpression(result: Parsed[Seq[UnknownTerm]]): Either[Seq[Error], Seq[Term]] =
     result.fold(
       (failedParser, index, _) => Left(Seq(
         Error(index, 1, s"Failed to parse $failedParser"))),
       (unknownExpression, _) => {
         def errors = unknownExpression collect {
-          case InvalidSourceTermLiteralWithSuffix(index, text) =>
+          case InvalidTermLiteralWithSuffix(index, text) =>
             Error(index, text.length, s"Invalid suffix on number")
-          case InvalidSourceTermOther(index, text) =>
+          case InvalidTermOther(index, text) =>
             Error(index, text.length, s"Invalid term")
         }
 
@@ -79,7 +79,7 @@ object SourceParser {
           Left(errors)
         } else {
           Right(unknownExpression collect {
-            case ValidSourceTerm(term) => term
+            case ValidTerm(term) => term
           })
         }
       })
