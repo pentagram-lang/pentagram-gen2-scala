@@ -11,7 +11,7 @@ object Main {
     val prompt = "tacit> "
 
     @tailrec
-    def loop: Unit = {
+    def loop(): Unit = {
       try {
         val line = reader.readLine(prompt)
         LineParser.parse(line) match {
@@ -24,9 +24,9 @@ object Main {
         case _: UserInterruptException => ()
         case _: EndOfFileException => return ()
       }
-      loop
+      loop()
     }
 
-    loop
+    loop()
   }
 }
