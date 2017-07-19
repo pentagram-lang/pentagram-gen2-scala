@@ -6,6 +6,7 @@ import scala.language.reflectiveCalls
 import fastparse.all._
 
 import LineParser._
+import SyntaxTerm._
 
 class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
@@ -30,40 +31,40 @@ class LineParserSpec extends FreeSpec {
     nameOf(number) - {
       def check = checkParse(number)
       "parses single digits" in {
-        check.positive("1", TermLiteral(0, "1"))
+        check.positive("1", Literal(0, "1"))
       }
       "does not parse letters" in {
         check.negative("a")
       }
       "parses multiple digits" in {
-        check.positive("123456789", TermLiteral(0, "123456789"))
+        check.positive("123456789", Literal(0, "123456789"))
       }
     }
 
     nameOf(invalidNumber) - {
       def check = checkParse(invalidNumber)
       "parses single digits" in {
-        check.positive("1+", InvalidTermLiteralWithSuffix(0, "1+"))
+        check.positive("1+", InvalidLiteralWithSuffix(0, "1+"))
       }
     }
 
     nameOf(operator) - {
       def check = checkParse(operator)
       "parses plus" in {
-        check.positive("+", TermPlus(0, "+"))
+        check.positive("+", Plus(0, "+"))
       }
     }
 
     nameOf(unknownTerm) - {
       def check = checkParse(unknownTerm)
       "parses plus" in {
-        check.positive("+", ValidTerm(TermPlus(0, "+")))
+        check.positive("+", Valid(Plus(0, "+")))
       }
       "parses single digits" in {
-        check.positive("1", ValidTerm(TermLiteral(0, "1")))
+        check.positive("1", Valid(Literal(0, "1")))
       }
       "parses invalid single digits" in {
-        check.positive("1+", InvalidTermLiteralWithSuffix(0, "1+"))
+        check.positive("1+", InvalidLiteralWithSuffix(0, "1+"))
       }
       "does not parse whitespace" in {
         check.negative("1+  ")
@@ -76,21 +77,21 @@ class LineParserSpec extends FreeSpec {
         check.positive(
           "10 20 +",
           Seq(
-            ValidTerm(TermLiteral(0, "10")),
-            ValidTerm(TermLiteral(3, "20")),
-            ValidTerm(TermPlus(6, "+"))))
+            Valid(Literal(0, "10")),
+            Valid(Literal(3, "20")),
+            Valid(Plus(6, "+"))))
       }
       "parses mixed expression" in {
         check.positive(
           "10 2 +  3 4 +  +",
           Seq(
-            ValidTerm(TermLiteral(0, "10")),
-            ValidTerm(TermLiteral(3, "2")),
-            ValidTerm(TermPlus(5, "+")),
-            ValidTerm(TermLiteral(8, "3")),
-            ValidTerm(TermLiteral(10, "4")),
-            ValidTerm(TermPlus(12, "+")),
-            ValidTerm(TermPlus(15, "+"))))
+            Valid(Literal(0, "10")),
+            Valid(Literal(3, "2")),
+            Valid(Plus(5, "+")),
+            Valid(Literal(8, "3")),
+            Valid(Literal(10, "4")),
+            Valid(Plus(12, "+")),
+            Valid(Plus(15, "+"))))
       }
       "parses nothing" in {
         check.positive(
@@ -106,9 +107,9 @@ class LineParserSpec extends FreeSpec {
         check.positive(
           "1 23+ *",
           Seq(
-            ValidTerm(TermLiteral(0, "1")),
-            InvalidTermLiteralWithSuffix(2, "23+"),
-            InvalidTermOther(6, "*")))
+            Valid(Literal(0, "1")),
+            InvalidLiteralWithSuffix(2, "23+"),
+            InvalidOther(6, "*")))
       }
     }
   }
