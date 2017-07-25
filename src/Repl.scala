@@ -14,7 +14,7 @@ object Repl {
     }
   }
 
-  def read = LineParser parse(_)
+  def read = LineParser.parse(_)
 
   def printErrors(errors: Seq[GuestError]): OutputBlock = {
     GuestError.output(errors)
@@ -28,7 +28,8 @@ object Repl {
   def loop(): Unit = {
     SimpleTerminal readLine() match {
       case InputLine.Value(line) => {
-        SimpleTerminal writeBlock(readEvalPrint(line))
+        val outputBlock = readEvalPrint(line)
+        SimpleTerminal.writeBlock(outputBlock, line)
         loop()
       }
       case InputLine.UserInterrupt() =>

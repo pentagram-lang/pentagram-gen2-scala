@@ -23,9 +23,11 @@ object LineParser {
     CharIn('0' to '9').rep(1),
     SyntaxTerm.Literal))
 
-  val invalidNumber = P(text(
-    CharIn('0' to '9').rep(1) ~ notTermEnd.rep(1),
-    SyntaxTerm.InvalidLiteralWithSuffix))
+  val invalidNumber = P(
+    CharIn('0' to '9').rep(1)
+    ~ text(
+      notTermEnd.rep(1),
+      SyntaxTerm.InvalidLiteralSuffix))
 
   val invalidOther = P(text(
     notTermEnd.rep(1),
@@ -54,10 +56,10 @@ object LineParser {
         GuestError(index, 1, s"Failed to parse $failedParser"))),
       (unknownExpression, _) => {
         def errors = unknownExpression collect {
-          case SyntaxTerm.InvalidLiteralWithSuffix(index, text) =>
-            GuestError(index, text.length, s"Invalid suffix on number")
+          case SyntaxTerm.InvalidLiteralSuffix(index, text) =>
+            GuestError(index, text.length, "This number suffix is not valid")
           case SyntaxTerm.InvalidOther(index, text) =>
-            GuestError(index, text.length, s"Invalid term")
+            GuestError(index, text.length, "This name is not in scope")
         }
 
         if (errors.nonEmpty) {

@@ -12,6 +12,6 @@ object SyntaxTerm {
 
   sealed trait Unknown
   case class Valid(term: SyntaxTerm) extends Unknown
-  case class InvalidLiteralWithSuffix(index: Int, text: String) extends Unknown
+  case class InvalidLiteralSuffix(index: Int, text: String) extends Unknown
   case class InvalidOther(index: Int, text: String) extends Unknown
 }

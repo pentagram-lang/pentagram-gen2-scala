@@ -44,7 +44,7 @@ class LineParserSpec extends FreeSpec {
     nameOf(invalidNumber) - {
       def check = checkParse(invalidNumber)
       "parses single digits" in {
-        check.positive("1+", InvalidLiteralWithSuffix(0, "1+"))
+        check.positive("1+", InvalidLiteralSuffix(1, "+"))
       }
     }
 
@@ -64,7 +64,7 @@ class LineParserSpec extends FreeSpec {
         check.positive("1", Valid(Literal(0, "1")))
       }
       "parses invalid single digits" in {
-        check.positive("1+", InvalidLiteralWithSuffix(0, "1+"))
+        check.positive("1+", InvalidLiteralSuffix(1, "+"))
       }
       "does not parse whitespace" in {
         check.negative("1+  ")
@@ -108,7 +108,7 @@ class LineParserSpec extends FreeSpec {
           "1 23+ *",
           Seq(
             Valid(Literal(0, "1")),
-            InvalidLiteralWithSuffix(2, "23+"),
+            InvalidLiteralSuffix(4, "+"),
             InvalidOther(6, "*")))
       }
     }
