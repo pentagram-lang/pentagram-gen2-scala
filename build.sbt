@@ -1,4 +1,4 @@
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.3"
 
 lazy val Bench = config("bench") extend(Test)
 

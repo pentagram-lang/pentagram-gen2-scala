@@ -27,9 +27,9 @@ object SimpleTerminal {
   }
 
   val reader = LineReaderBuilder.builder().build()
-  var terminal = reader.getTerminal
+  val terminal = reader.getTerminal
 
-  var plainPrompt = "(repl)"
+  val plainPrompt = "(repl)"
   val prompt = getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
 
   def writeInstruction(instruction: OutputInstruction): Unit =
@@ -49,7 +49,7 @@ object SimpleTerminal {
     }
 
   def writeStringCapabilityN(capability: Capability): Seq[Object] => Unit = {
-    var value = terminal.getStringCapability(capability)
+    val value = terminal.getStringCapability(capability)
     params => Curses.tputs(terminal.writer, value, params: _*)
   }
 

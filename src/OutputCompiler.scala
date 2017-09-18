@@ -70,11 +70,11 @@ case class OutputCompiler(prompt: String, line: String, terminalWidth: Int) {
     fill: Text = NormalText(" "),
     right: OutputInstruction = BorderText(" ┃"))
   = {
-    var leftBasic = Multi(
+    val leftBasic = Multi(
       gutter,
       left,
       alignLeft(fill, alignIndex, content))
-    var leftPadded = padRight(
+    val leftPadded = padRight(
       leftBasic,
       fill,
       terminalWidth - right.length)
