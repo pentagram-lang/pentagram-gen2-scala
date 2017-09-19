@@ -1,6 +1,6 @@
 package tacit
 
-case class GuestError(index: Int, length: Int, message: String)
+final case class GuestError(index: Int, length: Int, message: String)
 
 object GuestError {
   def output(errors: Seq[GuestError]): OutputBlock =

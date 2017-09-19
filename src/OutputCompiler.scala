@@ -1,6 +1,6 @@
 package tacit
 
-case class OutputCompiler(prompt: String, line: String, terminalWidth: Int) {
+final case class OutputCompiler(prompt: String, line: String, terminalWidth: Int) {
   import OutputInstruction._
 
   val gutterLength = prompt.length

@@ -8,7 +8,7 @@ import fastparse.all._
 import LineParser._
 import SyntaxTerm._
 
-class LineParserSpec extends FreeSpec {
+final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
     def checkParse(parser: P[Any]) = new {
       val fullParser = P( parser ~ End )
