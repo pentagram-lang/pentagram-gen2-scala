@@ -7,16 +7,16 @@ final case class OutputCompiler(prompt: String, line: String, terminalWidth: Int
 
   def compileBlock(block: OutputBlock): OutputInstruction = {
     block match {
-      case OutputBlock.ErrorHighlightPrevious(index, length) => Multi(
+      case OutputBlock.ErrorHighlightPrevious(sourceLocation) => Multi(
         CursorUp(),
-        highlightPrevious(index, length),
-        highlightUnder(index, length))
-      case OutputBlock.ErrorHighlightNew(index, length) => Multi(
+        highlightPrevious(sourceLocation),
+        highlightUnder(sourceLocation))
+      case OutputBlock.ErrorHighlightNew(sourceLocation) => Multi(
         header(),
-        highlightNew(index, length),
-        highlightUnder(index, length))
-      case OutputBlock.ErrorMessage(index, message) => Multi(
-        errorMessage(index, message),
+        highlightNew(sourceLocation),
+        highlightUnder(sourceLocation))
+      case OutputBlock.ErrorMessage(sourceLocation, message) => Multi(
+        errorMessage(sourceLocation, message),
         footer())
       case OutputBlock.NormalText(text) => Multi(
         NormalText(text),
@@ -26,24 +26,25 @@ final case class OutputCompiler(prompt: String, line: String, terminalWidth: Int
     }
   }
 
-  def highlightPrevious(index: Int, length: Int) = line(
+  def highlightPrevious(sourceLocation: SourceLocation) = line(
     gutter = ErrorText(prompt),
     left = BorderText("╭ "),
     content = Multi(
-      highlightError(line, index, length),
+      highlightError(sourceLocation),
       NormalText(" ")),
     fill = BorderText("─"),
     right = BorderText("╮"))
 
-  def highlightNew(index: Int, length: Int) = line(
-    content = highlightError(line, index, length))
+  def highlightNew(sourceLocation: SourceLocation) = line(
+    content = highlightError(sourceLocation))
 
-  def highlightUnder(index: Int, length: Int) = line(
-    alignIndex = index,
-    content = ErrorAccentText("▀" * length))
+  def highlightUnder(sourceLocation: SourceLocation) = line(
+    alignIndex = sourceLocation.begin,
+    content = ErrorAccentText(
+      "▀" * sourceLocation.length))
 
-  def errorMessage(index: Int, message: String) = line(
-    alignIndex = index - 2,
+  def errorMessage(sourceLocation: SourceLocation, message: String) = line(
+    alignIndex = sourceLocation.begin - 2,
     content = ErrorText("✗ " + message))
 
   def header() = Multi(
@@ -84,16 +85,17 @@ final case class OutputCompiler(prompt: String, line: String, terminalWidth: Int
       NewLine())
   }
 
-  def highlightError = highlightText(
-    _: String,
-    _: Int,
-    _: Int,
-    OutputFormat.Error)
+  def highlightError(sourceLocation: SourceLocation) =
+    highlightText(
+      line,
+      sourceLocation.begin,
+      sourceLocation.end,
+      OutputFormat.Error)
 
-  def highlightText(originalText: String, highlightIndex: Int, highlightLength: Int, highlightFormat: OutputFormat) = {
-    val start = originalText.substring(0, highlightIndex)
-    val mid = originalText.substring(highlightIndex, highlightIndex + highlightLength)
-    val end = originalText.substring(highlightIndex + highlightLength)
+  def highlightText(originalText: String, highlightBegin: Int, highlightEnd: Int, highlightFormat: OutputFormat) = {
+    val start = originalText.substring(0, highlightBegin)
+    val mid = originalText.substring(highlightBegin, highlightEnd)
+    val end = originalText.substring(highlightEnd)
     Multi(
       NormalText(start),
       Text(highlightFormat, mid),

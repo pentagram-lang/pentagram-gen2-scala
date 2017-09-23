@@ -1,6 +1,6 @@
 package tacit
 
-final case class GuestError(index: Int, length: Int, message: String)
+final case class GuestError(sourceLocation: SourceLocation, message: String)
 
 object GuestError {
   def output(errors: Seq[GuestError]): OutputBlock =
@@ -17,8 +17,8 @@ object GuestError {
   def outputOneHighlightNew(error: GuestError): OutputBlock =
     outputOne(error, OutputBlock.ErrorHighlightNew)
 
-  def outputOne(error: GuestError, highlight: (Int, Int) => OutputBlock): OutputBlock =
+  def outputOne(error: GuestError, highlight: SourceLocation => OutputBlock): OutputBlock =
     OutputBlock.Multi(
-      highlight(error.index, error.length),
-      OutputBlock.ErrorMessage(error.index, error.message))
+      highlight(error.sourceLocation),
+      OutputBlock.ErrorMessage(error.sourceLocation, error.message))
 }

@@ -7,8 +7,24 @@ object LineParser {
     CharIn(" ").rep(1)
       .map(_ => ()))
 
-  def text[T](p: P[Unit], f: (Int, String) => T) =
-    (Index ~ p.!) map { case (index, text) => f(index, text) }
+  def location[T](
+    parser: P[SourceLocation => T]
+  ): P[T] =
+    (Index ~ parser ~ Index) map { case (begin, partial, end) =>
+      partial(SourceLocation(begin, end))
+    }
+
+  def text[T](
+    parser: P[Unit],
+    transform: String => SourceLocation => T
+  ): P[T] =
+    location((parser.!) map (transform))
+
+  def noText[T](
+    parser: P[Unit],
+    result: SourceLocation => T
+  ): P[T] =
+    location((parser) map (_ => result))
 
   val termEnd: P[Unit] = P(
     CharIn(" ") | End)
@@ -16,24 +32,26 @@ object LineParser {
   val notTermEnd: P[Unit] = P(
     !(termEnd) ~ AnyChar)
 
-  def validTerm(p: P[SyntaxTerm]): P[SyntaxTerm.Valid] =
-    (p ~ &(termEnd)).map(SyntaxTerm.Valid)
+  def validTerm(
+    parser: P[SyntaxTerm]
+  ): P[SyntaxTerm.Valid] =
+    (parser ~ &(termEnd)) map (SyntaxTerm.Valid)
 
   val number = P(text(
     CharIn('0' to '9').rep(1),
-    SyntaxTerm.Literal))
+    text => SyntaxTerm.Literal(text.toInt, _)))
 
   val invalidNumber = P(
     CharIn('0' to '9').rep(1)
-    ~ text(
+    ~ noText(
       notTermEnd.rep(1),
       SyntaxTerm.InvalidLiteralSuffix))
 
-  val invalidOther = P(text(
+  val invalidOther = P(noText(
     notTermEnd.rep(1),
     SyntaxTerm.InvalidOther))
 
-  val operator = P(text(
+  val operator = P(noText(
     CharIn("+"),
     SyntaxTerm.Plus))
 
@@ -50,26 +68,38 @@ object LineParser {
     ~ whitespace.?
     ~ End)
 
-  def checkExpression(result: Parsed[Seq[SyntaxTerm.Unknown]]): Either[Seq[GuestError], Seq[SyntaxTerm]] =
-    result.fold(
-      (failedParser, index, _) => Left(Seq(
-        GuestError(index, 1, s"Failed to parse $failedParser"))),
-      (unknownExpression, _) => {
-        def errors = unknownExpression collect {
-          case SyntaxTerm.InvalidLiteralSuffix(index, text) =>
-            GuestError(index, text.length, "This number suffix is not valid")
-          case SyntaxTerm.InvalidOther(index, text) =>
-            GuestError(index, text.length, "This name is not in scope")
-        }
+  def checkExpression(result: Parsed[Seq[SyntaxTerm.Unknown]]): Either[Seq[GuestError], Seq[SyntaxTerm]] = {
+    val unknown = result.fold(
+      (failedParser, index, _) => Seq(
+        SyntaxTerm.ParseError(
+          s"Failed to parse $failedParser",
+          SourceLocation(index, index + 1))),
+      (parseResult, _) => parseResult)
 
-        if (errors.nonEmpty) {
-          Left(errors)
-        } else {
-          Right(unknownExpression collect {
-            case SyntaxTerm.Valid(term) => term
-          })
-        }
-      })
+      def errors = unknown collect {
+        case invalidTerm : SyntaxTerm.Invalid =>
+          (convertToError(invalidTerm)
+            (invalidTerm.sourceLocation))
+      }
+
+      if (errors.nonEmpty) {
+        Left(errors)
+      } else {
+        Right(unknown collect {
+          case SyntaxTerm.Valid(term) => term
+        })
+      }
+  }
+
+  def convertToError(invalidTerm: SyntaxTerm.Invalid): SourceLocation => GuestError =
+    invalidTerm match {
+      case SyntaxTerm.InvalidLiteralSuffix(_) =>
+        GuestError(_, "This number suffix is not valid")
+      case SyntaxTerm.InvalidOther(_) =>
+        GuestError(_, "This name is not in scope")
+      case SyntaxTerm.ParseError(message, _) =>
+        GuestError(_, message)
+    }
 
   def parse(in: String) = checkExpression(expression.parse(in))
 }

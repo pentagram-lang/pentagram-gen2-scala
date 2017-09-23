@@ -1,17 +1,40 @@
 package tacit
 
-sealed trait SyntaxTerm
+sealed trait SyntaxTerm {
+  def sourceLocation: SourceLocation
+}
 
 object SyntaxTerm {
-  final case class Literal(index: Int, text: String) extends SyntaxTerm {
-    val value = text.toInt
-  }
-  final case class Plus(index: Int, text: String) extends SyntaxTerm {
-    def operation(x: Int, y: Int) = x + y
+  final case class Literal(
+    value: Int,
+    sourceLocation: SourceLocation
+  ) extends SyntaxTerm
+
+  final case class Plus(
+    sourceLocation: SourceLocation
+  ) extends SyntaxTerm
+
+  sealed trait Unknown {
   }
 
-  sealed trait Unknown
-  final case class Valid(term: SyntaxTerm) extends Unknown
-  final case class InvalidLiteralSuffix(index: Int, text: String) extends Unknown
-  final case class InvalidOther(index: Int, text: String) extends Unknown
+  final case class Valid(
+    term: SyntaxTerm
+  ) extends Unknown
+
+  sealed trait Invalid extends Unknown {
+    def sourceLocation: SourceLocation
+  }
+
+  final case class InvalidLiteralSuffix(
+    sourceLocation: SourceLocation
+  ) extends Invalid
+
+  final case class InvalidOther(
+    sourceLocation: SourceLocation
+  ) extends Invalid
+
+  final case class ParseError(
+    message: String,
+    sourceLocation: SourceLocation
+  ) extends Invalid
 }
