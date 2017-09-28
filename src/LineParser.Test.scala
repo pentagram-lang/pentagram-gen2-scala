@@ -2,7 +2,6 @@ package tacit
 
 import org.scalatest.{Assertion,FreeSpec}
 import com.github.dwickern.macros.NameOf._
-import scala.language.reflectiveCalls
 import fastparse.all._
 
 import LineParser._
@@ -11,7 +10,7 @@ import SourceLocationExtensions._
 
 final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
-    def checkParse(parser: P[Any]) = new {
+    final case class CheckParse(parser: P[Any]) {
       val fullParser = P( parser ~ End )
 
       def positive(in: String, result: Any): Assertion =
@@ -30,7 +29,7 @@ final class LineParserSpec extends FreeSpec {
     }
 
     nameOf(number) - {
-      def check = checkParse(number)
+      val check = CheckParse(number)
       "parses single digits" in {
         check.positive("1", Literal(1, 0 -- 1))
       }
@@ -43,21 +42,21 @@ final class LineParserSpec extends FreeSpec {
     }
 
     nameOf(invalidNumber) - {
-      def check = checkParse(invalidNumber)
+      val check = CheckParse(invalidNumber)
       "parses single digits" in {
         check.positive("1+", InvalidLiteralSuffix(1 -- 2))
       }
     }
 
     nameOf(operator) - {
-      def check = checkParse(operator)
+      val check = CheckParse(operator)
       "parses plus" in {
         check.positive("+", Plus(0 -- 1))
       }
     }
 
     nameOf(unknownTerm) - {
-      def check = checkParse(unknownTerm)
+      val check = CheckParse(unknownTerm)
       "parses plus" in {
         check.positive("+", Valid(Plus(0 -- 1)))
       }
@@ -73,7 +72,7 @@ final class LineParserSpec extends FreeSpec {
     }
 
     nameOf(expression) - {
-      def check = checkParse(expression)
+      val check = CheckParse(expression)
       "parses simple expression" in {
         check.positive(
           "10 20 +",

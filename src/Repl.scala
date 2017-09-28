@@ -3,29 +3,49 @@ package tacit
 import scala.annotation.tailrec
 
 object Repl {
-  def readEvalPrint(line: String): OutputBlock = {
-    read(line) match {
+  def readEvalPrint(line: String): OutputBlock =
+    readEval(line) match {
       case Left(errors) =>
         printErrors(errors)
       case Right(Nil) =>
         OutputBlock.Nothing()
-      case Right(result) =>
-        printResult(result)
+      case Right(results) =>
+        printResults(results)
     }
-  }
 
-  def read = LineParser.parse(_)
+  def readEval(line: String) =
+    read(line).map(eval)
 
-  def printErrors(errors: Seq[GuestError]): OutputBlock = {
+  def read(line: String) =
+    LineParser.parse(line)
+      .flatMap(StackInterpreter.interpret)
+
+  def eval(
+    expressions: Seq[Expression]
+  ): Seq[Int] =
+    expressions.map(evalOne)
+
+  def evalOne(expression: Expression): Int =
+    expression match {
+      case Expression.Value(value, _) =>
+        value
+      case Expression.Add(initialValue, addition, _) =>
+        evalOne(initialValue) + evalOne(addition)
+    }
+
+  def printErrors(
+    errors: Seq[GuestError]
+  ): OutputBlock =
     GuestError.output(errors)
-  }
 
-  def printResult(result: Seq[SyntaxTerm]): OutputBlock = {
-    OutputBlock.NormalText(s"$result")
-  }
+  def printResults(
+    results: Seq[Int]
+  ): OutputBlock =
+    OutputBlock.Multi(results.map(result =>
+      OutputBlock.NormalText(s" ▹ $result")))
 
   @tailrec
-  def loop(): Unit = {
+  def loop(): Unit =
     SimpleTerminal readLine() match {
       case InputLine.Value(line) => {
         val outputBlock = readEvalPrint(line)
@@ -37,5 +57,4 @@ object Repl {
       case InputLine.EndOfStream() =>
         ()
     }
-  }
 }

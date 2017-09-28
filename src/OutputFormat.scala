@@ -8,18 +8,21 @@ sealed trait OutputFormat {
 
 object OutputFormat {
   object Normal extends OutputFormat {
-    val style = AttributedStyle.DEFAULT
+    val style = default
   }
   object Error extends OutputFormat {
-    val style = AttributedStyle.DEFAULT.foreground(203)
+    val style = foreground(203)
   }
   object ErrorAccent extends OutputFormat {
-    val style = AttributedStyle.DEFAULT.foreground(167)
+    val style = foreground(167)
   }
   object Prompt extends OutputFormat {
-    val style = AttributedStyle.DEFAULT.foreground(140)
+    val style = foreground(140)
   }
   object Border extends OutputFormat {
-    val style = AttributedStyle.DEFAULT.foreground(103)
+    val style = foreground(103)
   }
+
+  val default = AttributedStyle.DEFAULT
+  def foreground = default.foreground(_)
 }
