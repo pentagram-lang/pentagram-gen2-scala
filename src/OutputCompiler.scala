@@ -21,6 +21,10 @@ final case class OutputCompiler(prompt: String, line: String, terminalWidth: Int
       case OutputBlock.NormalText(text) => Multi(
         NormalText(text),
         NewLine())
+      case OutputBlock.ValueText(text) => Multi(
+        ValueAccentText(s" ▹ "),
+        ValueText(text),
+        NewLine())
       case OutputBlock.Multi(blocks) => Multi(
         blocks.map(compileBlock))
     }

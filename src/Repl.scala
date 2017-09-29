@@ -42,7 +42,7 @@ object Repl {
     results: Seq[Int]
   ): OutputBlock =
     OutputBlock.Multi(results.map(result =>
-      OutputBlock.NormalText(s" ▹ $result")))
+      OutputBlock.ValueText(result.toString)))
 
   @tailrec
   def loop(): Unit =

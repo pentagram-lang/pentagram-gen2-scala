@@ -22,6 +22,8 @@ object OutputInstruction {
   def formatText(format: OutputFormat): String => Text =
     text => Text(format, text)
   val NormalText = formatText(OutputFormat.Normal)
+  val ValueText = formatText(OutputFormat.Value)
+  val ValueAccentText = formatText(OutputFormat.ValueAccent)
   val ErrorText = formatText(OutputFormat.Error)
   val ErrorAccentText = formatText(OutputFormat.ErrorAccent)
   val BorderText = formatText(OutputFormat.Border)

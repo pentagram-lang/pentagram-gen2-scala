@@ -2,27 +2,31 @@ package tacit
 
 import org.jline.utils.AttributedStyle
 
-sealed trait OutputFormat {
-  def style: AttributedStyle
-}
+final case class OutputFormat(
+  style: AttributedStyle)
 
 object OutputFormat {
-  object Normal extends OutputFormat {
-    val style = default
-  }
-  object Error extends OutputFormat {
-    val style = foreground(203)
-  }
-  object ErrorAccent extends OutputFormat {
-    val style = foreground(167)
-  }
-  object Prompt extends OutputFormat {
-    val style = foreground(140)
-  }
-  object Border extends OutputFormat {
-    val style = foreground(103)
-  }
-
   val default = AttributedStyle.DEFAULT
   def foreground = default.foreground(_)
+
+  val Normal = OutputFormat(
+    default)
+
+  val Error = OutputFormat(
+    foreground(203))
+
+  val ErrorAccent = OutputFormat(
+    foreground(167))
+
+  val Value = OutputFormat(
+    foreground(159))
+
+  val ValueAccent = OutputFormat(
+    foreground(51))
+
+  val Prompt = OutputFormat(
+    foreground(140))
+
+  val Border = OutputFormat(
+    foreground(103))
 }
