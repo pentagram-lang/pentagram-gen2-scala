@@ -36,7 +36,33 @@ object Repl {
   def printErrors(
     errors: Seq[GuestError]
   ): OutputBlock =
-    GuestError.output(errors)
+    printErrorsMulti(
+      printErrorHighlightPrevious(errors.head),
+      errors.tail.map(printErrorHighlightNew))
+
+  def printErrorsMulti(
+    head: OutputBlock,
+    tail: Seq[OutputBlock]
+  ): OutputBlock =
+    OutputBlock.Multi(Seq(head) ++ tail)
+
+  def printErrorHighlightPrevious(
+    error: GuestError
+  ): OutputBlock =
+    printError(error, OutputBlock.ErrorHighlightPrevious)
+
+  def printErrorHighlightNew(
+    error: GuestError
+  ): OutputBlock =
+    printError(error, OutputBlock.ErrorHighlightNew)
+
+  def printError(
+    error: GuestError,
+    highlight: GuestError => OutputBlock
+  ): OutputBlock =
+    OutputBlock.Multi(
+      highlight(error),
+      OutputBlock.ErrorMessage(error))
 
   def printResults(
     results: Seq[Int]

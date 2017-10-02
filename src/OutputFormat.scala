@@ -8,6 +8,7 @@ final case class OutputFormat(
 object OutputFormat {
   val default = AttributedStyle.DEFAULT
   def foreground = default.foreground(_)
+  def background = default.background(_)
 
   val Normal = OutputFormat(
     default)
@@ -17,6 +18,15 @@ object OutputFormat {
 
   val ErrorAccent = OutputFormat(
     foreground(167))
+
+  val ErrorBackground = OutputFormat(
+    Error.style.background(1))
+
+  val Info = OutputFormat(
+    foreground(140))
+
+  val InfoBackground = OutputFormat(
+    background(97))
 
   val Value = OutputFormat(
     foreground(159))

@@ -7,10 +7,8 @@ object StackInterpreter {
     interpretMany(terms.toList, List()) match {
       case Expression.Valid(expressions) =>
         Right(expressions.reverse)
-      case Expression.StackUnderflow(stack, parameterNames, sourceLocation) =>
-        Left(Seq(GuestError(
-          sourceLocation,
-          "Not enough values to call this method")))
+      case stackUnderflow: Expression.StackUnderflow =>
+        Left(Seq(convertToError(stackUnderflow)))
     }
 
   def interpretMany(
@@ -69,4 +67,31 @@ object StackInterpreter {
           Seq(parameterNames._1, parameterNames._2),
           sourceLocation)
     }
+
+  def convertToError(
+    stackUnderflow: Expression.StackUnderflow
+  ): GuestError = {
+    val missingCount =
+      (stackUnderflow.parameterNames.length
+      - stackUnderflow.stack.length)
+    val missingAnnotations =
+      stackUnderflow.parameterNames
+        .take(missingCount)
+        .map(name => GuestError.Annotation(
+          sourceLocation = None,
+          message = name,
+          isError = true))
+    val infoAnnotations =
+      stackUnderflow.parameterNames
+        .drop(missingCount)
+        .zip(stackUnderflow.stack.reverse)
+        .map({ case (name, expression) => GuestError.Annotation(
+          sourceLocation = Some(expression.fullSourceLocation),
+          message = name,
+          isError = false) })
+    GuestError(
+      stackUnderflow.sourceLocation,
+      "Not enough values to call this method",
+      missingAnnotations ++ infoAnnotations)
+  }
 }

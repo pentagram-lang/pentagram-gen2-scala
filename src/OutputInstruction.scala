@@ -18,14 +18,11 @@ object OutputInstruction {
     val length = instructions.map(_.length).sum
   }
   def Multi(instructions: OutputInstruction*): OutputInstruction = Multi(instructions: Seq[OutputInstruction])
+}
 
-  def formatText(format: OutputFormat): String => Text =
-    text => Text(format, text)
-  val NormalText = formatText(OutputFormat.Normal)
-  val ValueText = formatText(OutputFormat.Value)
-  val ValueAccentText = formatText(OutputFormat.ValueAccent)
-  val ErrorText = formatText(OutputFormat.Error)
-  val ErrorAccentText = formatText(OutputFormat.ErrorAccent)
-  val BorderText = formatText(OutputFormat.Border)
-
+object OutputInstructionExtensions {
+  implicit final class OutputFormatHelper(val outputFormat: OutputFormat) extends AnyVal {
+    def apply(text: String): OutputInstruction.Text =
+      OutputInstruction.Text(outputFormat, text)
+  }
 }
