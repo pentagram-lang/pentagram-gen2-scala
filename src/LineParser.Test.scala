@@ -6,6 +6,7 @@ import fastparse.all._
 
 import LineParser._
 import SyntaxTerm._
+import Arithmetic._
 import SourceLocationExtensions._
 
 final class LineParserSpec extends FreeSpec {
@@ -51,23 +52,32 @@ final class LineParserSpec extends FreeSpec {
     nameOf(operator) - {
       val check = CheckParse(operator)
       "parses plus" in {
-        check.positive("+", Plus(0 -- 1))
+        check.positive("+", Operator(+, 0 -- 1))
+      }
+      "parses minus" in {
+        check.positive("-", Operator(-, 0 -- 1))
+      }
+      "parses multiply" in {
+        check.positive("*", Operator(*, 0 -- 1))
+      }
+      "parses divide" in {
+        check.positive("/", Operator(/, 0 -- 1))
       }
     }
 
     nameOf(unknownTerm) - {
       val check = CheckParse(unknownTerm)
       "parses plus" in {
-        check.positive("+", Valid(Plus(0 -- 1)))
+        check.positive("-", Valid(Operator(-, 0 -- 1)))
       }
       "parses single digits" in {
         check.positive("1", Valid(Literal(1, 0 -- 1)))
       }
       "parses invalid single digits" in {
-        check.positive("1+", InvalidLiteralSuffix(1 -- 2))
+        check.positive("1*", InvalidLiteralSuffix(1 -- 2))
       }
       "does not parse whitespace" in {
-        check.negative("1+  ")
+        check.negative("1/  ")
       }
     }
 
@@ -75,23 +85,23 @@ final class LineParserSpec extends FreeSpec {
       val check = CheckParse(expression)
       "parses simple expression" in {
         check.positive(
-          "10 20 +",
+          "10 20 *",
           Seq(
             Valid(Literal(10, 0 -- 2)),
             Valid(Literal(20, 3 -- 5)),
-            Valid(Plus(6 -- 7))))
+            Valid(Operator(*, 6 -- 7))))
       }
       "parses mixed expression" in {
         check.positive(
-          "10 2 +  3 4 +  +",
+          "10 2 +  3 4 -  /",
           Seq(
             Valid(Literal(10, 0 -- 2)),
             Valid(Literal(2, 3 -- 4)),
-            Valid(Plus(5 -- 6)),
+            Valid(Operator(+, 5 -- 6)),
             Valid(Literal(3, 8 -- 9)),
             Valid(Literal(4, 10 -- 11)),
-            Valid(Plus(12 -- 13)),
-            Valid(Plus(15 -- 16))))
+            Valid(Operator(-, 12 -- 13)),
+            Valid(Operator(/, 15 -- 16))))
       }
       "parses nothing" in {
         check.positive(
@@ -105,7 +115,7 @@ final class LineParserSpec extends FreeSpec {
       }
       "does not parse when whitespace missing" in {
         check.positive(
-          "1 23+ *",
+          "1 23+ ?",
           Seq(
             Valid(Literal(1, 0 -- 1)),
             InvalidLiteralSuffix(4 -- 5),

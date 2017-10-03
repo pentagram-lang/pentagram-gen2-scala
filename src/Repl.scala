@@ -29,8 +29,18 @@ object Repl {
     expression match {
       case Expression.Value(value, _) =>
         value
-      case Expression.Add(initialValue, addition, _) =>
-        evalOne(initialValue) + evalOne(addition)
+      case Expression.Apply(arithmetic, firstOperand, secondOperand, _) =>
+        evalArithmetic(arithmetic)(
+          evalOne(firstOperand),
+          evalOne(secondOperand))
+    }
+
+  def evalArithmetic(arithmetic: Arithmetic): (Int, Int) => Int =
+    arithmetic match {
+      case Arithmetic.+ => _ + _
+      case Arithmetic.- => _ - _
+      case Arithmetic.* => _ * _
+      case Arithmetic./ => _ / _
     }
 
   def printErrors(

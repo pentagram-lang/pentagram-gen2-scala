@@ -1,6 +1,7 @@
 package tacit
 
 import fastparse.all._
+import Arithmetic._
 
 object LineParser {
   val whitespace: P[Unit] = P(
@@ -51,9 +52,16 @@ object LineParser {
     notTermEnd.rep(1),
     SyntaxTerm.InvalidOther))
 
-  val operator = P(noText(
-    CharIn("+"),
-    SyntaxTerm.Plus))
+  def op(symbol: Char, arithmetic: Arithmetic) =
+    noText(
+      CharIn(symbol to symbol),
+      SyntaxTerm.Operator(arithmetic, _))
+
+  val operator = P(
+    op('+', +)
+    | op('-', -)
+    | op('*', *)
+    | op('/', /))
 
   val unknownTerm = P(
     validTerm(number)

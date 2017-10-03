@@ -36,10 +36,12 @@ object StackInterpreter {
         pushStack(
           Expression.Value(value, sourceLocation),
           stack)
-      case SyntaxTerm.Plus(sourceLocation) =>
+      case SyntaxTerm.Operator(arithmetic, sourceLocation) =>
         useStack(
-          Expression.Add,
-          ("initial-value", "addition"),
+          Expression.Apply,
+          arithmetic,
+          ("initial-value",
+            secondParameterName(arithmetic)),
           sourceLocation,
           stack)
     }
@@ -51,7 +53,8 @@ object StackInterpreter {
     Expression.Valid(expression :: stack)
 
   def useStack(
-    expression: (Expression, Expression, SourceLocation) => Expression,
+    expression: (Arithmetic, Expression, Expression, SourceLocation) => Expression,
+    arithmetic: Arithmetic,
     parameterNames: (String, String),
     sourceLocation: SourceLocation,
     stack: List[Expression]
@@ -59,13 +62,21 @@ object StackInterpreter {
     stack match {
       case first :: second :: rest =>
         pushStack(
-          expression(second, first, sourceLocation),
+          expression(arithmetic, second, first, sourceLocation),
           rest)
       case _ =>
         Expression.StackUnderflow(
           stack,
           Seq(parameterNames._1, parameterNames._2),
           sourceLocation)
+    }
+
+  def secondParameterName(arithmetic: Arithmetic) =
+    arithmetic match {
+      case Arithmetic.+ => "addition"
+      case Arithmetic.- => "subtraction"
+      case Arithmetic.* => "multiplier"
+      case Arithmetic./ => "divisor"
     }
 
   def convertToError(

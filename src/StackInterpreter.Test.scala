@@ -5,6 +5,7 @@ import com.github.dwickern.macros.NameOf._
 
 import StackInterpreter._
 import SyntaxTerm._
+import Arithmetic._
 import Expression._
 import SourceLocationExtensions._
 
@@ -48,23 +49,25 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "uses values for operators" in {
         check.positive(
-          Plus(4 -- 5),
+          Operator(+, 4 -- 5),
           List(
             Value(2, 2 -- 3),
             Value(1, 0 -- 1)),
           List(
-            Add(
+            Apply(
+              +,
               Value(1, 0 -- 1),
               Value(2, 2 -- 3),
               4 -- 5)))
         check.positive(
-          Plus(6 -- 7),
+          Operator(-, 6 -- 7),
           List(
             Value(3, 4 -- 5),
             Value(2, 2 -- 3),
             Value(1, 0 -- 1)),
           List(
-            Add(
+            Apply(
+              -,
               Value(2, 2 -- 3),
               Value(3, 4 -- 5),
               6 -- 7),
@@ -73,17 +76,20 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "uses operators for operators" in {
         check.positive(
-          Plus(8 -- 9),
+          Operator(*, 8 -- 9),
           List(
-            Add(
+            Apply(
+              /,
               Value(2, 2 -- 3),
               Value(3, 4 -- 5),
               6 -- 7),
             Value(1, 0 -- 1)),
           List(
-            Add(
+            Apply(
+              *,
               Value(1, 0 -- 1),
-              Add(
+              Apply(
+                /,
                 Value(2, 2 -- 3),
                 Value(3, 4 -- 5),
                 6 -- 7),
@@ -92,20 +98,20 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "fails for stack underflow" in {
         check.negative(
-          Plus(0 -- 1),
+          Operator(+, 0 -- 1),
           List(),
           StackUnderflow(
             List(),
             Seq("initial-value", "addition"),
             0 -- 1))
         check.negative(
-          Plus(2 -- 3),
+          Operator(-, 2 -- 3),
           List(
             Value(1, 0 -- 1)),
           StackUnderflow(
             List(
               Value(1, 0 -- 1)),
-            Seq("initial-value", "addition"),
+            Seq("initial-value", "subtraction"),
             2 -- 3))
       }
     }

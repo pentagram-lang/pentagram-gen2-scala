@@ -12,13 +12,14 @@ object Expression {
     def fullSourceLocation = sourceLocation
   }
 
-  final case class Add(
-    initialValue: Expression,
-    addition: Expression,
+  final case class Apply(
+    arithmetic: Arithmetic,
+    firstOperand: Expression,
+    secondOperand: Expression,
     sourceLocation: SourceLocation
   ) extends Expression {
     def fullSourceLocation = SourceLocation(
-      initialValue.fullSourceLocation.begin,
+      firstOperand.fullSourceLocation.begin,
       sourceLocation.end)
   }
 

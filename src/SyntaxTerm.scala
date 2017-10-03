@@ -10,7 +10,8 @@ object SyntaxTerm {
     sourceLocation: SourceLocation
   ) extends SyntaxTerm
 
-  final case class Plus(
+  final case class Operator(
+    arithmetic: Arithmetic,
     sourceLocation: SourceLocation
   ) extends SyntaxTerm
 
