@@ -39,7 +39,7 @@ object LineParser {
     (parser ~ &(termEnd)) map (SyntaxTerm.Valid)
 
   val number = P(text(
-    CharIn('0' to '9').rep(1),
+    CharIn("-").? ~ CharIn('0' to '9').rep(1),
     text => SyntaxTerm.Literal(text.toInt, _)))
 
   val invalidNumber = P(

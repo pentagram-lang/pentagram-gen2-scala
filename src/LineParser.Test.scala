@@ -40,6 +40,12 @@ final class LineParserSpec extends FreeSpec {
       "parses multiple digits" in {
         check.positive("123456789", Literal(123456789, 0 -- 9))
       }
+      "parses negative numbers" in {
+        check.positive("-12", Literal(-12, 0 -- 3))
+      }
+      "does not parse double negative" in {
+        check.negative("--12")
+      }
     }
 
     nameOf(invalidNumber) - {
