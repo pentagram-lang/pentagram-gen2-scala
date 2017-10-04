@@ -40,8 +40,6 @@ object StackInterpreter {
         useStack(
           Expression.Apply,
           arithmetic,
-          ("initial-value",
-            secondParameterName(arithmetic)),
           sourceLocation,
           stack)
     }
@@ -55,28 +53,25 @@ object StackInterpreter {
   def useStack(
     expression: (Arithmetic, Expression, Expression, SourceLocation) => Expression,
     arithmetic: Arithmetic,
-    parameterNames: (String, String),
     sourceLocation: SourceLocation,
     stack: List[Expression]
   ): Expression.Unknown =
     stack match {
       case first :: second :: rest =>
         pushStack(
-          expression(arithmetic, second, first, sourceLocation),
+          expression(
+            arithmetic,
+            second,
+            first,
+            sourceLocation),
           rest)
       case _ =>
         Expression.StackUnderflow(
           stack,
-          Seq(parameterNames._1, parameterNames._2),
+          Seq(
+            arithmetic.parameterNames._1,
+            arithmetic.parameterNames._2),
           sourceLocation)
-    }
-
-  def secondParameterName(arithmetic: Arithmetic) =
-    arithmetic match {
-      case Arithmetic.+ => "addition"
-      case Arithmetic.- => "subtraction"
-      case Arithmetic.* => "multiplier"
-      case Arithmetic./ => "divisor"
     }
 
   def convertToError(
@@ -88,18 +83,16 @@ object StackInterpreter {
     val missingAnnotations =
       stackUnderflow.parameterNames
         .take(missingCount)
-        .map(name => GuestError.Annotation(
-          sourceLocation = None,
-          message = name,
-          isError = true))
+        .map(name => GuestError.ErrorAnnotation(
+          None,
+          name))
     val infoAnnotations =
       stackUnderflow.parameterNames
         .drop(missingCount)
         .zip(stackUnderflow.stack.reverse)
-        .map({ case (name, expression) => GuestError.Annotation(
-          sourceLocation = Some(expression.fullSourceLocation),
-          message = name,
-          isError = false) })
+        .map({ case (name, expression) => GuestError.InfoAnnotation(
+          Some(expression.fullSourceLocation),
+          name) })
     GuestError(
       stackUnderflow.sourceLocation,
       "Not enough values to call this method",

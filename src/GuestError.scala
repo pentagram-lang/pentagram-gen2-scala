@@ -10,4 +10,14 @@ object GuestError {
     sourceLocation: Option[SourceLocation],
     message: String,
     isError: Boolean)
+
+  def InfoAnnotation = Annotation(
+    _: Option[SourceLocation],
+    _: String,
+    false)
+
+  def ErrorAnnotation = Annotation(
+    _: Option[SourceLocation],
+    _: String,
+    true)
 }

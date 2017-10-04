@@ -13,35 +13,16 @@ object Repl {
         printResults(results)
     }
 
-  def readEval(line: String) =
-    read(line).map(eval)
+  def readEval(
+    line: String
+  ): Either[Seq[GuestError], Seq[Int]] =
+    read(line).flatMap(Evaluator.eval)
 
-  def read(line: String) =
+  def read(
+    line: String
+  ): Either[Seq[GuestError], Seq[Expression]] =
     LineParser.parse(line)
       .flatMap(StackInterpreter.interpret)
-
-  def eval(
-    expressions: Seq[Expression]
-  ): Seq[Int] =
-    expressions.map(evalOne)
-
-  def evalOne(expression: Expression): Int =
-    expression match {
-      case Expression.Value(value, _) =>
-        value
-      case Expression.Apply(arithmetic, firstOperand, secondOperand, _) =>
-        evalArithmetic(arithmetic)(
-          evalOne(firstOperand),
-          evalOne(secondOperand))
-    }
-
-  def evalArithmetic(arithmetic: Arithmetic): (Int, Int) => Int =
-    arithmetic match {
-      case Arithmetic.+ => _ + _
-      case Arithmetic.- => _ - _
-      case Arithmetic.* => _ * _
-      case Arithmetic./ => _ / _
-    }
 
   def printErrors(
     errors: Seq[GuestError]
