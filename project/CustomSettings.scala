@@ -20,9 +20,9 @@ object CustomSettings {
   lazy val benchFilePattern = "*.Bench.scala"
 
   lazy val customSourceRules = Seq(
-    scalaSource in Compile := baseDirectory.value / "src",
-    scalaSource in Test := baseDirectory.value / "src",
-    scalaSource in Bench := baseDirectory.value / "src",
+    scalaSource in Compile := baseDirectory.value,
+    scalaSource in Test := baseDirectory.value,
+    scalaSource in Bench := baseDirectory.value,
 
     excludeFilter in Compile := testFilePattern || benchFilePattern,
     excludeFilter in Test := NothingFilter,

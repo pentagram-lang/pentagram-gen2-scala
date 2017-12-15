@@ -3,6 +3,8 @@ import Keys._
 import BenchConfig._
 
 object Dependencies {
+  lazy val customScalaVersion = scalaVersion := "2.12.3"
+
   lazy val fastparse = "com.lihaoyi" %% "fastparse" % "0.4.3"
   lazy val jline = "org.jline" % "jline-reader" % "3.3.1"
   lazy val scalatest = "org.scalatest" %% "scalatest" % "3.0.3" % Test

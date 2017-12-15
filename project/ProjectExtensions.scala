@@ -7,6 +7,7 @@ object ProjectExtensions {
   implicit final class ProjectHelper(val project: Project) extends AnyVal {
     def withCustomSettings =
       project
+        .settings(customScalaVersion)
         .configs(Bench)
         .settings(benchSettings : _*)
         .settings(customSourceRules)
@@ -17,6 +18,12 @@ object ProjectExtensions {
     def libraryDependencies(dependencies: ModuleID*) =
       project.settings(
         Keys.libraryDependencies ++= dependencies
+      )
+
+    def runOther(otherProject: Project) =
+      project.settings(
+        Keys.run in Compile :=
+          (Keys.run in Compile in otherProject).evaluated
       )
   }
 }

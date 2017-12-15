@@ -1,9 +1,7 @@
 import Dependencies._
 import ProjectExtensions._
 
-scalaVersion := "2.12.3"
-
-lazy val root = (project in file("."))
+lazy val core = (project in file("core"))
   .withCustomSettings
   .libraryDependencies(
     fastparse,
@@ -12,3 +10,7 @@ lazy val root = (project in file("."))
     scalameter,
     nameof
   )
+
+lazy val root = (project in file("."))
+  .aggregate(core)
+  .runOther(core)
