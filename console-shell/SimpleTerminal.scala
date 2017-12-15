@@ -1,4 +1,4 @@
-package tacit
+package tacit.consoleShell
 
 import org.jline.reader.LineReaderBuilder
 import org.jline.reader.UserInterruptException
@@ -7,6 +7,9 @@ import org.jline.utils.AttributedStyle
 import org.jline.utils.AttributedString
 import org.jline.utils.InfoCmp.Capability
 import org.jline.utils.Curses
+
+import tacit.core.InputLine
+import tacit.core.OutputBlock
 
 object SimpleTerminal {
   def readLine(): InputLine = {

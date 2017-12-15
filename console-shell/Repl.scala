@@ -1,6 +1,14 @@
-package tacit
+package tacit.consoleShell
 
 import scala.annotation.tailrec
+
+import tacit.core.Evaluator
+import tacit.core.Expression
+import tacit.core.GuestError
+import tacit.core.InputLine
+import tacit.core.LineParser
+import tacit.core.OutputBlock
+import tacit.core.StackInterpreter
 
 object Repl {
   def readEvalPrint(line: String): OutputBlock =

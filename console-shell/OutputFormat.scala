@@ -1,4 +1,4 @@
-package tacit
+package tacit.consoleShell
 
 import org.jline.utils.AttributedStyle
 

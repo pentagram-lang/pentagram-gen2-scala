@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 import fastparse.all._
 import Arithmetic._

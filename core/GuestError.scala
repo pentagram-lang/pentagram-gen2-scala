@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 final case class GuestError(
   sourceLocation: SourceLocation,

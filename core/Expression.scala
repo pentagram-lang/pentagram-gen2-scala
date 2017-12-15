@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 sealed trait Expression {
   def fullSourceLocation: SourceLocation

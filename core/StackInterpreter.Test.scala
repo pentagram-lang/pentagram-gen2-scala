@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 import org.scalatest.{Assertion,FreeSpec}
 import com.github.dwickern.macros.NameOf._

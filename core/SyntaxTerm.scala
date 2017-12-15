@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 sealed trait SyntaxTerm {
   def sourceLocation: SourceLocation

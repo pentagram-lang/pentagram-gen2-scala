@@ -1,4 +1,8 @@
-package tacit
+package tacit.consoleShell
+
+import tacit.core.GuestError
+import tacit.core.OutputBlock
+import tacit.core.SourceLocation
 
 final case class OutputCompiler(
   prompt: String,

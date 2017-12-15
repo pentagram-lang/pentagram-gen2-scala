@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 object Evaluator {
   def eval(

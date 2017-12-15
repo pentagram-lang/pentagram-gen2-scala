@@ -1,4 +1,4 @@
-package tacit
+package tacit.consoleShell
 
 sealed trait OutputInstruction {
   def length: Int

@@ -1,4 +1,4 @@
-package tacit
+package tacit.core
 
 import org.scalameter._
 import com.github.dwickern.macros.NameOf._
