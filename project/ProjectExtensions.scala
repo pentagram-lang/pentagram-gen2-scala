@@ -20,6 +20,9 @@ object ProjectExtensions {
         Keys.libraryDependencies ++= dependencies
       )
 
+    def projectDependencies(dependencies: ClasspathDep[ProjectReference]*) =
+      project.dependsOn(dependencies: _*)
+
     def runOther(otherProject: Project) =
       project.settings(
         Keys.run in Compile :=
