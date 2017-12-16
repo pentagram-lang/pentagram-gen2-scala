@@ -9,17 +9,20 @@ object ProjectExtensions {
     def withCustomSettings =
       project
         .settings(customScalaVersion)
-        .configs(Bench)
         .settings(benchSettings : _*)
         .settings(customSourceRules)
         .settings(customTestOptions)
         .settings(customScalacOptions)
         .settings(customResolvers)
 
-    def libraryDependencies(dependencies: ModuleID*) =
+    def withBenchConfig =
+      project
+        .configs(Bench)
+
+    def libraryDependencies(dependencies: Def.Initialize[ModuleID]*) =
       project.settings(
-        Keys.libraryDependencies ++= dependencies
-      )
+        dependencies.map(dependency =>
+          Keys.libraryDependencies += dependency.value))
 
     def projectDependencies(dependencies: ClasspathDep[ProjectReference]*) =
       project.dependsOn(dependencies: _*)
@@ -35,16 +38,15 @@ object ProjectExtensions {
     def withCustomSettings =
       crossProject
         .settings(customScalaVersion)
-        .configs(Bench)
         .settings(benchSettings : _*)
         .settings(customSourceRules)
         .settings(customTestOptions)
         .settings(customScalacOptions)
         .settings(customResolvers)
 
-    def libraryDependencies(dependencies: ModuleID*) =
+    def libraryDependencies(dependencies: Def.Initialize[ModuleID]*) =
       crossProject.settings(
-        Keys.libraryDependencies ++= dependencies
-      )
+        dependencies.map(dependency =>
+          Keys.libraryDependencies += dependency.value))
   }
 }

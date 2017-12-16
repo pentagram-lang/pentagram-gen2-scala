@@ -10,7 +10,8 @@ lazy val core = (crossProject.crossType(CustomCrossType) in file("core"))
     scalameter,
     nameof
   )
-lazy val coreJVM = core.jvm
+lazy val coreJVM = core.jvm.withBenchConfig
+lazy val coreJS = core.js
 
 lazy val consoleShell = (project in file("console-shell"))
   .withCustomSettings
@@ -22,5 +23,5 @@ lazy val consoleShell = (project in file("console-shell"))
   )
 
 lazy val root = (project in file("."))
-  .aggregate(coreJVM, consoleShell)
+  .aggregate(coreJVM, coreJS, consoleShell)
   .runOther(consoleShell)
