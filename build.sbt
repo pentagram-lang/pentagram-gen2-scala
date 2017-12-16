@@ -25,3 +25,5 @@ lazy val consoleShell = (project in file("console-shell"))
 lazy val root = (project in file("."))
   .aggregate(coreJVM, coreJS, consoleShell)
   .runOther(consoleShell)
+
+cancelable in Global := true
