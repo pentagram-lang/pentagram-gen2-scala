@@ -1,4 +1,5 @@
 /console-shell/target/
+/core/target-jvm/
 /core/target/
 /project/project/
 /project/target/

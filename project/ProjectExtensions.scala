@@ -1,4 +1,5 @@
 import sbt._
+import org.scalajs.sbtplugin.cross._
 import BenchConfig._
 import CustomSettings._
 import Dependencies._
@@ -27,6 +28,23 @@ object ProjectExtensions {
       project.settings(
         Keys.run in Compile :=
           (Keys.run in Compile in otherProject).evaluated
+      )
+  }
+
+  implicit final class CrossProjectHelper(val crossProject: CrossProject) extends AnyVal {
+    def withCustomSettings =
+      crossProject
+        .settings(customScalaVersion)
+        .configs(Bench)
+        .settings(benchSettings : _*)
+        .settings(customSourceRules)
+        .settings(customTestOptions)
+        .settings(customScalacOptions)
+        .settings(customResolvers)
+
+    def libraryDependencies(dependencies: ModuleID*) =
+      crossProject.settings(
+        Keys.libraryDependencies ++= dependencies
       )
   }
 }

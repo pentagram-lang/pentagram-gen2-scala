@@ -1,7 +1,8 @@
+import CustomCrossProject._
 import Dependencies._
 import ProjectExtensions._
 
-lazy val core = (project in file("core"))
+lazy val core = (crossProject.crossType(CustomCrossType) in file("core"))
   .withCustomSettings
   .libraryDependencies(
     fastparse,
@@ -9,6 +10,7 @@ lazy val core = (project in file("core"))
     scalameter,
     nameof
   )
+lazy val coreJVM = core.jvm
 
 lazy val consoleShell = (project in file("console-shell"))
   .withCustomSettings
@@ -16,9 +18,9 @@ lazy val consoleShell = (project in file("console-shell"))
     jline
   )
   .projectDependencies(
-    core
+    coreJVM
   )
 
 lazy val root = (project in file("."))
-  .aggregate(core, consoleShell)
+  .aggregate(coreJVM, consoleShell)
   .runOther(consoleShell)
