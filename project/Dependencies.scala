@@ -12,6 +12,8 @@ object Dependencies {
     setting("com.lihaoyi" %%% "fastparse" % "1.0.0")
   lazy val jline =
     setting("org.jline" % "jline-reader" % "3.5.1")
+  lazy val dom =
+    setting("org.scala-js" %%% "scalajs-dom" % "0.9.4")
   lazy val scalatest =
     setting("org.scalatest" %%% "scalatest" % "3.0.4" % Test)
   lazy val scalameter =

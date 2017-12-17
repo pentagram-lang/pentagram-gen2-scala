@@ -1,5 +1,7 @@
 import sbt._
+import org.scalajs.sbtplugin._
 import org.scalajs.sbtplugin.cross._
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import BenchConfig._
 import CustomSettings._
 import Dependencies._
@@ -25,6 +27,13 @@ object ProjectExtensions {
         Keys.run in Compile :=
           (Keys.run in Compile in otherProject).evaluated
       )
+
+    def withJSMain =
+      project
+        .enablePlugins(ScalaJSPlugin)
+        .settings(
+          scalaJSUseMainModuleInitializer := true
+        )
   }
 
   implicit final class CrossProjectHelper(val crossProject: CrossProject) extends AnyVal {

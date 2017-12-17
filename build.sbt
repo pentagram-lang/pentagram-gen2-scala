@@ -22,8 +22,23 @@ lazy val consoleShell = (project in file("console-shell"))
     coreJVM
   )
 
+lazy val webShell = (project in file("web-shell"))
+  .withCustomSettings
+  .withJSMain
+  .libraryDependencies(
+    dom
+  )
+  .projectDependencies(
+    coreJS
+  )
+
 lazy val root = (project in file("."))
-  .aggregate(coreJVM, coreJS, consoleShell)
+  .aggregate(
+    coreJVM,
+    coreJS,
+    consoleShell,
+    webShell
+  )
   .runOther(consoleShell)
 
 cancelable in Global := true
