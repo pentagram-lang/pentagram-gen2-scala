@@ -33,7 +33,16 @@ object CustomSettings {
 
   lazy val customTestOptions = Seq(
     logBuffered in Test := false,
-    testFrameworks ++= customTestFrameworks,
+    customTestFrameworks,
     parallelExecution in Bench := false
+  )
+
+  lazy val allCustomSettings = (
+    customScalaVersion
+    ++ benchSettings
+    ++ customSourceRules
+    ++ customTestOptions
+    ++ customScalacOptions
+    ++ customResolvers
   )
 }

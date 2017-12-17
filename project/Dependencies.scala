@@ -24,7 +24,10 @@ object Dependencies {
       Resolver.sonatypeRepo("releases")
     )
 
-  lazy val customTestFrameworks = Seq(
-    new TestFramework("org.scalameter.ScalaMeterFramework")
-  )
+  lazy val customTestFrameworks =
+    testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
+
+  def mapLibraryDependencies(dependencies: Seq[Def.Initialize[ModuleID]]) =
+    dependencies.map(dependency =>
+      libraryDependencies += dependency.value)
 }
