@@ -6,14 +6,14 @@ import sbt.Def._
 import BenchConfig._
 
 object Dependencies {
-  lazy val customScalaVersion = scalaVersion := "2.12.3"
+  lazy val customScalaVersion = scalaVersion := "2.12.4"
 
   lazy val fastparse =
-    setting("com.lihaoyi" %%% "fastparse" % "0.4.3")
+    setting("com.lihaoyi" %%% "fastparse" % "1.0.0")
   lazy val jline =
-    setting("org.jline" % "jline-reader" % "3.3.1")
+    setting("org.jline" % "jline-reader" % "3.5.1")
   lazy val scalatest =
-    setting("org.scalatest" %%% "scalatest" % "3.0.3" % Test)
+    setting("org.scalatest" %%% "scalatest" % "3.0.4" % Test)
   lazy val scalameter =
     setting("com.storm-enroute" %% "scalameter" % "0.8.2" % Bench)
   lazy val nameof =
