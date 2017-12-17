@@ -1,10 +1,12 @@
+package tacit.sbt
+
 import sbt._
 import org.scalajs.sbtplugin._
 import org.scalajs.sbtplugin.cross._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import BenchConfig._
-import CustomSettings._
-import Dependencies._
+import tacit.sbt.BenchConfig._
+import tacit.sbt.CustomSettings._
+import tacit.sbt.Dependencies._
 
 object ProjectExtensions {
   implicit final class ProjectHelper(val project: Project) extends AnyVal {

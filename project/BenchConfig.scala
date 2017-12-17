@@ -1,5 +1,7 @@
+package tacit.sbt
+
 import sbt._
-import Keys._
+import sbt.Keys._
 
 object BenchConfig {
   lazy val Bench = config("bench") extend(Test)

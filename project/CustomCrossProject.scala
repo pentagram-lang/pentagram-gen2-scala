@@ -1,3 +1,5 @@
+package tacit.sbt
+
 import sbt._
 import org.scalajs.sbtplugin.cross._
 

@@ -1,7 +1,9 @@
+package tacit.sbt
+
 import sbt._
-import Keys._
-import BenchConfig._
-import Dependencies._
+import sbt.Keys._
+import tacit.sbt.BenchConfig._
+import tacit.sbt.Dependencies._
 
 object CustomSettings {
   lazy val customScalacOptions =

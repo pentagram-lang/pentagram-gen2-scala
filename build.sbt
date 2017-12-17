@@ -1,6 +1,6 @@
-import CustomCrossProject._
-import Dependencies._
-import ProjectExtensions._
+import tacit.sbt.CustomCrossProject._
+import tacit.sbt.Dependencies._
+import tacit.sbt.ProjectExtensions._
 
 lazy val core = (crossProject.crossType(CustomCrossType) in file("core"))
   .withCustomSettings
