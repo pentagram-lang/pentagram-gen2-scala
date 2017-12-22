@@ -26,7 +26,10 @@ lazy val webShell = (project in file("web-shell"))
   .withCustomSettings
   .withJSMain
   .libraryDependencies(
-    dom
+    dom,
+    scalatags,
+    scalacss,
+    scalacssExt
   )
   .projectDependencies(
     coreJS
