@@ -1,24 +1,27 @@
 package tacit.webShell
 
 import scalatags.JsDom.all._
-import scalacss.ScalatagsCss._
+import org.scalajs.dom.raw._
 
 import tacit.core.LineParser
-import CssExtensions._
 
 object Shell {
-  val parseResult = LineParser.parse("1 1 +")
+  val shellInput = TextInput()
+
+  val shellOutput = p().render
 
   val root =
     div(
-      Style.renderTag,
-      p(
-        Style.highlight,
-        "Hello scalatags + scalacss world"
+      Style.renderTags,
+      form(
+        onsubmit := { event: Event =>
+          event.preventDefault
+          println(s"Submit ${shellInput.value}")
+          shellOutput.textContent = LineParser.parse(shellInput.value).toString()
+        },
+        shellInput.element
       ),
-      p(
-        s"Parsed: $parseResult"
-      )
+      shellOutput
     )
 
   def render = root.render

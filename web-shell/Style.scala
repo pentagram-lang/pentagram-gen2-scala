@@ -1,11 +1,12 @@
 package tacit.webShell
 
-import CssSettings.Defaults._
+import CssExtensions._
 
-object Style extends StyleSheet.Inline {
-  import Style.dsl._
-
-  val highlight = style(
-    color(red)
-  )
+object Style {
+  val renderTags = {
+    val styles = Seq(
+      TextInput.Style
+    )
+    styles.map(_.renderTag)
+  }
 }
