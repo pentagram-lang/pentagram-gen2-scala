@@ -1,6 +1,6 @@
 package tacit.webShell
 
-import org.scalajs.dom.html._
+import org.scalajs.dom.html.Input
 import scalacss.ScalatagsCss._
 import scalatags.JsDom.all._
 

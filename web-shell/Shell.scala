@@ -1,7 +1,7 @@
 package tacit.webShell
 
 import scalatags.JsDom.all._
-import org.scalajs.dom.raw._
+import org.scalajs.dom.Event
 
 import tacit.core.LineParser
 
