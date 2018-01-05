@@ -5,7 +5,7 @@ import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
 import scalatags.JsDom.all._
 
-import tacit.core.LineParser
+import tacit.core.ReadEvalPrintChain
 
 import CssSettings.Defaults._
 
@@ -18,7 +18,8 @@ final class Repl(
 
   def handleSubmit(event: dom.Event): Unit = {
     event.preventDefault
-    replOutput.addResult(LineParser.parse(replInput.value).toString())
+    val outputBlock = ReadEvalPrintChain.readEvalPrint(replInput.value)
+    replOutput.addResult(outputBlock.toString())
   }
 }
 
