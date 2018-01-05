@@ -6,18 +6,20 @@ import scalatags.JsDom.all._
 
 import CssSettings.Defaults._
 
-final class TextInput(val root: html.Input) {
-  def value: String = root.value
+final class ReplOutput(
+  val root: html.Div
+) {
+  def addResult(text: String): Unit = {
+    root.appendChild(div(text).render)
+  }
 }
 
-object TextInput {
-  def apply(xs: Modifier*): TextInput = {
-    val root = input(
-      Style.root,
-      `type` := "text",
-      xs
+object ReplOutput {
+  def apply(xs: Modifier*): ReplOutput = {
+    val root = div(
+      Style.root
     )
-    new TextInput(root.render)
+    new ReplOutput(root.render)
   }
 
   object Style extends StyleSheet.Inline {
