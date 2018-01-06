@@ -17,9 +17,10 @@ final class Repl(
   replInput.onSubmit(handleSubmit(_))
 
   def handleSubmit(event: dom.Event): Unit = {
-    event.preventDefault
+    event.preventDefault()
     val outputBlock = ReadEvalPrintChain.readEvalPrint(replInput.value)
-    replOutput.addResult(outputBlock.toString())
+    replOutput.writeBlock(outputBlock)
+    replInput.reset()
   }
 }
 

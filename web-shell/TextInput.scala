@@ -8,6 +8,8 @@ import CssSettings.Defaults._
 
 final class TextInput(val root: html.Input) {
   def value: String = root.value
+
+  def value_=(text: String): Unit = root.value = text
 }
 
 object TextInput {

@@ -15,6 +15,8 @@ final class ReplInput(
     root.onsubmit = handler
 
   def value = textInput.value
+
+  def reset(): Unit = textInput.value = ""
 }
 
 object ReplInput {
