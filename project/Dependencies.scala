@@ -19,15 +19,19 @@ object Dependencies {
   lazy val scalatags =
     setting("com.lihaoyi" %%% "scalatags" % "0.6.7")
   lazy val scalacss =
-    setting("com.github.japgolly.scalacss" %%% "core" % "0.5.3")
+    setting(
+      "com.github.japgolly.scalacss" %%% "core" % "0.5.3")
   lazy val scalacssExt =
-    setting("com.github.japgolly.scalacss" %%% "ext-scalatags" % "0.5.3")
+    setting(
+      "com.github.japgolly.scalacss" %%% "ext-scalatags" % "0.5.3")
   lazy val scalatest =
     setting("org.scalatest" %%% "scalatest" % "3.0.4" % Test)
   lazy val scalameter =
-    setting("com.storm-enroute" %% "scalameter" % "0.8.2" % Bench)
+    setting(
+      "com.storm-enroute" %% "scalameter" % "0.8.2" % Bench)
   lazy val nameof =
-    setting("com.github.dwickern" %% "scala-nameof" % "1.0.3" % Provided)
+    setting(
+      "com.github.dwickern" %% "scala-nameof" % "1.0.3" % Provided)
 
   lazy val customResolvers =
     resolvers ++= Seq(
@@ -35,9 +39,12 @@ object Dependencies {
     )
 
   lazy val customTestFrameworks =
-    testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
+    testFrameworks += new TestFramework(
+      "org.scalameter.ScalaMeterFramework")
 
-  def mapLibraryDependencies(dependencies: Seq[Def.Initialize[ModuleID]]) =
+  def mapLibraryDependencies(
+    dependencies: Seq[Def.Initialize[ModuleID]]
+  ) =
     dependencies.map(dependency =>
       libraryDependencies += dependency.value)
 }

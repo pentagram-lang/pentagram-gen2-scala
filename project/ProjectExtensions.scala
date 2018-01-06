@@ -9,19 +9,25 @@ import tacit.sbt.CustomSettings._
 import tacit.sbt.Dependencies._
 
 object ProjectExtensions {
-  implicit final class ProjectHelper(val project: Project) extends AnyVal {
-    def withCustomSettings =
+  implicit final class ProjectHelper(
+    val project: Project
+  ) extends AnyVal {
+    def withCustomSettings() =
       project.settings(allCustomSettings)
 
-    def withBenchConfig =
+    def withBenchConfig() =
       project.configs(Bench)
 
-    def libraryDependencies(dependencies: Def.Initialize[ModuleID]*) =
+    def libraryDependencies(
+      dependencies: Def.Initialize[ModuleID]*
+    ) =
       project.settings(
         mapLibraryDependencies(dependencies)
       )
 
-    def projectDependencies(dependencies: ClasspathDep[ProjectReference]*) =
+    def projectDependencies(
+      dependencies: ClasspathDep[ProjectReference]*
+    ) =
       project.dependsOn(dependencies: _*)
 
     def runOther(otherProject: Project) =
@@ -30,7 +36,7 @@ object ProjectExtensions {
           (Keys.run in Compile in otherProject).evaluated
       )
 
-    def withJSMain =
+    def withJSMain() =
       project
         .enablePlugins(ScalaJSPlugin)
         .settings(
@@ -38,11 +44,14 @@ object ProjectExtensions {
         )
   }
 
-  implicit final class CrossProjectHelper(val crossProject: CrossProject) extends AnyVal {
-    def withCustomSettings =
+  implicit final class CrossProjectHelper(
+    val crossProject: CrossProject
+  ) extends AnyVal {
+    def withCustomSettings() =
       crossProject.settings(allCustomSettings)
 
-    def libraryDependencies(dependencies: Def.Initialize[ModuleID]*) =
+    def libraryDependencies(
+      dependencies: Def.Initialize[ModuleID]*) =
       crossProject.settings(
         mapLibraryDependencies(dependencies)
       )

@@ -9,7 +9,8 @@ object CustomSettings {
   lazy val customScalacOptions =
     scalacOptions ++= Seq(
       "-deprecation",
-      "-encoding", "UTF-8",
+      "-encoding",
+      "UTF-8",
       "-feature",
       "-unchecked",
       "-Xlint",
@@ -25,7 +26,6 @@ object CustomSettings {
     scalaSource in Compile := baseDirectory.value,
     scalaSource in Test := baseDirectory.value,
     scalaSource in Bench := baseDirectory.value,
-
     excludeFilter in Compile := testFilePattern || benchFilePattern,
     excludeFilter in Test := NothingFilter,
     includeFilter in Test := testFilePattern,
@@ -41,10 +41,10 @@ object CustomSettings {
 
   lazy val allCustomSettings = (
     customScalaVersion
-    ++ benchSettings
-    ++ customSourceRules
-    ++ customTestOptions
-    ++ customScalacOptions
-    ++ customResolvers
+      ++ benchSettings
+      ++ customSourceRules
+      ++ customTestOptions
+      ++ customScalacOptions
+      ++ customResolvers
   )
 }
