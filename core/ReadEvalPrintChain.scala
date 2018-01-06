@@ -19,7 +19,8 @@ object ReadEvalPrintChain {
   def read(
     line: String
   ): Either[Seq[GuestError], Seq[Expression]] =
-    LineParser.parse(line)
+    LineParser
+      .parse(line)
       .flatMap(StackInterpreter.interpret)
 
   def printErrors(

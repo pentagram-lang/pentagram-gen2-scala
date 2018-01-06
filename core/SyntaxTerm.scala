@@ -15,8 +15,7 @@ object SyntaxTerm {
     sourceLocation: SourceLocation
   ) extends SyntaxTerm
 
-  sealed trait Unknown {
-  }
+  sealed trait Unknown {}
 
   final case class Valid(
     term: SyntaxTerm

@@ -18,9 +18,10 @@ object Expression {
     secondOperand: Expression,
     sourceLocation: SourceLocation
   ) extends Expression {
-    def fullSourceLocation = SourceLocation(
-      firstOperand.fullSourceLocation.begin,
-      sourceLocation.end)
+    def fullSourceLocation =
+      SourceLocation(
+        firstOperand.fullSourceLocation.begin,
+        sourceLocation.end)
   }
 
   sealed trait Unknown

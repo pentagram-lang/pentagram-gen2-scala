@@ -51,7 +51,12 @@ object StackInterpreter {
     Expression.Valid(expression :: stack)
 
   def useStack(
-    expression: (Arithmetic, Expression, Expression, SourceLocation) => Expression,
+    expression: (
+      Arithmetic,
+      Expression,
+      Expression,
+      SourceLocation
+    ) => Expression,
     arithmetic: Arithmetic,
     sourceLocation: SourceLocation,
     stack: List[Expression]
@@ -79,20 +84,21 @@ object StackInterpreter {
   ): GuestError = {
     val missingCount =
       (stackUnderflow.parameterNames.length
-      - stackUnderflow.stack.length)
+        - stackUnderflow.stack.length)
     val missingAnnotations =
       stackUnderflow.parameterNames
         .take(missingCount)
-        .map(name => GuestError.ErrorAnnotation(
-          None,
-          name))
+        .map(name => GuestError.ErrorAnnotation(None, name))
     val infoAnnotations =
       stackUnderflow.parameterNames
         .drop(missingCount)
         .zip(stackUnderflow.stack.reverse)
-        .map({ case (name, expression) => GuestError.InfoAnnotation(
-          Some(expression.fullSourceLocation),
-          name) })
+        .map({
+          case (name, expression) =>
+            GuestError.InfoAnnotation(
+              Some(expression.fullSourceLocation),
+              name)
+        })
     GuestError(
       stackUnderflow.sourceLocation,
       "Not enough values to call this method",
