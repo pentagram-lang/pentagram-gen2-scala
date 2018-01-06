@@ -58,23 +58,23 @@ final class LineParserSpec extends FreeSpec {
     nameOf(operator) - {
       val check = CheckParse(operator)
       "parses plus" in {
-        check.positive("+", Operator(+, 0 -- 1))
+        check.positive("+", Operator(A_+, 0 -- 1))
       }
       "parses minus" in {
-        check.positive("-", Operator(-, 0 -- 1))
+        check.positive("-", Operator(A_-, 0 -- 1))
       }
       "parses multiply" in {
-        check.positive("*", Operator(*, 0 -- 1))
+        check.positive("*", Operator(A_*, 0 -- 1))
       }
       "parses divide" in {
-        check.positive("/", Operator(/, 0 -- 1))
+        check.positive("/", Operator(A_/, 0 -- 1))
       }
     }
 
     nameOf(unknownTerm) - {
       val check = CheckParse(unknownTerm)
       "parses plus" in {
-        check.positive("-", Valid(Operator(-, 0 -- 1)))
+        check.positive("-", Valid(Operator(A_-, 0 -- 1)))
       }
       "parses single digits" in {
         check.positive("1", Valid(Literal(1, 0 -- 1)))
@@ -95,7 +95,7 @@ final class LineParserSpec extends FreeSpec {
           Seq(
             Valid(Literal(10, 0 -- 2)),
             Valid(Literal(20, 3 -- 5)),
-            Valid(Operator(*, 6 -- 7))))
+            Valid(Operator(A_*, 6 -- 7))))
       }
       "parses mixed expression" in {
         check.positive(
@@ -103,11 +103,11 @@ final class LineParserSpec extends FreeSpec {
           Seq(
             Valid(Literal(10, 0 -- 2)),
             Valid(Literal(2, 3 -- 4)),
-            Valid(Operator(+, 5 -- 6)),
+            Valid(Operator(A_+, 5 -- 6)),
             Valid(Literal(3, 8 -- 9)),
             Valid(Literal(4, 10 -- 11)),
-            Valid(Operator(-, 12 -- 13)),
-            Valid(Operator(/, 15 -- 16))))
+            Valid(Operator(A_-, 12 -- 13)),
+            Valid(Operator(A_/, 15 -- 16))))
       }
       "parses nothing" in {
         check.positive(

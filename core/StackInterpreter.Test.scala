@@ -49,25 +49,25 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "uses values for operators" in {
         check.positive(
-          Operator(+, 4 -- 5),
+          Operator(A_+, 4 -- 5),
           List(
             Value(2, 2 -- 3),
             Value(1, 0 -- 1)),
           List(
             Apply(
-              +,
+              A_+,
               Value(1, 0 -- 1),
               Value(2, 2 -- 3),
               4 -- 5)))
         check.positive(
-          Operator(-, 6 -- 7),
+          Operator(A_-, 6 -- 7),
           List(
             Value(3, 4 -- 5),
             Value(2, 2 -- 3),
             Value(1, 0 -- 1)),
           List(
             Apply(
-              -,
+              A_-,
               Value(2, 2 -- 3),
               Value(3, 4 -- 5),
               6 -- 7),
@@ -76,20 +76,20 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "uses operators for operators" in {
         check.positive(
-          Operator(*, 8 -- 9),
+          Operator(A_*, 8 -- 9),
           List(
             Apply(
-              /,
+              A_/,
               Value(2, 2 -- 3),
               Value(3, 4 -- 5),
               6 -- 7),
             Value(1, 0 -- 1)),
           List(
             Apply(
-              *,
+              A_*,
               Value(1, 0 -- 1),
               Apply(
-                /,
+                A_/,
                 Value(2, 2 -- 3),
                 Value(3, 4 -- 5),
                 6 -- 7),
@@ -98,14 +98,14 @@ final class StackInterpreterSpec extends FreeSpec {
 
       "fails for stack underflow" in {
         check.negative(
-          Operator(+, 0 -- 1),
+          Operator(A_+, 0 -- 1),
           List(),
           StackUnderflow(
             List(),
             Seq("initial-value", "addition"),
             0 -- 1))
         check.negative(
-          Operator(-, 2 -- 3),
+          Operator(A_-, 2 -- 3),
           List(
             Value(1, 0 -- 1)),
           StackUnderflow(

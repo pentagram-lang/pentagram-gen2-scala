@@ -5,16 +5,16 @@ sealed trait Arithmetic {
 }
 
 object Arithmetic {
-  final object + extends Arithmetic {
+  final object A_+ extends Arithmetic {
     val parameterNames = ("initial-value", "addition")
   }
-  final object - extends Arithmetic {
+  final object A_- extends Arithmetic {
     val parameterNames = ("initial-value", "subtraction")
   }
-  final object * extends Arithmetic {
+  final object A_* extends Arithmetic {
     val parameterNames = ("initial-value", "multiplier")
   }
-  final object / extends Arithmetic {
+  final object A_/ extends Arithmetic {
     val parameterNames = ("initial-value", "divisor")
   }
 }

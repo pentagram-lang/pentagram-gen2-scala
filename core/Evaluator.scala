@@ -43,13 +43,13 @@ object Evaluator {
     secondValue: Int
   ): Either[GuestError, Int] =
     apply.arithmetic match {
-      case Arithmetic.+ =>
+      case Arithmetic.A_+ =>
         Right(firstValue + secondValue)
-      case Arithmetic.- =>
+      case Arithmetic.A_- =>
         Right(firstValue - secondValue)
-      case Arithmetic.* =>
+      case Arithmetic.A_* =>
         Right(firstValue * secondValue)
-      case Arithmetic./ =>
+      case Arithmetic.A_/ =>
         if (secondValue == 0) {
           Left(divideByZero(
             apply,

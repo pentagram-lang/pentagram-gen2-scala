@@ -58,10 +58,10 @@ object LineParser {
       SyntaxTerm.Operator(arithmetic, _))
 
   val operator = P(
-    op('+', +)
-    | op('-', -)
-    | op('*', *)
-    | op('/', /))
+    op('+', A_+)
+    | op('-', A_-)
+    | op('*', A_*)
+    | op('/', A_/))
 
   val unknownTerm = P(
     validTerm(number)
