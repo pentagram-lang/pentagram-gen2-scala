@@ -1,6 +1,6 @@
 package tacit.core
 
-import org.scalatest.{Assertion,FreeSpec}
+import org.scalatest.{Assertion, FreeSpec}
 import com.github.dwickern.macros.NameOf._
 import fastparse.all._
 
@@ -12,21 +12,23 @@ import SourceLocationExtensions._
 final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
     final case class CheckParse(parser: P[Any]) {
-      val fullParser = P( parser ~ End )
+      val fullParser = P(parser ~ End)
 
       def positive(in: String, result: Any): Assertion =
-        fullParser.parse(in).fold(
-          (failedParser, position, extra) =>
-            fail(s"Parse failed: $failedParser $position $extra"),
-          (matched, _) =>
-            assert(matched == result))
+        fullParser
+          .parse(in)
+          .fold(
+            (failedParser, position, extra) =>
+              fail(
+                s"Parse failed: $failedParser $position $extra"),
+            (matched, _) => assert(matched == result))
 
       def negative(in: String): Assertion =
-        fullParser.parse(in).fold(
-          (failedParser, position, extra) =>
-            assert(true),
-          (matched, _) =>
-            fail(s"Parse succeeded: $matched"))
+        fullParser
+          .parse(in)
+          .fold(
+            (failedParser, position, extra) => assert(true),
+            (matched, _) => fail(s"Parse succeeded: $matched"))
     }
 
     nameOf(number) - {
@@ -38,7 +40,9 @@ final class LineParserSpec extends FreeSpec {
         check.negative("a")
       }
       "parses multiple digits" in {
-        check.positive("123456789", Literal(123456789, 0 -- 9))
+        check.positive(
+          "123456789",
+          Literal(123456789, 0 -- 9))
       }
       "parses negative numbers" in {
         check.positive("-12", Literal(-12, 0 -- 3))
@@ -107,17 +111,15 @@ final class LineParserSpec extends FreeSpec {
             Valid(Literal(3, 8 -- 9)),
             Valid(Literal(4, 10 -- 11)),
             Valid(Operator(A_-, 12 -- 13)),
-            Valid(Operator(A_/, 15 -- 16))))
+            Valid(Operator(A_/, 15 -- 16))
+          )
+        )
       }
       "parses nothing" in {
-        check.positive(
-          "",
-          Seq())
+        check.positive("", Seq())
       }
       "parses whitespace" in {
-        check.positive(
-          "   ",
-          Seq())
+        check.positive("   ", Seq())
       }
       "does not parse when whitespace missing" in {
         check.positive(

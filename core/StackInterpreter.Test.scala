@@ -1,6 +1,6 @@
 package tacit.core
 
-import org.scalatest.{Assertion,FreeSpec}
+import org.scalatest.{Assertion, FreeSpec}
 import com.github.dwickern.macros.NameOf._
 
 import StackInterpreter._
@@ -20,7 +20,7 @@ final class StackInterpreterSpec extends FreeSpec {
         ): Assertion =
           assert(
             interpretOne(term, stack)
-            == Expression.Valid(result))
+              == Expression.Valid(result))
 
         def negative(
           term: SyntaxTerm,
@@ -29,30 +29,24 @@ final class StackInterpreterSpec extends FreeSpec {
         ): Assertion =
           assert(
             interpretOne(term, stack)
-            == result)
+              == result)
       }
 
       "adds values to stack" in {
         check.positive(
           Literal(1, 0 -- 1),
           List(),
-          List(
-            Value(1, 0 -- 1)))
+          List(Value(1, 0 -- 1)))
         check.positive(
           Literal(2, 2 -- 3),
-          List(
-            Value(1, 0 -- 1)),
-          List(
-            Value(2, 2 -- 3),
-            Value(1, 0 -- 1)))
+          List(Value(1, 0 -- 1)),
+          List(Value(2, 2 -- 3), Value(1, 0 -- 1)))
       }
 
       "uses values for operators" in {
         check.positive(
           Operator(A_+, 4 -- 5),
-          List(
-            Value(2, 2 -- 3),
-            Value(1, 0 -- 1)),
+          List(Value(2, 2 -- 3), Value(1, 0 -- 1)),
           List(
             Apply(
               A_+,
@@ -93,7 +87,8 @@ final class StackInterpreterSpec extends FreeSpec {
                 Value(2, 2 -- 3),
                 Value(3, 4 -- 5),
                 6 -- 7),
-              8 -- 9)))
+              8 -- 9))
+        )
       }
 
       "fails for stack underflow" in {
@@ -106,11 +101,9 @@ final class StackInterpreterSpec extends FreeSpec {
             0 -- 1))
         check.negative(
           Operator(A_-, 2 -- 3),
-          List(
-            Value(1, 0 -- 1)),
+          List(Value(1, 0 -- 1)),
           StackUnderflow(
-            List(
-              Value(1, 0 -- 1)),
+            List(Value(1, 0 -- 1)),
             Seq("initial-value", "subtraction"),
             2 -- 3))
       }
