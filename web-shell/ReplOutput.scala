@@ -27,7 +27,10 @@ final class ReplOutput(
         blocks.map(writeBlock)
     }
 
-  def addResult(text: String, style: Option[StyleA] = None): Unit = {
+  def addResult(
+    text: String,
+    style: Option[StyleA] = None
+  ): Unit = {
     root.appendChild(div(text, style).render)
   }
 }

@@ -15,8 +15,7 @@ object SimpleTerminal {
   def readLine(): InputLine = {
     try {
       InputLine.Value(reader.readLine(prompt))
-    }
-    catch {
+    } catch {
       case _: UserInterruptException =>
         InputLine.UserInterrupt()
       case _: EndOfFileException =>
@@ -25,7 +24,11 @@ object SimpleTerminal {
   }
 
   def writeBlock(block: OutputBlock, line: String): Unit = {
-    val instruction = OutputCompiler.compileBlock(block, plainPrompt, line, terminal.getWidth())
+    val instruction = OutputCompiler.compileBlock(
+      block,
+      plainPrompt,
+      line,
+      terminal.getWidth())
     SimpleTerminal.writeInstruction(instruction)
   }
 
@@ -33,7 +36,8 @@ object SimpleTerminal {
   val terminal = reader.getTerminal
 
   val plainPrompt = "(repl)"
-  val prompt = getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
+  val prompt =
+    getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
 
   def writeInstruction(instruction: OutputInstruction): Unit =
     instruction match {
@@ -51,32 +55,46 @@ object SimpleTerminal {
         }
     }
 
-  def writeStringCapabilityN(capability: Capability): Seq[Object] => Unit = {
+  def writeStringCapabilityN(
+    capability: Capability
+  ): Seq[Object] => Unit = {
     val value = terminal.getStringCapability(capability)
-    params => Curses.tputs(terminal.writer, value, params: _*)
+    params =>
+      Curses.tputs(terminal.writer, value, params: _*)
   }
 
-  def writeStringCapability0(capability: Capability): () => Unit = {
+  def writeStringCapability0(
+    capability: Capability
+  ): () => Unit = {
     val result = writeStringCapabilityN(capability)
-    () => result(Seq())
+    () =>
+      result(Seq())
   }
 
-  val writeCarriageReturn = writeStringCapability0(Capability.carriage_return)
+  val writeCarriageReturn =
+    writeStringCapability0(Capability.carriage_return)
 
-  val writeCursorUp = writeStringCapability0(Capability.cursor_up)
+  val writeCursorUp =
+    writeStringCapability0(Capability.cursor_up)
 
-  val writeCursorDown = writeStringCapability0(Capability.cursor_down)
+  val writeCursorDown =
+    writeStringCapability0(Capability.cursor_down)
 
   def writeNewLine(): Unit = {
     writeCarriageReturn()
     writeCursorDown()
   }
 
-  def writeText(style: AttributedStyle, text: String): Unit = {
-    terminal.writer.write(
-      getAnsiText(style, text))
+  def writeText(
+    style: AttributedStyle,
+    text: String
+  ): Unit = {
+    terminal.writer.write(getAnsiText(style, text))
   }
 
-  def getAnsiText(style: AttributedStyle, text: String): String =
+  def getAnsiText(
+    style: AttributedStyle,
+    text: String
+  ): String =
     new AttributedString(text, style).toAnsi(terminal)
 }
