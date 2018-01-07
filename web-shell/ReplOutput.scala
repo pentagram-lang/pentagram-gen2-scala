@@ -30,9 +30,8 @@ final class ReplOutput(
   def addResult(
     text: String,
     style: Option[StyleA] = None
-  ): Unit = {
+  ): Unit =
     root.appendChild(div(text, style).render)
-  }
 }
 
 object ReplOutput {

@@ -12,7 +12,7 @@ import tacit.core.InputLine
 import tacit.core.OutputBlock
 
 object SimpleTerminal {
-  def readLine(): InputLine = {
+  def readLine(): InputLine =
     try {
       InputLine.Value(reader.readLine(prompt))
     } catch {
@@ -21,7 +21,6 @@ object SimpleTerminal {
       case _: EndOfFileException =>
         InputLine.EndOfStream()
     }
-  }
 
   def writeBlock(block: OutputBlock, line: String): Unit = {
     val instruction = OutputCompiler.compileBlock(
@@ -88,9 +87,8 @@ object SimpleTerminal {
   def writeText(
     style: AttributedStyle,
     text: String
-  ): Unit = {
+  ): Unit =
     terminal.writer.write(getAnsiText(style, text))
-  }
 
   def getAnsiText(
     style: AttributedStyle,

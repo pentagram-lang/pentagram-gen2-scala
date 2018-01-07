@@ -1,6 +1,7 @@
 package tacit.core
 
-import org.scalatest.{Assertion, FreeSpec}
+import org.scalatest.Assertion
+import org.scalatest.FreeSpec
 import com.github.dwickern.macros.NameOf._
 
 import StackInterpreter._
