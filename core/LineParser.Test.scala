@@ -1,14 +1,14 @@
 package tacit.core
 
-import org.scalatest.Assertion
-import org.scalatest.FreeSpec
 import com.github.dwickern.macros.NameOf._
 import fastparse.all._
+import org.scalatest.Assertion
+import org.scalatest.FreeSpec
 
-import LineParser._
-import SyntaxTerm._
 import Arithmetic._
+import LineParser._
 import SourceLocationExtensions._
+import SyntaxTerm._
 
 final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {

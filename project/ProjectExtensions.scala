@@ -1,10 +1,10 @@
 package tacit.sbt
 
-import sbt._
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import org.scalajs.sbtplugin._
 import org.scalajs.sbtplugin.cross._
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import tacit.sbt.BenchConfig._
+import sbt._
+
 import BenchConfig._
 import FmtTask._
 import CustomSettings._

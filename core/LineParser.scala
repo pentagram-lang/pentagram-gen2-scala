@@ -1,6 +1,7 @@
 package tacit.core
 
 import fastparse.all._
+
 import Arithmetic._
 
 object LineParser {

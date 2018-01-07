@@ -4,15 +4,15 @@ import tacit.core.GuestError
 import tacit.core.OutputBlock
 import tacit.core.SourceLocation
 
+import OutputFormat._
+import OutputInstruction._
+import OutputInstructionExtensions._
+
 final case class OutputCompiler(
   prompt: String,
   line: String,
   terminalWidth: Int
 ) {
-  import OutputInstruction._
-  import OutputInstructionExtensions._
-  import OutputFormat._
-
   val gutterLength = prompt.length
   val indent = line.indexWhere(_ != ' ') max 0
 

@@ -1,7 +1,7 @@
 package tacit.sbt
 
-import sbt._
 import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
+import sbt._
 
 import BenchConfig._
 

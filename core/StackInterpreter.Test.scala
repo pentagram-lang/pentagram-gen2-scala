@@ -1,14 +1,14 @@
 package tacit.core
 
+import com.github.dwickern.macros.NameOf._
 import org.scalatest.Assertion
 import org.scalatest.FreeSpec
-import com.github.dwickern.macros.NameOf._
 
-import StackInterpreter._
-import SyntaxTerm._
 import Arithmetic._
 import Expression._
 import SourceLocationExtensions._
+import StackInterpreter._
+import SyntaxTerm._
 
 final class StackInterpreterSpec extends FreeSpec {
   nameOf(StackInterpreter) - {

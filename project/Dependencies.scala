@@ -1,10 +1,11 @@
 package tacit.sbt
 
-import sbt._
-import sbt.Keys._
-import sbt.Def._
-import org.scalajs.sbtplugin.cross._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import org.scalajs.sbtplugin.cross._
+import sbt.Def._
+import sbt.Keys._
+import sbt._
+
 import BenchConfig._
 
 object Dependencies {

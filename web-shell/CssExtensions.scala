@@ -1,7 +1,7 @@
 package tacit.webShell
 
-import scalacss.ScalatagsCss._
 import org.scalajs.dom.html.Style
+import scalacss.ScalatagsCss._
 import scalatags.JsDom.TypedTag
 
 import CssSettings.Defaults._

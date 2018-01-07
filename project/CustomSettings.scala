@@ -1,7 +1,8 @@
 package tacit.sbt
 
-import sbt._
 import sbt.Keys._
+import sbt._
+
 import BenchConfig._
 import Dependencies._
 import FmtTask._

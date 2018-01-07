@@ -1,8 +1,8 @@
 package tacit.sbt
 
-import sbt._
-import sbt.Keys._
 import org.scalafmt.sbt.ScalafmtPlugin._
+import sbt.Keys._
+import sbt._
 
 object BenchConfig {
   lazy val Bench = config("bench") extend (Test)

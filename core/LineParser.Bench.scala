@@ -1,7 +1,7 @@
 package tacit.core
 
-import org.scalameter._
 import com.github.dwickern.macros.NameOf._
+import org.scalameter._
 
 import LineParser._
 
