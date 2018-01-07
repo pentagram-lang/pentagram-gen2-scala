@@ -17,6 +17,10 @@ Here are some important `sbt` commands:
 - `bench` (to run benchmarks)
 - `fmt` (to reformat all source files)
 
+### Code style
+
+For Scala code style, see the [Tacit wiki page](../../wiki/Scala-code-style).
+
 ## License
 
 This project is released under the MIT License (see [LICENSE.md](LICENSE.md) for details).
