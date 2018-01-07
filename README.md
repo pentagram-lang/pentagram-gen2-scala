@@ -13,8 +13,9 @@ Here are some important `sbt` commands:
 
 - `run` (to run)
 - `test` (to run all tests)
-- `~test-quick` (to run only affected tests, and run them again when any source file changes)
+- `~testQuick` (to run only affected tests, and run them again when any source file changes)
 - `bench` (to run benchmarks)
+- `fmt` (to reformat all source files)
 
 ## License
 

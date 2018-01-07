@@ -5,8 +5,10 @@ import org.scalajs.sbtplugin._
 import org.scalajs.sbtplugin.cross._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import tacit.sbt.BenchConfig._
-import tacit.sbt.CustomSettings._
-import tacit.sbt.Dependencies._
+import BenchConfig._
+import FmtTask._
+import CustomSettings._
+import Dependencies._
 
 object ProjectExtensions {
   implicit final class ProjectHelper(
@@ -17,6 +19,9 @@ object ProjectExtensions {
 
     def withBenchConfig() =
       project.configs(Bench)
+
+    def withFmtTask() =
+      project.settings(fmtSettings)
 
     def libraryDependencies(
       dependencies: Def.Initialize[ModuleID]*

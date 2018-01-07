@@ -50,5 +50,7 @@ lazy val root =
       webShell
     )
     .runOther(consoleShell)
+    .withBenchConfig()
+    .withFmtTask()
 
 cancelable in Global := true

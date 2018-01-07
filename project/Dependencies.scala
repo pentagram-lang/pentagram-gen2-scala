@@ -5,7 +5,7 @@ import sbt.Keys._
 import sbt.Def._
 import org.scalajs.sbtplugin.cross._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import tacit.sbt.BenchConfig._
+import BenchConfig._
 
 object Dependencies {
   lazy val customScalaVersion = scalaVersion := "2.12.4"

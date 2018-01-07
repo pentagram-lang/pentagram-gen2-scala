@@ -2,8 +2,9 @@ package tacit.sbt
 
 import sbt._
 import sbt.Keys._
-import tacit.sbt.BenchConfig._
-import tacit.sbt.Dependencies._
+import BenchConfig._
+import Dependencies._
+import FmtTask._
 
 object CustomSettings {
   lazy val customScalacOptions =
@@ -42,6 +43,7 @@ object CustomSettings {
   lazy val allCustomSettings = (
     customScalaVersion
       ++ benchSettings
+      ++ fmtSettings
       ++ customSourceRules
       ++ customTestOptions
       ++ customScalacOptions
