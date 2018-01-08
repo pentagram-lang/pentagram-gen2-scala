@@ -13,9 +13,9 @@ final class ReplOutput(
 ) {
   def writeBlock(block: OutputBlock): Unit =
     block match {
-      case OutputBlock.ErrorHighlightPrevious(error) =>
+      case OutputBlock.ErrorHighlightPrevious(_) =>
         ()
-      case OutputBlock.ErrorHighlightNew(error) =>
+      case OutputBlock.ErrorHighlightNew(_) =>
         ()
       case OutputBlock.ErrorMessage(error) =>
         addResult(error.message, Some(ReplOutput.Style.error))
@@ -24,20 +24,23 @@ final class ReplOutput(
       case OutputBlock.ValueText(text) =>
         addResult(text)
       case OutputBlock.Multi(blocks) =>
-        blocks.map(writeBlock)
+        blocks.foreach(writeBlock)
     }
 
   def addResult(
     text: String,
     style: Option[StyleA] = None
-  ): Unit =
+  ): Unit = {
     root.appendChild(div(text, style).render)
+    ()
+  }
 }
 
 object ReplOutput {
   def apply(xs: Modifier*): ReplOutput = {
     val root = div(
-      Style.root
+      Style.root,
+      xs
     )
     new ReplOutput(root.render)
   }

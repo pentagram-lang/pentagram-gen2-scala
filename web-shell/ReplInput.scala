@@ -24,7 +24,8 @@ object ReplInput {
     val textInput = TextInput()
     val root = form(
       Style.root,
-      textInput.root
+      textInput.root,
+      xs
     )
     new ReplInput(root.render, textInput)
   }

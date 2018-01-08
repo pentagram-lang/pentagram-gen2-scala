@@ -14,11 +14,22 @@ object CustomSettings {
       "-encoding",
       "UTF-8",
       "-feature",
+      "-target:jvm-1.8",
       "-unchecked",
+      "-Xfatal-warnings",
+      "-Xfuture",
       "-Xlint",
+      "-Xsource:2.12",
+      "-Ywarn-adapted-args",
       "-Ywarn-dead-code",
+      "-Ywarn-extra-implicit",
+      "-Ywarn-inaccessible",
+      "-Ywarn-nullary-override",
+      "-Ywarn-nullary-unit",
       "-Ywarn-numeric-widen",
-      "-Ywarn-unused-import"
+      "-Ywarn-unused:_",
+      "-Ywarn-unused-import",
+      "-Ywarn-value-discard"
     )
 
   lazy val testFilePattern = "*.Test.scala"
