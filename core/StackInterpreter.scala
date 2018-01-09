@@ -1,5 +1,7 @@
 package tacit.core
 
+import scala.annotation.tailrec
+
 object StackInterpreter {
   def interpret(
     terms: Seq[SyntaxTerm]
@@ -11,6 +13,7 @@ object StackInterpreter {
         Left(Seq(convertToError(stackUnderflow)))
     }
 
+  @tailrec
   def interpretMany(
     terms: List[SyntaxTerm],
     stack: List[Expression]

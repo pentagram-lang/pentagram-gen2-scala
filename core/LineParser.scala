@@ -109,11 +109,15 @@ object LineParser {
   ): SourceLocation => GuestError =
     invalidTerm match {
       case SyntaxTerm.InvalidLiteralSuffix(_) =>
-        GuestError(_, "This number suffix is not valid")
+        GuestError.withoutAnnotations(
+          _,
+          "This number suffix is not valid")
       case SyntaxTerm.InvalidOther(_) =>
-        GuestError(_, "This name is not in scope")
+        GuestError.withoutAnnotations(
+          _,
+          "This name is not in scope")
       case SyntaxTerm.ParseError(message, _) =>
-        GuestError(_, message)
+        GuestError.withoutAnnotations(_, message)
     }
 
   def parse(in: String) =

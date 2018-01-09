@@ -20,6 +20,7 @@ object Evaluator {
     }
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def evalOne(
     expression: Expression
   ): Either[GuestError, Int] =

@@ -38,6 +38,7 @@ object SimpleTerminal {
   val prompt =
     getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
 
+  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def writeInstruction(instruction: OutputInstruction): Unit =
     instruction match {
       case OutputInstruction.Text(_, "") =>

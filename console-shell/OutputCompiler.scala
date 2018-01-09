@@ -16,6 +16,7 @@ final case class OutputCompiler(
   val gutterLength = prompt.length
   val indent = line.indexWhere(_ != ' ') max 0
 
+  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def compileBlock(block: OutputBlock): OutputInstruction =
     block match {
       case OutputBlock.ErrorHighlightPrevious(error) =>
@@ -135,6 +136,10 @@ final case class OutputCompiler(
       fill = Border("━"),
       right = Border("┛"))
 
+  @SuppressWarnings(
+    Array(
+      "org.wartremover.warts.DefaultArguments",
+      "org.wartremover.warts.Overloading"))
   def line(
     gutter: Text = padding(Normal(" "), gutterLength),
     left: OutputInstruction = Border("┃ "),

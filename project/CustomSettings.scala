@@ -2,6 +2,7 @@ package tacit.sbt
 
 import sbt.Keys._
 import sbt._
+import wartremover.WartRemover.autoImport._
 
 import BenchConfig._
 import Dependencies._
@@ -52,6 +53,16 @@ object CustomSettings {
     parallelExecution in Bench := false
   )
 
+  lazy val customWartremoverErrors = Seq(
+    wartremoverErrors := Warts.allBut(
+      Wart.Equals,
+      Wart.Nothing,
+      Wart.Product,
+      Wart.PublicInference,
+      Wart.Serializable,
+      Wart.TraversableOps)
+  )
+
   lazy val allCustomSettings = (
     customScalaVersion
       ++ benchSettings
@@ -60,5 +71,6 @@ object CustomSettings {
       ++ customTestOptions
       ++ customScalacOptions
       ++ customResolvers
+      ++ customWartremoverErrors
   )
 }

@@ -11,6 +11,7 @@ import CssSettings.Defaults._
 final class ReplOutput(
   val root: html.Div
 ) {
+  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def writeBlock(block: OutputBlock): Unit =
     block match {
       case OutputBlock.ErrorHighlightPrevious(_) =>
@@ -18,20 +19,29 @@ final class ReplOutput(
       case OutputBlock.ErrorHighlightNew(_) =>
         ()
       case OutputBlock.ErrorMessage(error) =>
-        addResult(error.message, Some(ReplOutput.Style.error))
+        addResultWithStyle(
+          error.message,
+          Some(ReplOutput.Style.error))
       case OutputBlock.NormalText(text) =>
         addResult(text)
       case OutputBlock.ValueText(text) =>
         addResult(text)
       case OutputBlock.Multi(blocks) =>
-        blocks.foreach(writeBlock)
+        blocks foreach {
+          writeBlock(_)
+        }
     }
 
   def addResult(
+    text: String
+  ): Unit =
+    addResultWithStyle(text, None)
+
+  def addResultWithStyle(
     text: String,
-    style: Option[StyleA] = None
+    style: Option[StyleA]
   ): Unit = {
-    root.appendChild(div(text, style).render)
+    val _ = root.appendChild(div(text, style).render)
     ()
   }
 }
