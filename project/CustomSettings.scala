@@ -59,7 +59,6 @@ object CustomSettings {
       Wart.Equals,
       Wart.Nothing,
       Wart.PublicInference,
-      Wart.Serializable,
       Wart.TraversableOps)
   )
 
