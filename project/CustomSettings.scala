@@ -55,11 +55,8 @@ object CustomSettings {
   )
 
   lazy val customWartremoverErrors = Seq(
-    wartremoverErrors := Warts.allBut(
-      Wart.Equals,
-      Wart.Nothing,
-      Wart.PublicInference,
-      Wart.TraversableOps)
+    wartremoverErrors := Warts
+      .allBut(Wart.Equals, Wart.Nothing, Wart.PublicInference)
   )
 
   lazy val allCustomSettings = (

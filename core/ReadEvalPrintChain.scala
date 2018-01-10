@@ -5,8 +5,6 @@ object ReadEvalPrintChain {
     readEval(line) match {
       case Left(errors) =>
         printErrors(errors)
-      case Right(Nil) =>
-        OutputBlock.Nothing()
       case Right(results) =>
         printResults(results)
     }
@@ -26,9 +24,14 @@ object ReadEvalPrintChain {
   def printErrors(
     errors: Seq[GuestError]
   ): OutputBlock =
-    printErrorsMulti(
-      printErrorHighlightPrevious(errors.head),
-      errors.tail.map(printErrorHighlightNew))
+    errors match {
+      case (head +: tail) =>
+        printErrorsMulti(
+          printErrorHighlightPrevious(head),
+          tail.map(printErrorHighlightNew))
+      case Nil =>
+        OutputBlock.Nothing()
+    }
 
   def printErrorsMulti(
     head: OutputBlock,
