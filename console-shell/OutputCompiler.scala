@@ -10,11 +10,11 @@ import OutputInstructionExtensions._
 
 final case class OutputCompiler(
   prompt: String,
-  line: String,
+  lineText: String,
   terminalWidth: Int
 ) {
   val gutterLength = prompt.length
-  val indent = line.indexWhere(_ != ' ') max 0
+  val indent = lineText.indexWhere(_ != ' ') max 0
 
   @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def compileBlock(block: OutputBlock): OutputInstruction =
@@ -46,26 +46,33 @@ final case class OutputCompiler(
     line(
       gutter = Error(prompt),
       left = Border("╭ "),
+      alignIndex = defaultLineAlignIndex,
       content =
         Multi(highlightError(sourceLocation), Normal(" ")),
       fill = Border("─"),
-      right = Border("╮"))
+      right = Border("╮")
+    )
 
   def highlightNew(sourceLocation: SourceLocation) =
-    line(content = highlightError(sourceLocation))
+    simpleLine(
+      alignIndex = defaultLineAlignIndex,
+      content = highlightError(sourceLocation)
+    )
 
   def highlightUnder(sourceLocation: SourceLocation) =
-    line(
+    simpleLine(
       alignIndex = sourceLocation.begin,
-      content = ErrorAccent("▀" * sourceLocation.length))
+      content = ErrorAccent("▀" * sourceLocation.length)
+    )
 
   def errorMessage(
     sourceLocation: SourceLocation,
     message: String
   ) =
-    line(
+    simpleLine(
       alignIndex = sourceLocation.begin - 2,
-      content = Error("✗ " + message))
+      content = Error("✗ " + message)
+    )
 
   def errorAnnotationsOption(
     annotations: Seq[GuestError.Annotation]
@@ -85,11 +92,15 @@ final case class OutputCompiler(
       left: OutputInstruction,
       right: OutputInstruction
     ) =
-      line(content =
-        Multi(padRight(left, Normal(" "), leftWidth), right))
+      simpleLine(
+        alignIndex = defaultLineAlignIndex,
+        content =
+          Multi(padRight(left, Normal(" "), leftWidth), right)
+      )
     Multi(
-      line(),
-      Multi(table.map(Function.tupled(buildRow(_, _)))))
+      blankLine(),
+      Multi(table.map(Function.tupled(buildRow(_, _))))
+    )
   }
 
   def errorAnnotation(annotation: GuestError.Annotation) = {
@@ -120,33 +131,37 @@ final case class OutputCompiler(
   def header() =
     Multi(
       line(
+        gutter = defaultLineGutter,
         left = Border("┏━┯━ @"),
+        alignIndex = defaultLineAlignIndex,
         content = Error(" (repl) "),
         fill = Border("━"),
         right = Border("┯━┓")),
       line(
+        gutter = defaultLineGutter,
         left = Border("┃ ╰"),
+        alignIndex = defaultLineAlignIndex,
+        content = defaultLineContent,
         fill = Border("─"),
         right = Border("╯ ┃"))
     )
 
   def footer() =
     line(
+      gutter = defaultLineGutter,
       left = Border("┗"),
+      alignIndex = defaultLineAlignIndex,
+      content = defaultLineContent,
       fill = Border("━"),
       right = Border("┛"))
 
-  @SuppressWarnings(
-    Array(
-      "org.wartremover.warts.DefaultArguments",
-      "org.wartremover.warts.Overloading"))
   def line(
-    gutter: Text = padding(Normal(" "), gutterLength),
-    left: OutputInstruction = Border("┃ "),
-    alignIndex: Int = 0,
-    content: OutputInstruction = Normal(""),
-    fill: Text = Normal(" "),
-    right: OutputInstruction = Border(" ┃")
+    gutter: Text,
+    left: OutputInstruction,
+    alignIndex: Int,
+    content: OutputInstruction,
+    fill: Text,
+    right: OutputInstruction
   ) = {
     val leftBasic = Multi(
       gutter,
@@ -157,6 +172,32 @@ final case class OutputCompiler(
     Multi(leftPadded, right, NewLine())
   }
 
+  def simpleLine(
+    alignIndex: Int,
+    content: OutputInstruction
+  ) =
+    line(
+      gutter = defaultLineGutter,
+      left = defaultLineLeft,
+      alignIndex = alignIndex,
+      content = content,
+      fill = defaultLineFill,
+      right = defaultLineRight
+    )
+
+  def blankLine() =
+    simpleLine(
+      alignIndex = defaultLineAlignIndex,
+      content = defaultLineContent
+    )
+
+  val defaultLineGutter = padding(Normal(" "), gutterLength)
+  val defaultLineLeft = Border("┃ ")
+  val defaultLineAlignIndex = 0
+  val defaultLineContent = Normal("")
+  val defaultLineFill = Normal(" ")
+  val defaultLineRight = Border(" ┃")
+
   def highlightError(sourceLocation: SourceLocation) =
     highlightLocation(sourceLocation, Error)
 
@@ -165,7 +206,7 @@ final case class OutputCompiler(
     outputFormat: OutputFormat
   ) =
     highlightText(
-      line,
+      lineText,
       sourceLocation.begin,
       sourceLocation.end,
       outputFormat)
@@ -203,10 +244,11 @@ object OutputCompiler {
   def compileBlock(
     block: OutputBlock,
     prompt: String,
-    line: String,
+    lineText: String,
     terminalWidth: Int
   ): OutputInstruction = {
-    val compiler = OutputCompiler(prompt, line, terminalWidth)
+    val compiler =
+      OutputCompiler(prompt, lineText, terminalWidth)
     compiler.compileBlock(block)
   }
 }
