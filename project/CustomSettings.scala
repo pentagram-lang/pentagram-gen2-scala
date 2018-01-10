@@ -5,6 +5,7 @@ import sbt._
 import wartremover.WartRemover.autoImport._
 
 import BenchConfig._
+import CompileAllTask._
 import Dependencies._
 import FmtTask._
 
@@ -66,10 +67,17 @@ object CustomSettings {
     customScalaVersion
       ++ benchSettings
       ++ fmtSettings
+      ++ compileAllSettings
       ++ customSourceRules
       ++ customTestOptions
       ++ customScalacOptions
       ++ customResolvers
       ++ customWartremoverErrors
+  )
+
+  lazy val allRootCustomSettings = (
+    benchSettings
+      ++ fmtSettings
+      ++ compileAllSettings
   )
 }

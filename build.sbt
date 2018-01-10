@@ -43,6 +43,7 @@ lazy val webShell =
 
 lazy val root =
   (project in file("."))
+    .withRootCustomSettings()
     .aggregate(
       coreJVM,
       coreJS,
@@ -50,7 +51,5 @@ lazy val root =
       webShell
     )
     .runOther(consoleShell)
-    .withBenchConfig()
-    .withFmtTask()
 
 cancelable in Global := true

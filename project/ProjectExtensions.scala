@@ -17,11 +17,11 @@ object ProjectExtensions {
     def withCustomSettings() =
       project.settings(allCustomSettings)
 
+    def withRootCustomSettings() =
+      project.settings(allRootCustomSettings)
+
     def withBenchConfig() =
       project.configs(Bench)
-
-    def withFmtTask() =
-      project.settings(fmtSettings)
 
     def libraryDependencies(
       dependencies: Def.Initialize[ModuleID]*
