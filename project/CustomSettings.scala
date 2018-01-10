@@ -57,7 +57,6 @@ object CustomSettings {
     wartremoverErrors := Warts.allBut(
       Wart.Equals,
       Wart.Nothing,
-      Wart.Product,
       Wart.PublicInference,
       Wart.Serializable,
       Wart.TraversableOps)

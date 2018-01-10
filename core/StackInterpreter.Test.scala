@@ -1,7 +1,6 @@
 package tacit.core
 
 import com.github.dwickern.macros.NameOf._
-import org.scalatest.Assertion
 import org.scalatest.FreeSpec
 
 import Arithmetic._
@@ -18,19 +17,21 @@ final class StackInterpreterSpec extends FreeSpec {
           term: SyntaxTerm,
           stack: List[Expression],
           result: List[Expression]
-        ): Assertion =
-          assert(
+        ): Unit = {
+          val _ = assert(
             interpretOne(term, stack)
               == Expression.Valid(result))
+        }
 
         def negative(
           term: SyntaxTerm,
           stack: List[Expression],
           result: Expression.Unknown
-        ): Assertion =
-          assert(
+        ): Unit = {
+          val _ = assert(
             interpretOne(term, stack)
               == result)
+        }
       }
 
       "adds values to stack" in {
@@ -60,7 +61,7 @@ final class StackInterpreterSpec extends FreeSpec {
             Value(3, 4 -- 5),
             Value(2, 2 -- 3),
             Value(1, 0 -- 1)),
-          List(
+          List[Expression](
             Apply(
               A_-,
               Value(2, 2 -- 3),
@@ -72,7 +73,7 @@ final class StackInterpreterSpec extends FreeSpec {
       "uses operators for operators" in {
         check.positive(
           Operator(A_*, 8 -- 9),
-          List(
+          List[Expression](
             Apply(
               A_/,
               Value(2, 2 -- 3),

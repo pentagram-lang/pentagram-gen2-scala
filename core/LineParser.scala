@@ -44,14 +44,14 @@ object LineParser {
       CharIn("-").? ~ CharIn('0' to '9').rep(1),
       text => SyntaxTerm.Literal(text.toInt, _)))
 
-  val invalidNumber = P(
+  val invalidNumber: Parser[SyntaxTerm.Unknown] = P(
     CharIn('0' to '9')
       .rep(1)
       ~ noText(
         notTermEnd.rep(1),
         SyntaxTerm.InvalidLiteralSuffix))
 
-  val invalidOther = P(
+  val invalidOther: Parser[SyntaxTerm.Unknown] = P(
     noText(notTermEnd.rep(1), SyntaxTerm.InvalidOther))
 
   def op(symbol: Char, arithmetic: Arithmetic) =
@@ -65,7 +65,7 @@ object LineParser {
       | op('*', A_*)
       | op('/', A_/))
 
-  val unknownTerm = P(
+  val unknownTerm: Parser[SyntaxTerm.Unknown] = P(
     validTerm(number)
       | validTerm(operator)
       | invalidNumber

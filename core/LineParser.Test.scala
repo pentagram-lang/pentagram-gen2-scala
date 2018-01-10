@@ -2,7 +2,6 @@ package tacit.core
 
 import com.github.dwickern.macros.NameOf._
 import fastparse.all._
-import org.scalatest.Assertion
 import org.scalatest.FreeSpec
 
 import Arithmetic._
@@ -12,24 +11,29 @@ import SyntaxTerm._
 
 final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
-    final case class CheckParse(parser: P[Any]) {
-      val fullParser = P(parser ~ End)
+    final case class CheckParse[T](parser: Parser[T]) {
+      val fullParser: Parser[T] = P(parser ~ End)
 
-      def positive(in: String, result: Any): Assertion =
-        fullParser
-          .parse(in)
-          .fold(
-            (failedParser, position, extra) =>
-              fail(
-                s"Parse failed: $failedParser $position $extra"),
-            (matched, _) => assert(matched == result))
+      def positive(in: String, result: T): Unit = {
+        val _ =
+          fullParser
+            .parse(in)
+            .fold(
+              (failedParser, position, extra) =>
+                fail(
+                  s"Parse failed: $failedParser $position $extra"),
+              (matched, _) => assert(matched == result))
+      }
 
-      def negative(in: String): Assertion =
-        fullParser
-          .parse(in)
-          .fold(
-            (failedParser, position, extra) => assert(true),
-            (matched, _) => fail(s"Parse succeeded: $matched"))
+      def negative(in: String): Unit = {
+        val _ =
+          fullParser
+            .parse(in)
+            .fold(
+              (failedParser, position, extra) => assert(true),
+              (matched, _) =>
+                fail(s"Parse succeeded: $matched"))
+      }
     }
 
     nameOf(number) - {
@@ -125,7 +129,7 @@ final class LineParserSpec extends FreeSpec {
       "does not parse when whitespace missing" in {
         check.positive(
           "1 23+ ?",
-          Seq(
+          Seq[SyntaxTerm.Unknown](
             Valid(Literal(1, 0 -- 1)),
             InvalidLiteralSuffix(4 -- 5),
             InvalidOther(6 -- 7)))
