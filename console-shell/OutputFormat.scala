@@ -5,39 +5,42 @@ import org.jline.utils.AttributedStyle
 final case class OutputFormat(style: AttributedStyle)
 
 object OutputFormat {
-  val default = AttributedStyle.DEFAULT
+  val default: AttributedStyle =
+    AttributedStyle.DEFAULT
 
-  def foreground = default.foreground(_)
+  def foreground: Int => AttributedStyle =
+    default.foreground(_)
 
-  def background = default.background(_)
+  def background: Int => AttributedStyle =
+    default.background(_)
 
-  val Normal =
+  val Normal: OutputFormat =
     OutputFormat(default)
 
-  val Error =
+  val Error: OutputFormat =
     OutputFormat(foreground(203))
 
-  val ErrorAccent =
+  val ErrorAccent: OutputFormat =
     OutputFormat(foreground(167))
 
-  val ErrorBackground =
+  val ErrorBackground: OutputFormat =
     OutputFormat(Error.style.background(1))
 
-  val Info =
+  val Info: OutputFormat =
     OutputFormat(foreground(140))
 
-  val InfoBackground =
+  val InfoBackground: OutputFormat =
     OutputFormat(background(97))
 
-  val Value =
+  val Value: OutputFormat =
     OutputFormat(foreground(159))
 
-  val ValueAccent =
+  val ValueAccent: OutputFormat =
     OutputFormat(foreground(51))
 
-  val Prompt =
+  val Prompt: OutputFormat =
     OutputFormat(foreground(140))
 
-  val Border =
+  val Border: OutputFormat =
     OutputFormat(foreground(103))
 }

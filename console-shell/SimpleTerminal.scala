@@ -31,15 +31,16 @@ object SimpleTerminal {
     SimpleTerminal.writeInstruction(instruction)
   }
 
-  val reader = LineReaderBuilder.builder().build()
-  val terminal = reader.getTerminal
+  private val reader = LineReaderBuilder.builder().build()
+  private val terminal = reader.getTerminal
 
-  val plainPrompt = "(repl)"
-  val prompt =
+  private val plainPrompt = "(repl)"
+  private val prompt =
     getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
 
   @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
-  def writeInstruction(instruction: OutputInstruction): Unit =
+  private def writeInstruction(
+    instruction: OutputInstruction): Unit =
     instruction match {
       case OutputInstruction.Text(_, "") =>
         ()
@@ -55,7 +56,7 @@ object SimpleTerminal {
         }
     }
 
-  def writeStringCapabilityN(
+  private def writeStringCapabilityN(
     capability: Capability
   ): Seq[Object] => Unit = {
     val value = terminal.getStringCapability(capability)
@@ -63,7 +64,7 @@ object SimpleTerminal {
       Curses.tputs(terminal.writer, value, params: _*)
   }
 
-  def writeStringCapability0(
+  private def writeStringCapability0(
     capability: Capability
   ): () => Unit = {
     val result = writeStringCapabilityN(capability)
@@ -71,27 +72,27 @@ object SimpleTerminal {
       result(Seq())
   }
 
-  val writeCarriageReturn =
+  private val writeCarriageReturn =
     writeStringCapability0(Capability.carriage_return)
 
-  val writeCursorUp =
+  private val writeCursorUp =
     writeStringCapability0(Capability.cursor_up)
 
-  val writeCursorDown =
+  private val writeCursorDown =
     writeStringCapability0(Capability.cursor_down)
 
-  def writeNewLine(): Unit = {
+  private def writeNewLine(): Unit = {
     writeCarriageReturn()
     writeCursorDown()
   }
 
-  def writeText(
+  private def writeText(
     style: AttributedStyle,
     text: String
   ): Unit =
     terminal.writer.write(getAnsiText(style, text))
 
-  def getAnsiText(
+  private def getAnsiText(
     style: AttributedStyle,
     text: String
   ): String =

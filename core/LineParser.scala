@@ -39,39 +39,42 @@ object LineParser {
   ): P[SyntaxTerm.Valid] =
     (parser ~ &(termEnd)) map (SyntaxTerm.Valid)
 
-  val number = P(
+  val number: P[SyntaxTerm.Literal] = P(
     text(
       CharIn("-").? ~ CharIn('0' to '9').rep(1),
       text => SyntaxTerm.Literal(text.toInt, _)))
 
-  val invalidNumber: Parser[SyntaxTerm.Unknown] = P(
+  val invalidNumber: P[SyntaxTerm.Unknown] = P(
     CharIn('0' to '9')
       .rep(1)
       ~ noText(
         notTermEnd.rep(1),
         SyntaxTerm.InvalidLiteralSuffix))
 
-  val invalidOther: Parser[SyntaxTerm.Unknown] = P(
+  val invalidOther: P[SyntaxTerm.Unknown] = P(
     noText(notTermEnd.rep(1), SyntaxTerm.InvalidOther))
 
-  def op(symbol: Char, arithmetic: Arithmetic) =
+  def op(
+    symbol: Char,
+    arithmetic: Arithmetic
+  ): P[SyntaxTerm.Operator] =
     noText(
       CharIn(symbol to symbol),
       SyntaxTerm.Operator(arithmetic, _))
 
-  val operator = P(
+  val operator: P[SyntaxTerm.Operator] = P(
     op('+', A_+)
       | op('-', A_-)
       | op('*', A_*)
       | op('/', A_/))
 
-  val unknownTerm: Parser[SyntaxTerm.Unknown] = P(
+  val unknownTerm: P[SyntaxTerm.Unknown] = P(
     validTerm(number)
       | validTerm(operator)
       | invalidNumber
       | invalidOther)
 
-  val expression = P(
+  val expression: P[Seq[SyntaxTerm.Unknown]] = P(
     Start
       ~ whitespace.?
       ~ unknownTerm.rep(0, whitespace)
@@ -120,6 +123,8 @@ object LineParser {
         GuestError.withoutAnnotations(_, message)
     }
 
-  def parse(in: String) =
+  def parse(
+    in: String
+  ): Either[Seq[GuestError], Seq[SyntaxTerm]] =
     checkExpression(expression.parse(in))
 }

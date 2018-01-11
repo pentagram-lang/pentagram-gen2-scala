@@ -1,15 +1,16 @@
 package tacit.webShell
 
+import org.scalajs.dom.html
 import scalatags.JsDom.all._
 
 object Shell {
-  val repl = Repl()
+  private val repl = Repl()
 
-  val root =
+  private val root =
     div(
       Style.renderTags,
       repl.root
     )
 
-  def render = root.render
+  def render: html.Div = root.render
 }

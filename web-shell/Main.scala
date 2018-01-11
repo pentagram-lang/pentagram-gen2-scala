@@ -3,5 +3,9 @@ package tacit.webShell
 import org.scalajs.dom
 
 object Main extends App {
-  val _ = dom.document.body.appendChild(Shell.render)
+  private def run(): Unit = {
+    val _ = dom.document.body.appendChild(Shell.render)
+  }
+
+  run()
 }

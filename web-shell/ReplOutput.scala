@@ -58,9 +58,9 @@ object ReplOutput {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
-    val root = style()
+    val root: StyleA = style()
 
-    val error = style(
+    val error: StyleA = style(
       color(red)
     )
   }

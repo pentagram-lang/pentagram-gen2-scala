@@ -11,8 +11,8 @@ import SyntaxTerm._
 
 final class LineParserSpec extends FreeSpec {
   nameOf(LineParser) - {
-    final case class CheckParse[T](parser: Parser[T]) {
-      val fullParser: Parser[T] = P(parser ~ End)
+    final case class CheckParse[T](parser: P[T]) {
+      val fullParser: P[T] = P(parser ~ End)
 
       def positive(in: String, result: T): Unit = {
         val _ =

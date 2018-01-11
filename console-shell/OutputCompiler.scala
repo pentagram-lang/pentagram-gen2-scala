@@ -13,8 +13,8 @@ final case class OutputCompiler(
   lineText: String,
   terminalWidth: Int
 ) {
-  val gutterLength = prompt.length
-  val indent = lineText.indexWhere(_ != ' ') max 0
+  private val gutterLength = prompt.length
+  private val indent = lineText.indexWhere(_ != ' ') max 0
 
   @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   def compileBlock(block: OutputBlock): OutputInstruction =
@@ -42,7 +42,9 @@ final case class OutputCompiler(
         Multi(blocks.map(compileBlock))
     }
 
-  def highlightPrevious(sourceLocation: SourceLocation) =
+  private def highlightPrevious(
+    sourceLocation: SourceLocation
+  ) =
     line(
       gutter = Error(prompt),
       left = Border("╭ "),
@@ -53,19 +55,23 @@ final case class OutputCompiler(
       right = Border("╮")
     )
 
-  def highlightNew(sourceLocation: SourceLocation) =
+  private def highlightNew(
+    sourceLocation: SourceLocation
+  ) =
     simpleLine(
       alignIndex = defaultLineAlignIndex,
       content = highlightError(sourceLocation)
     )
 
-  def highlightUnder(sourceLocation: SourceLocation) =
+  private def highlightUnder(
+    sourceLocation: SourceLocation
+  ) =
     simpleLine(
       alignIndex = sourceLocation.begin,
       content = ErrorAccent("▀" * sourceLocation.length)
     )
 
-  def errorMessage(
+  private def errorMessage(
     sourceLocation: SourceLocation,
     message: String
   ) =
@@ -74,7 +80,7 @@ final case class OutputCompiler(
       content = Error("✗ " + message)
     )
 
-  def errorAnnotationsOption(
+  private def errorAnnotationsOption(
     annotations: Seq[GuestError.Annotation]
   ) =
     if (annotations.nonEmpty) {
@@ -83,7 +89,7 @@ final case class OutputCompiler(
       Multi()
     }
 
-  def errorAnnotations(
+  private def errorAnnotations(
     annotations: Seq[GuestError.Annotation]
   ) = {
     val table = annotations.map(errorAnnotation)
@@ -103,7 +109,9 @@ final case class OutputCompiler(
     )
   }
 
-  def errorAnnotation(annotation: GuestError.Annotation) = {
+  private def errorAnnotation(
+    annotation: GuestError.Annotation
+  ) = {
     def source(outputFormat: OutputFormat) =
       annotation.sourceLocation match {
         case Some(sourceLocation) =>
@@ -128,7 +136,7 @@ final case class OutputCompiler(
       Multi(arrow(" ⇐ "), background(annotation.message)))
   }
 
-  def header() =
+  private def header() =
     Multi(
       line(
         gutter = defaultLineGutter,
@@ -146,7 +154,7 @@ final case class OutputCompiler(
         right = Border("╯ ┃"))
     )
 
-  def footer() =
+  private def footer() =
     line(
       gutter = defaultLineGutter,
       left = Border("┗"),
@@ -155,7 +163,7 @@ final case class OutputCompiler(
       fill = Border("━"),
       right = Border("┛"))
 
-  def line(
+  private def line(
     gutter: Text,
     left: OutputInstruction,
     alignIndex: Int,
@@ -172,7 +180,7 @@ final case class OutputCompiler(
     Multi(leftPadded, right, NewLine())
   }
 
-  def simpleLine(
+  private def simpleLine(
     alignIndex: Int,
     content: OutputInstruction
   ) =
@@ -185,23 +193,34 @@ final case class OutputCompiler(
       right = defaultLineRight
     )
 
-  def blankLine() =
+  private def blankLine() =
     simpleLine(
       alignIndex = defaultLineAlignIndex,
       content = defaultLineContent
     )
 
-  val defaultLineGutter = padding(Normal(" "), gutterLength)
-  val defaultLineLeft = Border("┃ ")
-  val defaultLineAlignIndex = 0
-  val defaultLineContent = Normal("")
-  val defaultLineFill = Normal(" ")
-  val defaultLineRight = Border(" ┃")
+  private val defaultLineGutter =
+    padding(Normal(" "), gutterLength)
 
-  def highlightError(sourceLocation: SourceLocation) =
+  private val defaultLineLeft =
+    Border("┃ ")
+
+  private val defaultLineAlignIndex =
+    0
+
+  private val defaultLineContent =
+    Normal("")
+
+  private val defaultLineFill =
+    Normal(" ")
+
+  private val defaultLineRight =
+    Border(" ┃")
+
+  private def highlightError(sourceLocation: SourceLocation) =
     highlightLocation(sourceLocation, Error)
 
-  def highlightLocation(
+  private def highlightLocation(
     sourceLocation: SourceLocation,
     outputFormat: OutputFormat
   ) =
@@ -211,7 +230,7 @@ final case class OutputCompiler(
       sourceLocation.end,
       outputFormat)
 
-  def highlightText(
+  private def highlightText(
     originalText: String,
     highlightBegin: Int,
     highlightEnd: Int,
@@ -224,19 +243,19 @@ final case class OutputCompiler(
     Multi(Normal(start), highlightFormat(mid), Normal(end))
   }
 
-  def alignLeft(
+  private def alignLeft(
     fill: Text,
     index: Int,
     content: OutputInstruction
   ) = Multi(padding(fill, index), content)
 
-  def padRight(
+  private def padRight(
     original: OutputInstruction,
     fill: Text,
     length: Int
   ) = Multi(original, padding(fill, length - original.length))
 
-  def padding(fill: Text, length: Int) =
+  private def padding(fill: Text, length: Int) =
     fill.format(fill.text.substring(0, 1) * length)
 }
 

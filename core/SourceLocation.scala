@@ -4,7 +4,7 @@ final case class SourceLocation(
   begin: Int,
   end: Int
 ) {
-  def length = end - begin
+  def length: Int = end - begin
 }
 
 object SourceLocationExtensions {

@@ -41,7 +41,7 @@ object Repl {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
-    val root = style(
+    val root: StyleA = style(
       backgroundColor(black),
       color(white)
     )

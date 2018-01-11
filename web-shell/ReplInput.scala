@@ -14,7 +14,7 @@ final class ReplInput(
   def onSubmit(handler: dom.Event => Unit): Unit =
     root.onsubmit = handler
 
-  def value = textInput.value
+  def value: String = textInput.value
 
   def reset(): Unit = textInput.value = ""
 }
@@ -33,7 +33,7 @@ object ReplInput {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
-    val root = style(
+    val root: StyleA = style(
       backgroundColor(black),
       color(white)
     )
