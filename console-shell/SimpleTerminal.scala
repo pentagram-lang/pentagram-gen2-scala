@@ -41,7 +41,7 @@ object SimpleTerminal {
 
   private val plainPrompt = "(repl)"
   private val prompt =
-    getAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
+    toAnsiText(OutputFormat.Prompt.style, s"$plainPrompt> ")
 
   @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
   private def writeInstruction(
@@ -95,9 +95,9 @@ object SimpleTerminal {
     style: AttributedStyle,
     text: String
   ): Unit =
-    terminal.writer.write(getAnsiText(style, text))
+    terminal.writer.write(toAnsiText(style, text))
 
-  private def getAnsiText(
+  private def toAnsiText(
     style: AttributedStyle,
     text: String
   ): String =
