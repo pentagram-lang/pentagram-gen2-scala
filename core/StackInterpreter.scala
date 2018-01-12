@@ -23,7 +23,7 @@ object StackInterpreter {
         interpretOne(headTerm, stack) match {
           case Expression.Valid(stack) =>
             interpretMany(restTerms, stack)
-          case invalid =>
+          case invalid: Any =>
             invalid
         }
       case Nil =>
