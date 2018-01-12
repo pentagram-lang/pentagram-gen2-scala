@@ -43,7 +43,7 @@ object Dependencies {
     testFrameworks += new TestFramework(
       "org.scalameter.ScalaMeterFramework")
 
-  def mapLibraryDependencies(
+  def toSettings(
     dependencies: Seq[Def.Initialize[ModuleID]]
   ) =
     dependencies.map(dependency =>

@@ -27,7 +27,7 @@ object ProjectExtensions {
       dependencies: Def.Initialize[ModuleID]*
     ) =
       project.settings(
-        mapLibraryDependencies(dependencies)
+        toSettings(dependencies)
       )
 
     def projectDependencies(
@@ -58,7 +58,7 @@ object ProjectExtensions {
     def libraryDependencies(
       dependencies: Def.Initialize[ModuleID]*) =
       crossProject.settings(
-        mapLibraryDependencies(dependencies)
+        toSettings(dependencies)
       )
   }
 }
