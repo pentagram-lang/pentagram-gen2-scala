@@ -1,6 +1,8 @@
 # Tacit
 _A programming language_
 
+[![Codacy grade](https://img.shields.io/codacy/grade/9c51ed7b9a0b4c49bdfdd073a0d2b1a3.svg?style=flat-square)](https://www.codacy.com/app/tacit-lang/tacit)
+
 ## Developing
 
 ### Prerequisites
