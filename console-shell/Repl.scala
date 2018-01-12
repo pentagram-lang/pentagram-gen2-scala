@@ -1,6 +1,8 @@
 package tacit.consoleShell
 
 import scala.annotation.tailrec
+import scala.util.Failure
+import scala.util.Success
 
 import tacit.core.InputLine
 import tacit.core.ReadEvalPrintChain
@@ -8,16 +10,18 @@ import tacit.core.ReadEvalPrintChain
 object Repl {
   @tailrec
   def loop(): Unit =
-    SimpleTerminal readLine () match {
-      case InputLine.Value(line) => {
+    SimpleTerminal.readLine() match {
+      case Success(InputLine.Value(line)) => {
         val outputBlock =
           ReadEvalPrintChain.readEvalPrint(line)
         SimpleTerminal.writeBlock(outputBlock, line)
         loop()
       }
-      case InputLine.UserInterrupt() =>
+      case Success(InputLine.UserInterrupt()) =>
         loop()
-      case InputLine.EndOfStream() =>
+      case Success(InputLine.EndOfStream()) =>
+        ()
+      case Failure(_) =>
         ()
     }
 }

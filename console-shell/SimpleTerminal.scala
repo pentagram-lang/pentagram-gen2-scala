@@ -7,19 +7,24 @@ import org.jline.utils.AttributedString
 import org.jline.utils.AttributedStyle
 import org.jline.utils.Curses
 import org.jline.utils.InfoCmp.Capability
+import scala.util.Failure
+import scala.util.Success
+import scala.util.Try
 
 import tacit.core.InputLine
 import tacit.core.OutputBlock
 
 object SimpleTerminal {
-  def readLine(): InputLine =
-    try {
-      InputLine.Value(reader.readLine(prompt))
-    } catch {
-      case _: UserInterruptException =>
-        InputLine.UserInterrupt()
-      case _: EndOfFileException =>
-        InputLine.EndOfStream()
+  def readLine(): Try[InputLine] =
+    Try(reader.readLine(prompt)) match {
+      case Success(line) =>
+        Success(InputLine.Value(line))
+      case Failure(_: UserInterruptException) =>
+        Success(InputLine.UserInterrupt())
+      case Failure(_: EndOfFileException) =>
+        Success(InputLine.EndOfStream())
+      case Failure(exception: Any) =>
+        Failure(exception)
     }
 
   def writeBlock(block: OutputBlock, line: String): Unit = {
@@ -28,7 +33,7 @@ object SimpleTerminal {
       plainPrompt,
       line,
       terminal.getWidth())
-    SimpleTerminal.writeInstruction(instruction)
+    writeInstruction(instruction)
   }
 
   private val reader = LineReaderBuilder.builder().build()
