@@ -22,6 +22,9 @@ object Expression {
       SourceLocation(
         firstOperand.fullSourceLocation.begin,
         sourceLocation.end)
+
+    def operands: (Expression, Expression) =
+      (firstOperand, secondOperand)
   }
 
   sealed trait Unknown

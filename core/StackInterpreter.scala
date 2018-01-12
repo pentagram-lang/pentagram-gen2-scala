@@ -73,13 +73,14 @@ object StackInterpreter {
             first,
             sourceLocation),
           rest)
-      case _ =>
+      case _ => {
+        val (firstName, secondName) =
+          arithmetic.parameterNames
         Expression.StackUnderflow(
           stack,
-          Seq(
-            arithmetic.parameterNames._1,
-            arithmetic.parameterNames._2),
+          Seq(firstName, secondName),
           sourceLocation)
+      }
     }
 
   def convertToError(

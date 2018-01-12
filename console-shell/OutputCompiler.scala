@@ -93,7 +93,9 @@ final case class OutputCompiler(
     annotations: Seq[GuestError.Annotation]
   ) = {
     val table = annotations.map(errorAnnotation)
-    val leftWidth = table.map(_._1.length).max
+    val leftWidth = table
+      .map({ case (left, _) => left.length })
+      .max
     def buildRow(
       left: OutputInstruction,
       right: OutputInstruction
@@ -112,28 +114,32 @@ final case class OutputCompiler(
   private def errorAnnotation(
     annotation: GuestError.Annotation
   ) = {
-    def source(outputFormat: OutputFormat) =
+    val backgroundFormat =
+      if (annotation.isError) {
+        ErrorBackground
+      } else {
+        InfoBackground
+      }
+    val source =
       annotation.sourceLocation match {
         case Some(sourceLocation) =>
-          highlightLocation(sourceLocation, outputFormat)
+          highlightLocation(sourceLocation, backgroundFormat)
         case None =>
           Multi(
             Normal(" " * indent),
-            outputFormat("<missing>"))
+            backgroundFormat("<missing>"))
       }
-    val background = if (annotation.isError) {
-      ErrorBackground
-    } else {
-      InfoBackground
-    }
-    val arrow = if (annotation.isError) {
-      Error
-    } else {
-      Info
-    }
-    (
-      source(background),
-      Multi(arrow(" ⇐ "), background(annotation.message)))
+    val arrowFormat =
+      if (annotation.isError) {
+        Error
+      } else {
+        Info
+      }
+    val message =
+      Multi(
+        arrowFormat(" ⇐ "),
+        backgroundFormat(annotation.message))
+    (source, message)
   }
 
   private def header() =

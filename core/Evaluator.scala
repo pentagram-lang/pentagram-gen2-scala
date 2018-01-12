@@ -61,17 +61,22 @@ object Evaluator {
   def divideByZero(
     apply: Expression.Apply,
     firstValue: Int
-  ): GuestError =
+  ): GuestError = {
+    val (firstOperand, secondOperand) = apply.operands
+    val (firstName, secondName) =
+      apply.arithmetic.parameterNames
+
     GuestError(
       apply.sourceLocation,
       s"Cannot divide integer $firstValue by zero",
       Seq(
         GuestError.InfoAnnotation(
-          Some(apply.firstOperand.fullSourceLocation),
-          s"${apply.arithmetic.parameterNames._1} ($firstValue)"),
+          Some(firstOperand.fullSourceLocation),
+          s"${firstName} ($firstValue)"),
         GuestError.ErrorAnnotation(
-          Some(apply.secondOperand.fullSourceLocation),
-          s"${apply.arithmetic.parameterNames._2} (0)")
+          Some(secondOperand.fullSourceLocation),
+          s"${secondName} (0)")
       )
     )
+  }
 }
