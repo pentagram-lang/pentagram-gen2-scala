@@ -18,7 +18,7 @@ lazy val coreJS =
   core.js
 
 lazy val consoleShell =
-  (project in file("console-shell"))
+  (project in file("consoleShell"))
     .withCustomSettings()
     .libraryDependencies(
       jline
@@ -28,7 +28,7 @@ lazy val consoleShell =
     )
 
 lazy val webShell =
-  (project in file("web-shell"))
+  (project in file("webShell"))
     .withCustomSettings()
     .withJSMain()
     .libraryDependencies(
