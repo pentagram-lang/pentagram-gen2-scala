@@ -22,8 +22,6 @@ final class ReplOutput(
         addResultWithStyle(
           error.message,
           Some(ReplOutput.Style.error))
-      case OutputBlock.NormalText(text) =>
-        addResult(text)
       case OutputBlock.ValueText(text) =>
         addResult(text)
       case OutputBlock.Multi(blocks) =>

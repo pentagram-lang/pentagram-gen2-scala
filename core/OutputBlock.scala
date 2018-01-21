@@ -3,10 +3,6 @@ package tacit.core
 sealed trait OutputBlock
 
 object OutputBlock {
-  final case class NormalText(
-    text: String
-  ) extends OutputBlock
-
   final case class ValueText(
     text: String
   ) extends OutputBlock

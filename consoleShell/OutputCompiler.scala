@@ -34,8 +34,6 @@ final case class OutputCompiler(
           errorMessage(error.sourceLocation, error.message),
           errorAnnotationsOption(error.annotations),
           footer())
-      case OutputBlock.NormalText(text) =>
-        Multi(Normal(text), NewLine())
       case OutputBlock.ValueText(text) =>
         Multi(ValueAccent(" ▹ "), Value(text), NewLine())
       case OutputBlock.Multi(blocks) =>
