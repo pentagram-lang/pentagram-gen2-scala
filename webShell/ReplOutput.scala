@@ -8,49 +8,51 @@ import tacit.core.OutputBlock
 
 import CssSettings.Defaults._
 
-final class ReplOutput(
-  val root: html.Div
-) {
-  @SuppressWarnings(Array("org.wartremover.warts.Recursion"))
-  def writeBlock(block: OutputBlock): Unit =
-    block match {
-      case OutputBlock.ErrorHighlightPrevious(_) =>
-        ()
-      case OutputBlock.ErrorHighlightNew(_) =>
-        ()
-      case OutputBlock.ErrorMessage(error) =>
-        addResultWithStyle(
-          error.message,
-          Some(ReplOutput.Style.error))
-      case OutputBlock.ValueText(text) =>
-        addResult(text)
-      case OutputBlock.Multi(blocks) =>
-        blocks foreach {
-          writeBlock(_)
-        }
-    }
-
-  def addResult(
-    text: String
-  ): Unit =
-    addResultWithStyle(text, None)
-
-  def addResultWithStyle(
-    text: String,
-    style: Option[StyleA]
-  ): Unit = {
-    val _ = root.appendChild(div(text, style).render)
-    ()
-  }
-}
-
-object ReplOutput {
-  def apply(xs: Modifier*): ReplOutput = {
+object ReplOutput extends Render {
+  def render: RenderComponent = {
     val root = div(
-      Style.root,
-      xs
+      Style.root
     )
-    new ReplOutput(root.render)
+    (root, new Component(_))
+  }
+
+  type Root = html.Div
+
+  final class Component(
+    val root: Root
+  ) {
+    @SuppressWarnings(
+      Array("org.wartremover.warts.Recursion"))
+    def writeBlock(block: OutputBlock): Unit =
+      block match {
+        case OutputBlock.ErrorHighlightPrevious(_) =>
+          ()
+        case OutputBlock.ErrorHighlightNew(_) =>
+          ()
+        case OutputBlock.ErrorMessage(error) =>
+          addResultWithStyle(
+            error.message,
+            Some(Style.error))
+        case OutputBlock.ValueText(text) =>
+          addResult(text)
+        case OutputBlock.Multi(blocks) =>
+          blocks foreach {
+            writeBlock(_)
+          }
+      }
+
+    def addResult(
+      text: String
+    ): Unit =
+      addResultWithStyle(text, None)
+
+    def addResultWithStyle(
+      text: String,
+      style: Option[StyleA]
+    ): Unit = {
+      val _ = root.appendChild(div(text, style).render)
+      ()
+    }
   }
 
   object Style extends StyleSheet.Inline {

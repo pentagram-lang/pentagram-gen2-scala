@@ -7,27 +7,28 @@ import scalatags.JsDom.all._
 
 import CssSettings.Defaults._
 
-final class ReplInput(
-  val root: html.Form,
-  val textInput: TextInput
-) {
-  def onSubmit(handler: dom.Event => Unit): Unit =
-    root.onsubmit = handler
-
-  def value: String = textInput.value
-
-  def reset(): Unit = textInput.value = ""
-}
-
-object ReplInput {
-  def apply(xs: Modifier*): ReplInput = {
+object ReplInput extends Render {
+  def render: RenderComponent = {
     val textInput = TextInput()
     val root = form(
       Style.root,
-      textInput.root,
-      xs
+      textInput.root
     )
-    new ReplInput(root.render, textInput)
+    (root, new Component(_, textInput))
+  }
+
+  type Root = html.Form
+
+  final class Component(
+    val root: Root,
+    val textInput: TextInput.Component
+  ) {
+    def onSubmit(handler: dom.Event => Unit): Unit =
+      root.onsubmit = handler
+
+    def value: String = textInput.value
+
+    def reset(): Unit = textInput.value = ""
   }
 
   object Style extends StyleSheet.Inline {

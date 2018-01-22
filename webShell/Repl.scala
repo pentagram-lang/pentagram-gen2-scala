@@ -9,33 +9,34 @@ import tacit.core.ReadEvalPrintChain
 
 import CssSettings.Defaults._
 
-final class Repl(
-  val root: html.Div,
-  val replInput: ReplInput,
-  val replOutput: ReplOutput
-) {
-  replInput.onSubmit(handleSubmit(_))
-
-  def handleSubmit(event: dom.Event): Unit = {
-    event.preventDefault()
-    val outputBlock =
-      ReadEvalPrintChain.readEvalPrint(replInput.value)
-    replOutput.writeBlock(outputBlock)
-    replInput.reset()
-  }
-}
-
-object Repl {
-  def apply(xs: Modifier*): Repl = {
+object Repl extends Render {
+  def render: RenderComponent = {
     val replInput = ReplInput()
     val replOutput = ReplOutput()
     val root = div(
       Style.root,
-      xs,
       replInput.root,
       replOutput.root
     )
-    new Repl(root.render, replInput, replOutput)
+    (root, new Component(_, replInput, replOutput))
+  }
+
+  type Root = html.Div
+
+  final class Component(
+    val root: Root,
+    val replInput: ReplInput.Component,
+    val replOutput: ReplOutput.Component
+  ) {
+    replInput.onSubmit(handleSubmit(_))
+
+    def handleSubmit(event: dom.Event): Unit = {
+      event.preventDefault()
+      val outputBlock =
+        ReadEvalPrintChain.readEvalPrint(replInput.value)
+      replOutput.writeBlock(outputBlock)
+      replInput.reset()
+    }
   }
 
   object Style extends StyleSheet.Inline {
