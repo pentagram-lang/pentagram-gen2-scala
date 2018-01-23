@@ -1,16 +1,43 @@
 package tacit.webShell
 
 import org.scalajs.dom.html
-import scalatags.JsDom.all._
+import scala.language.postfixOps
+import scalacss.ScalatagsCss._
+import scalatags.JsDom.all.{
+  Double2CssNumber => _,
+  Int2CssNumber => _,
+  _
+}
 
-object Shell {
-  private val repl = Repl()
+import CssSettings.Defaults._
 
-  private val root =
-    div(
-      Style.renderTags,
+object Shell extends Render {
+  def render: RenderComponent = {
+    val repl = Repl()
+
+    val root = div(
+      Style.root,
+      AllStyles.renderTags,
       repl.root
     )
+    (root, new Component(_))
+  }
 
-  def render: html.Div = root.render
+  type Root = html.Div
+
+  final class Component(
+    val root: Root
+  )
+
+  object Style extends StyleSheet.Inline {
+    import Style.dsl._
+
+    val root: StyleA = style(
+      display.flex,
+      flexDirection.column,
+      alignItems.center,
+      minHeight(100 vh),
+      backgroundColor(black)
+    )
+  }
 }

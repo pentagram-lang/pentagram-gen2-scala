@@ -4,7 +4,12 @@ import org.scalajs.dom
 
 object Main extends App {
   private def run(): Unit = {
-    val _ = dom.document.body.appendChild(Shell.render)
+    val bodyClassName = BodyStyle.root.className.value
+    val shell = Shell().root
+    val body = dom.document.body
+
+    body.className = bodyClassName
+    val _ = body.appendChild(shell)
   }
 
   run()

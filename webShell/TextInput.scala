@@ -2,7 +2,11 @@ package tacit.webShell
 
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all._
+import scalatags.JsDom.all.{
+  Double2CssNumber => _,
+  Int2CssNumber => _,
+  _
+}
 
 import CssSettings.Defaults._
 
@@ -29,8 +33,16 @@ object TextInput extends Render {
     import Style.dsl._
 
     val root: StyleA = style(
-      backgroundColor(black),
-      color(white)
+      flexGrow(1),
+      backgroundColor.inherit,
+      color.inherit,
+      fontFamily.inherit,
+      fontSize.inherit,
+      lineHeight.inherit,
+      borderWidth.`0`,
+      &.focus - (
+        outline.none
+      )
     )
   }
 }

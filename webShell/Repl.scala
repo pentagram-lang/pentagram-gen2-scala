@@ -2,8 +2,13 @@ package tacit.webShell
 
 import org.scalajs.dom
 import org.scalajs.dom.html
+import scala.language.postfixOps
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all._
+import scalatags.JsDom.all.{
+  Double2CssNumber => _,
+  Int2CssNumber => _,
+  _
+}
 
 import tacit.core.ReadEvalPrintChain
 
@@ -43,8 +48,14 @@ object Repl extends Render {
     import Style.dsl._
 
     val root: StyleA = style(
-      backgroundColor(black),
-      color(white)
+      display.flex,
+      flexDirection.column,
+      padding(15 vh, `0`),
+      width(60 ex),
+      color(white),
+      fontSize(18 px),
+      fontFamily.attr := "monospace",
+      lineHeight(1.8 em)
     )
   }
 }

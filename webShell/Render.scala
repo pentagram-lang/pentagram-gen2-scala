@@ -2,7 +2,11 @@ package tacit.webShell
 
 import org.scalajs.dom
 import scalatags.JsDom.TypedTag
-import scalatags.JsDom.all._
+import scalatags.JsDom.all.{
+  Double2CssNumber => _,
+  Int2CssNumber => _,
+  _
+}
 
 trait Render {
   type Root <: dom.Element

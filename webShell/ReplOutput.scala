@@ -2,7 +2,11 @@ package tacit.webShell
 
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all._
+import scalatags.JsDom.all.{
+  Double2CssNumber => _,
+  Int2CssNumber => _,
+  _
+}
 
 import tacit.core.OutputBlock
 
@@ -30,9 +34,7 @@ object ReplOutput extends Render {
         case OutputBlock.ErrorHighlightNew(_) =>
           ()
         case OutputBlock.ErrorMessage(error) =>
-          addResultWithStyle(
-            error.message,
-            Some(Style.error))
+          addResultWithStyle(error.message, Some(Style.error))
         case OutputBlock.ValueText(text) =>
           addResult(text)
         case OutputBlock.Multi(blocks) =>
