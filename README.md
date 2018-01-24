@@ -9,15 +9,23 @@ _A programming language_
 
 You'll need to install a JDK (to run the Scala compiler) and [SBT](http://www.scala-sbt.org/) (to download the Scala compiler and library dependencies).
 
+Optionally, for a smoother web shell development workflow, you can install [Browsersync](https://browsersync.io/).
+
 ### Workflow
 
 Here are some important `sbt` commands:
 
-- `run` (to run)
+- `run` (to run the console shell)
+- `fastOptJs` (to compile the web shell to JS)
 - `test` (to run all tests)
 - `~testQuick` (to run only affected tests, and run them again when any source file changes)
 - `bench` (to run benchmarks)
 - `fmt` (to reformat all source files)
+- `compileAll` (to compile all source files including tests)
+
+When working on the web shell, you can use the included Browsersync + `sbt` wrapper script:
+
+- `./browser-sync-sbt.sh` (to automatically reload the web console after the SBT build finishes)
 
 ### Code style
 
