@@ -27,6 +27,8 @@ object TextInput extends Render {
     def value: String = root.value
 
     def value_=(text: String): Unit = root.value = text
+
+    def focus(): Unit = root.focus()
   }
 
   object Style extends StyleSheet.Inline {

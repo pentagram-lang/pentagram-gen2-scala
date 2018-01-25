@@ -1,5 +1,6 @@
 package tacit.webShell
 
+import org.scalajs.dom
 import org.scalajs.dom.html
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
@@ -20,14 +21,36 @@ object Shell extends Render {
       AllStyles.renderTags,
       repl.root
     )
-    (root, new Component(_))
+    (root, new Component(_, repl))
   }
 
   type Root = html.Div
 
   final class Component(
-    val root: Root
-  )
+    val root: Root,
+    val repl: Repl.Component
+  ) {
+    def autofocus(): Unit = repl.autofocus()
+
+    def handleClick(event: dom.MouseEvent): Unit = {
+      event.preventDefault()
+
+      val selection = dom.document.getSelection()
+      val isSelectionEmpty = (
+        selection.anchorNode == selection.focusNode
+          && selection.anchorOffset == selection.focusOffset
+      )
+
+      if (isSelectionEmpty) {
+        // Only change focus when the click didn't result in
+        // a selection, to avoid interfering with the user's
+        // intention
+        autofocus()
+      }
+    }
+
+    dom.document.onclick = handleClick(_)
+  }
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._

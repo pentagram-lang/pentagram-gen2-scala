@@ -33,8 +33,6 @@ object Repl extends Render {
     val replInput: ReplInput.Component,
     val replOutput: ReplOutput.Component
   ) {
-    replInput.onSubmit(handleSubmit(_))
-
     def handleSubmit(event: dom.Event): Unit = {
       event.preventDefault()
       val outputBlock =
@@ -42,6 +40,10 @@ object Repl extends Render {
       replOutput.writeBlock(outputBlock)
       replInput.reset()
     }
+
+    def autofocus(): Unit = replInput.autofocus()
+
+    replInput.onSubmit(handleSubmit(_))
   }
 
   object Style extends StyleSheet.Inline {

@@ -34,6 +34,8 @@ object ReplInput extends Render {
     def value: String = textInput.value
 
     def reset(): Unit = textInput.value = ""
+
+    def autofocus(): Unit = textInput.focus()
   }
 
   object Style extends StyleSheet.Inline {
