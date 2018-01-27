@@ -15,8 +15,8 @@ Optionally, for a smoother web shell development workflow, you can install [Brow
 
 Here are some important `sbt` commands:
 
-- `run` (to run the console shell)
-- `fastOptJs` (to compile the web shell to JS)
+- `jvm` (to run the JVM console shell)
+- `js` (to compile the web shell to JS)
 - `test` (to run all tests)
 - `~testQuick` (to run only affected tests, and run them again when any source file changes)
 - `bench` (to run benchmarks)

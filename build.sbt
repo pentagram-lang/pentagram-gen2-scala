@@ -43,13 +43,13 @@ lazy val jsShell =
 
 lazy val root =
   (project in file("."))
-    .withRootCustomSettings()
     .aggregate(
       coreJVM,
       coreJS,
       jvmShell,
       jsShell
     )
-    .runOther(jvmShell)
+    .rootJVM(jvmShell)
+    .rootJS(jsShell)
 
 cancelable in Global := true

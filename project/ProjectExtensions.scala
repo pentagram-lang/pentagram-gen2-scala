@@ -17,9 +17,6 @@ object ProjectExtensions {
     def withCustomSettings() =
       project.settings(allCustomSettings)
 
-    def withRootCustomSettings() =
-      project.settings(allRootCustomSettings)
-
     def withBenchConfig() =
       project.configs(Bench)
 
@@ -35,10 +32,16 @@ object ProjectExtensions {
     ) =
       project.dependsOn(dependencies: _*)
 
-    def runOther(otherProject: Project) =
+    def rootJVM(otherProject: Project) =
       project.settings(
-        Keys.run in Compile :=
+        RootTasks.jvm in Compile :=
           (Keys.run in Compile in otherProject).evaluated
+      )
+
+    def rootJS(otherProject: Project) =
+      project.settings(
+        RootTasks.js in Compile :=
+          (fastOptJS in Compile in otherProject).value
       )
 
     def withJSMain() =

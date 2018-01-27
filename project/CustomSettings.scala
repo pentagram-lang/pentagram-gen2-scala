@@ -62,18 +62,12 @@ object CustomSettings {
   lazy val allCustomSettings = (
     customScalaVersion
       ++ benchSettings
-      ++ fmtSettings
-      ++ compileAllSettings
+      ++ fmtTaskSettings
+      ++ compileAllTaskSettings
       ++ customSourceRules
       ++ customTestOptions
       ++ customScalacOptions
       ++ customResolvers
       ++ customWartremoverErrors
-  )
-
-  lazy val allRootCustomSettings = (
-    benchSettings
-      ++ fmtSettings
-      ++ compileAllSettings
   )
 }
