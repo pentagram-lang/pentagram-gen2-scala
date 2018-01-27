@@ -36,12 +36,13 @@ object TextInput extends Render {
 
     val root: StyleA = style(
       flexGrow(1),
+      borderWidth.`0`,
+      padding.`0`,
       backgroundColor.inherit,
       color.inherit,
       fontFamily.inherit,
       fontSize.inherit,
       lineHeight.inherit,
-      borderWidth.`0`,
       &.focus - (
         outline.none
       )

@@ -16,27 +16,29 @@ import CssSettings.Defaults._
 
 object Repl extends Render {
   def render: RenderComponent = {
-    val replInput = ReplInput()
     val replOutput = ReplOutput()
+    val replInput = ReplInput()
     val root = div(
       Style.root,
-      replInput.root,
-      replOutput.root
+      replOutput.root,
+      replInput.root
     )
-    (root, new Component(_, replInput, replOutput))
+    (root, new Component(_, replOutput, replInput))
   }
 
   type Root = html.Div
 
   final class Component(
     val root: Root,
-    val replInput: ReplInput.Component,
-    val replOutput: ReplOutput.Component
+    val replOutput: ReplOutput.Component,
+    val replInput: ReplInput.Component
   ) {
     def handleSubmit(event: dom.Event): Unit = {
       event.preventDefault()
+      val input = replInput.value
+      replOutput.echoInput(ReplInput.Prompt, input)
       val outputBlock =
-        ReadEvalPrintChain.readEvalPrint(replInput.value)
+        ReadEvalPrintChain.readEvalPrint(input)
       replOutput.writeBlock(outputBlock)
       replInput.reset()
     }

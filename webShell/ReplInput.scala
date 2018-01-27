@@ -2,7 +2,6 @@ package tacit.webShell
 
 import org.scalajs.dom
 import org.scalajs.dom.html
-import scala.language.postfixOps
 import scalacss.ScalatagsCss._
 import scalatags.JsDom.all.{
   Double2CssNumber => _,
@@ -14,13 +13,15 @@ import CssSettings.Defaults._
 
 object ReplInput extends Render {
   def render: RenderComponent = {
-    val textInput = TextInput(Style.input)
+    val textInput = TextInput()
     val root = form(
       Style.root,
-      label(Style.label, "(repl)>", textInput.root)
+      label(Style.label, Prompt, textInput.root)
     )
     (root, new Component(_, textInput))
   }
+
+  val Prompt = "(repl)> "
 
   type Root = html.Form
 
@@ -47,11 +48,8 @@ object ReplInput extends Render {
 
     val label: StyleA = style(
       display.flex,
-      flexGrow(1)
-    )
-
-    val input: StyleA = style(
-      marginLeft(1 ex)
+      flexGrow(1),
+      whiteSpace.pre
     )
   }
 }

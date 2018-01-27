@@ -25,6 +25,9 @@ object ReplOutput extends Render {
   final class Component(
     val root: Root
   ) {
+    def echoInput(prompt: String, input: String): Unit =
+      addResult(s"$prompt$input")
+
     @SuppressWarnings(
       Array("org.wartremover.warts.Recursion"))
     def writeBlock(block: OutputBlock): Unit =
@@ -43,12 +46,12 @@ object ReplOutput extends Render {
           }
       }
 
-    def addResult(
+    private def addResult(
       text: String
     ): Unit =
       addResultWithStyle(text, None)
 
-    def addResultWithStyle(
+    private def addResultWithStyle(
       text: String,
       style: Option[StyleA]
     ): Unit = {
