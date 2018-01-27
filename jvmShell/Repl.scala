@@ -1,4 +1,4 @@
-package tacit.consoleShell
+package tacit.jvmShell
 
 import scala.annotation.tailrec
 import scala.util.Failure

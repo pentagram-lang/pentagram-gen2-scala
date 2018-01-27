@@ -1,4 +1,4 @@
-package tacit.webShell
+package tacit.jsShell
 
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._

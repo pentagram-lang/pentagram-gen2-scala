@@ -1,8 +1,8 @@
-/consoleShell/target/
 /core/target-js/
 /core/target-jvm/
 /core/target/
+/jsShell/target/
+/jvmShell/target/
 /project/project/
 /project/target/
 /target/
-/webShell/target/

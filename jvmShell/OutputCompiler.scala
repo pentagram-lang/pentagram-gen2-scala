@@ -1,4 +1,4 @@
-package tacit.consoleShell
+package tacit.jvmShell
 
 import tacit.core.GuestError
 import tacit.core.OutputBlock

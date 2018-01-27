@@ -1,4 +1,4 @@
-package tacit.consoleShell
+package tacit.jvmShell
 
 import org.jline.reader.EndOfFileException
 import org.jline.reader.LineReaderBuilder

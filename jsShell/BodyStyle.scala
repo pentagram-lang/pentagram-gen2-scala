@@ -1,4 +1,4 @@
-package tacit.webShell
+package tacit.jsShell
 
 import CssSettings.Defaults._
 
