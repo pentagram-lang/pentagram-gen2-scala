@@ -12,6 +12,7 @@ object AllStyles {
       Repl.Style,
       ReplInput.Style,
       ReplOutput.Style,
+      RootStyle,
       Shell.Style,
       TextInput.Style
     )

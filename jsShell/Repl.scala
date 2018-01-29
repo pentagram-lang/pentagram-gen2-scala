@@ -55,7 +55,7 @@ object Repl extends Render {
       display.flex,
       flexDirection.column,
       padding(15 vh, `0`),
-      width(60 ex)
+      width(60 ch)
     )
   }
 }
