@@ -9,6 +9,8 @@ _A programming language_
 
 You'll need to install a JDK (to run the Scala compiler) and [SBT](http://www.scala-sbt.org/) (to download the Scala compiler and library dependencies).
 
+You'll also need to install [Git Large File Storage](https://git-lfs.github.com/) (to download the fonts used by the JS web shell).
+
 Optionally, for a smoother web shell development workflow, you can install [Browsersync](https://browsersync.io/).
 
 ### Workflow
@@ -16,7 +18,7 @@ Optionally, for a smoother web shell development workflow, you can install [Brow
 Here are some important `sbt` commands:
 
 - `jvm` (to run the JVM console shell)
-- `js` (to compile the web shell to JS)
+- `js` (to compile the JS web shell)
 - `test` (to run all tests)
 - `~testQuick` (to run only affected tests, and run them again when any source file changes)
 - `bench` (to run benchmarks)
