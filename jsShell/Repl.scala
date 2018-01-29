@@ -55,11 +55,7 @@ object Repl extends Render {
       display.flex,
       flexDirection.column,
       padding(15 vh, `0`),
-      width(60 ex),
-      color(white),
-      fontSize(18 px),
-      fontFamily.attr := "monospace",
-      lineHeight(1.8 em)
+      width(60 ex)
     )
   }
 }

@@ -59,8 +59,7 @@ object Shell extends Render {
       display.flex,
       flexDirection.column,
       alignItems.center,
-      minHeight(100 vh),
-      backgroundColor(black)
+      minHeight(100 vh)
     )
   }
 }
