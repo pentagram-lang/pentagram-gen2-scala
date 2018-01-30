@@ -14,7 +14,11 @@ object TextInput extends Render {
   def render: RenderComponent = {
     val root = input(
       Style.root,
-      `type` := "text"
+      `type` := "text",
+      autocomplete := "off",
+      attr("autocorrect") := "off",
+      attr("autocapitalize") := "off",
+      spellcheck := "false"
     )
     (root, new Component(_))
   }
