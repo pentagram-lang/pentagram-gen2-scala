@@ -14,7 +14,8 @@ object AllStyles {
       ReplOutput.Style,
       RootStyle,
       Shell.Style,
-      TextInput.Style
+      TextInput.Style,
+      WelcomeLines.Style
     )
     styles.map(_.renderTag)
   }

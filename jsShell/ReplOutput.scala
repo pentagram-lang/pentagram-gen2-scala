@@ -15,7 +15,8 @@ import CssSettings.Defaults._
 object ReplOutput extends Render {
   def render: RenderComponent = {
     val root = div(
-      Style.root
+      Style.root,
+      WelcomeLines().root
     )
     (root, new Component(_))
   }
