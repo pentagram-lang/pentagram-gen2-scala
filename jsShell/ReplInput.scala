@@ -30,7 +30,7 @@ object ReplInput extends Render {
     val textInput: TextInput.Component
   ) {
     def onSubmit(handler: dom.Event => Unit): Unit =
-      root.onsubmit = handler
+      root.addEventListener("submit", handler(_))
 
     def value: String = textInput.value
 

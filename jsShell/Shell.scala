@@ -33,7 +33,7 @@ object Shell extends Render {
     def autofocus(): Unit = repl.autofocus()
 
     def handleClick(event: dom.MouseEvent): Unit = {
-      event.preventDefault()
+      val _ = event
 
       val selection = dom.document.getSelection()
       val isSelectionEmpty = (
@@ -49,7 +49,10 @@ object Shell extends Render {
       }
     }
 
-    dom.document.onclick = handleClick(_)
+    dom.document.addEventListener(
+      "click",
+      handleClick(_),
+      useCapture = false)
   }
 
   object Style extends StyleSheet.Inline {
