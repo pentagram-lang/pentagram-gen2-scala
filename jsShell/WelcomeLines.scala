@@ -84,7 +84,9 @@ object WelcomeLines extends Render {
     )
 
     val note: StyleA = style(
-      margin.`0`,
+      marginTop.`0`,
+      marginRight.`0`,
+      marginBottom.`0`,
       marginLeft(2 ch),
       fontSize.inherit,
       fontWeight.inherit,
