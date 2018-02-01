@@ -67,7 +67,7 @@ object ReplOutput extends Render {
     val root: StyleA = style()
 
     val error: StyleA = style(
-      color(c"#e82d2d")
+      color(Colors.error)
     )
   }
 }

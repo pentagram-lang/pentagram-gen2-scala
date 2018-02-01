@@ -80,7 +80,7 @@ object WelcomeLines extends Render {
     )
 
     val highlight: StyleA = style(
-      color(c"#d3a7ff")
+      color(Colors.highlight)
     )
 
     val note: StyleA = style(
@@ -96,7 +96,7 @@ object WelcomeLines extends Render {
     val nav: StyleA = style(
       marginLeft(1 ch),
       fontStyle.italic,
-      color(c"#9069b3")
+      color(Colors.link)
     )
 
     val navLink: StyleA = style(
