@@ -52,11 +52,8 @@ object WelcomeLines extends Render {
         )
       ),
       div(
-        "To get started, try a simple expression like ",
+        "Get started with a simple expression: ",
         span(Style.highlight, "1 1 +")
-      ),
-      div(
-        "----------------------------------------------------"
       )
     )
     (root, new Component(_))

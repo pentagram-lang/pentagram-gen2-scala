@@ -26,8 +26,8 @@ object ReplOutput extends Render {
   final class Component(
     val root: Root
   ) {
-    def echoInput(prompt: String, input: String): Unit =
-      addResult(s"$prompt$input")
+    def echoInput(input: String): Unit =
+      addLine(EchoLine(input).root)
 
     @SuppressWarnings(
       Array("org.wartremover.warts.Recursion"))
@@ -47,6 +47,12 @@ object ReplOutput extends Render {
           }
       }
 
+    private def addLine(
+      line: html.Div
+    ): Unit = {
+      val _ = root.appendChild(line)
+    }
+
     private def addResult(
       text: String
     ): Unit =
@@ -57,7 +63,6 @@ object ReplOutput extends Render {
       style: Option[StyleA]
     ): Unit = {
       val _ = root.appendChild(div(text, style).render)
-      ()
     }
   }
 

@@ -36,7 +36,7 @@ object Repl extends Render {
     def handleSubmit(event: dom.Event): Unit = {
       event.preventDefault()
       val input = replInput.value
-      replOutput.echoInput(ReplInput.Prompt, input)
+      replOutput.echoInput(input)
       val outputBlock =
         ReadEvalPrintChain.readEvalPrint(input)
       replOutput.writeBlock(outputBlock)
@@ -54,7 +54,7 @@ object Repl extends Render {
     val root: StyleA = style(
       display.flex,
       flexDirection.column,
-      padding(15 vh, `0`),
+      padding(12 vh, `0`),
       width(60 ch)
     )
   }

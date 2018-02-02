@@ -16,12 +16,13 @@ object ReplInput extends Render {
     val textInput = TextInput()
     val root = form(
       Style.root,
-      label(Style.label, Prompt, textInput.root)
+      label(
+        Style.label,
+        PromptSpan(Style.prompt).root,
+        textInput.root)
     )
     (root, new Component(_, textInput))
   }
-
-  val Prompt = "(repl)> "
 
   type Root = html.Form
 
@@ -48,8 +49,11 @@ object ReplInput extends Render {
 
     val label: StyleA = style(
       display.flex,
-      flexGrow(1),
-      whiteSpace.pre
+      flexGrow(1)
+    )
+
+    val prompt: StyleA = style(
+      fontWeight._700
     )
   }
 }

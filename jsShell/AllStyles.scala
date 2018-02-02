@@ -9,6 +9,8 @@ object AllStyles {
   val renderTags: Seq[TypedTag[html.Style]] = {
     val styles = Seq(
       BodyStyle,
+      EchoLine.Style,
+      PromptSpan.Style,
       Repl.Style,
       ReplInput.Style,
       ReplOutput.Style,
