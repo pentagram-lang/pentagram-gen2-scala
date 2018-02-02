@@ -38,7 +38,7 @@ object ReplOutput extends Render {
         case OutputBlock.ErrorHighlightNew(_) =>
           ()
         case OutputBlock.ErrorMessage(error) =>
-          addResultWithStyle(error.message, Some(Style.error))
+          addLine(ErrorLine(error.message).root)
         case OutputBlock.ValueText(text) =>
           addResult(text)
         case OutputBlock.Multi(blocks) =>
@@ -67,12 +67,6 @@ object ReplOutput extends Render {
   }
 
   object Style extends StyleSheet.Inline {
-    import Style.dsl._
-
     val root: StyleA = style()
-
-    val error: StyleA = style(
-      color(Colors.error)
-    )
   }
 }

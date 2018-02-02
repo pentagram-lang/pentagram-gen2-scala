@@ -10,6 +10,7 @@ object AllStyles {
     val styles = Seq(
       BodyStyle,
       EchoLine.Style,
+      ErrorLine.Style,
       PromptSpan.Style,
       Repl.Style,
       ReplInput.Style,
