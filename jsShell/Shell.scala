@@ -19,6 +19,7 @@ object Shell extends Render {
     val root = div(
       Style.root,
       AllStyles.renderTags,
+      ScreenEdge().root,
       repl.root
     )
     (root, new Component(_, repl))

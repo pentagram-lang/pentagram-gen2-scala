@@ -35,7 +35,10 @@ object Repl extends Render {
   ) {
     def handleSubmit(event: dom.Event): Unit = {
       event.preventDefault()
-      val input = replInput.value
+      handleInput(replInput.value)
+    }
+
+    def handleInput(input: String): Unit = {
       replOutput.echoInput(input)
       val outputBlock =
         ReadEvalPrintChain.readEvalPrint(input)
