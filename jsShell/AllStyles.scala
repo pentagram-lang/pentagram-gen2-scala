@@ -18,6 +18,7 @@ object AllStyles {
       RootStyle,
       Shell.Style,
       TextInput.Style,
+      ValueLine.Style,
       WelcomeLines.Style
     )
     styles.map(_.renderTag)

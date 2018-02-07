@@ -40,7 +40,7 @@ object ReplOutput extends Render {
         case OutputBlock.ErrorMessage(error) =>
           addLine(ErrorLine(error.message).root)
         case OutputBlock.ValueText(text) =>
-          addResult(text)
+          addLine(ValueLine(text).root)
         case OutputBlock.Multi(blocks) =>
           blocks foreach {
             writeBlock(_)
@@ -51,18 +51,6 @@ object ReplOutput extends Render {
       line: html.Div
     ): Unit = {
       val _ = root.appendChild(line)
-    }
-
-    private def addResult(
-      text: String
-    ): Unit =
-      addResultWithStyle(text, None)
-
-    private def addResultWithStyle(
-      text: String,
-      style: Option[StyleA]
-    ): Unit = {
-      val _ = root.appendChild(div(text, style).render)
     }
   }
 

@@ -48,7 +48,7 @@ object TextInput extends Render {
       fontSize.inherit,
       fontWeight.inherit,
       lineHeight.inherit,
-      &.focus - (
+      &.focus(
         outline.none
       )
     )
