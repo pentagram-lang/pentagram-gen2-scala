@@ -57,8 +57,10 @@ object Repl extends Render {
     val root: StyleA = style(
       display.flex,
       flexDirection.column,
-      padding(12 vh, `0`),
-      width(60 ch)
+      padding(6 em, `0`),
+      width(60 ch),
+      mixBlendMode := "darken",
+      willChange := "transform"
     )
   }
 }

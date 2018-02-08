@@ -34,19 +34,33 @@ object ScreenEdge extends Render {
       right.`0`,
       bottom.`0`,
       left.`0`,
-      backgroundImage := allGradients,
+      backgroundImage := allGradients.mkString(","),
       willChange := "transform"
     )
 
-    def allGradients: String =
+    def allGradients: Seq[String] =
+      highlightGradients ++ baseGradients
+
+    def baseGradients: Seq[String] =
+      Seq("1em", "3em").flatMap(
+        allSideGradients("#1a1a1a", _))
+
+    def highlightGradients: Seq[String] =
+      Seq("2em", "4em").flatMap(
+        allSideGradients("rgba(229, 255, 229, 0.08)", _))
+
+    def allSideGradients(
+      startColor: String,
+      stopSize: String
+    ): Seq[String] =
       Seq("top", "right", "bottom", "left")
-        .flatMap(oneSideGradients(_))
-        .mkString(",")
+        .map(singleGradient(_, startColor, stopSize))
 
-    def oneSideGradients(to: String): Seq[String] =
-      Seq("2em", "4em").map(singleGradient(to, _))
-
-    def singleGradient(to: String, size: String): String =
-      s"linear-gradient(to $to, rgba(229, 255, 229, 0.08), transparent $size)"
+    def singleGradient(
+      side: String,
+      startColor: String,
+      stopSize: String
+    ): String =
+      s"linear-gradient(to $side, $startColor, transparent $stopSize)"
   }
 }
