@@ -11,6 +11,7 @@ object AllStyles {
       BodyStyle,
       EchoLine.Style,
       ErrorLine.Style,
+      GlobalStyle,
       PromptSpan.Style,
       Repl.Style,
       ReplInput.Style,

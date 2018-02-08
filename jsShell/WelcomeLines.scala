@@ -98,7 +98,10 @@ object WelcomeLines extends Render {
 
     val navLink: StyleA = style(
       marginLeft(1 ch),
-      color.inherit
+      color.inherit,
+      &.selection(
+        color(Colors.highlight)
+      )
     )
   }
 }
