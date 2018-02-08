@@ -2,6 +2,7 @@ package tacit.jsShell
 
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
+import scalacss.internal.Macros.Color
 import scalatags.JsDom.all.{
   Double2CssNumber => _,
   Int2CssNumber => _,
@@ -43,14 +44,14 @@ object ScreenEdge extends Render {
 
     def baseGradients: Seq[String] =
       Seq("1em", "3em").flatMap(
-        allSideGradients("#1a1a1a", _))
+        allSideGradients(Colors.background, _))
 
     def highlightGradients: Seq[String] =
       Seq("2em", "4em").flatMap(
-        allSideGradients("rgba(229, 255, 229, 0.08)", _))
+        allSideGradients(Colors.edgeHighlight, _))
 
     def allSideGradients(
-      startColor: String,
+      startColor: Color,
       stopSize: String
     ): Seq[String] =
       Seq("top", "right", "bottom", "left")
@@ -58,9 +59,9 @@ object ScreenEdge extends Render {
 
     def singleGradient(
       side: String,
-      startColor: String,
+      startColor: Color,
       stopSize: String
     ): String =
-      s"linear-gradient(to $side, $startColor, transparent $stopSize)"
+      s"linear-gradient(to $side, ${startColor.value}, transparent $stopSize)"
   }
 }
