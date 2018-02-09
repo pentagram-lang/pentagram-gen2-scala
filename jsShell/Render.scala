@@ -8,8 +8,8 @@ import scalatags.JsDom.all.{
   _
 }
 
-trait Render {
-  type Root <: dom.Element
+trait Render[RootArg <: dom.Element] {
+  type Root = RootArg
 
   type Component
 

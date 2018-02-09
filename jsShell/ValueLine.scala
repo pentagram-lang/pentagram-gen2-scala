@@ -11,15 +11,13 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object ValueLine extends Render {
+object ValueLine extends Render[html.Div] {
   def render: RenderComponent = {
     val root = div(
       Style.root
     )
     (root, new Component(_))
   }
-
-  type Root = html.Div
 
   final class Component(
     val root: Root

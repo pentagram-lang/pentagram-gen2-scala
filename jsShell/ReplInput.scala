@@ -11,7 +11,7 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object ReplInput extends Render {
+object ReplInput extends Render[html.Form] {
   def render: RenderComponent = {
     val textInput = TextInput()
     val root = form(
@@ -23,8 +23,6 @@ object ReplInput extends Render {
     )
     (root, new Component(_, textInput))
   }
-
-  type Root = html.Form
 
   final class Component(
     val root: Root,

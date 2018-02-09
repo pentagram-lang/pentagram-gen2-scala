@@ -14,7 +14,7 @@ import tacit.core.ReadEvalPrintChain
 
 import CssSettings.Defaults._
 
-object Repl extends Render {
+object Repl extends Render[html.Div] {
   def render: RenderComponent = {
     val replOutput = ReplOutput()
     val replInput = ReplInput()
@@ -25,8 +25,6 @@ object Repl extends Render {
     )
     (root, new Component(_, replOutput, replInput))
   }
-
-  type Root = html.Div
 
   final class Component(
     val root: Root,

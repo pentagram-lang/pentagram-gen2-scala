@@ -12,7 +12,7 @@ import tacit.core.OutputBlock
 
 import CssSettings.Defaults._
 
-object ReplOutput extends Render {
+object ReplOutput extends Render[html.Div] {
   def render: RenderComponent = {
     val root = div(
       Style.root,
@@ -20,8 +20,6 @@ object ReplOutput extends Render {
     )
     (root, new Component(_))
   }
-
-  type Root = html.Div
 
   final class Component(
     val root: Root

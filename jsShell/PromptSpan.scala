@@ -10,7 +10,7 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object PromptSpan extends Render {
+object PromptSpan extends Render[html.Span] {
   def render: RenderComponent = {
     val root = span(
       Style.root,
@@ -18,8 +18,6 @@ object PromptSpan extends Render {
     )
     (root, new Component(_))
   }
-
-  type Root = html.Span
 
   final class Component(
     val root: Root

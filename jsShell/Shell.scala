@@ -12,7 +12,7 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object Shell extends Render {
+object Shell extends Render[html.Div] {
   def render: RenderComponent = {
     val repl = Repl()
 
@@ -24,8 +24,6 @@ object Shell extends Render {
     )
     (root, new Component(_, repl))
   }
-
-  type Root = html.Div
 
   final class Component(
     val root: Root,

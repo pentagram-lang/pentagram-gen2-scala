@@ -10,7 +10,7 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object EchoLine extends Render {
+object EchoLine extends Render[html.Div] {
   def render: RenderComponent = {
     val root = div(
       Style.root,
@@ -18,8 +18,6 @@ object EchoLine extends Render {
     )
     (root, new Component(_))
   }
-
-  type Root = html.Div
 
   final class Component(
     val root: Root
