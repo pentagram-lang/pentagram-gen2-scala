@@ -13,7 +13,9 @@ trait Render[RootArg <: dom.Element] {
 
   type Component
 
-  type RenderComponent = (TypedTag[Root], Root => Component)
+  type RenderTag = TypedTag[Root]
+
+  type RenderComponent = (RenderTag, Root => Component)
 
   def render: RenderComponent
 

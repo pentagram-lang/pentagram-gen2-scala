@@ -10,18 +10,12 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object EchoLine extends Render[html.Div] {
-  def render: RenderComponent = {
-    val root = div(
+object EchoLine extends RenderSimple[html.Div] {
+  def renderSimple: RenderTag =
+    div(
       Style.root,
       PromptSpan().root
     )
-    (root, new Component(_))
-  }
-
-  final class Component(
-    val root: Root
-  )
 
   object Style extends StyleSheet.Inline {
     val root: StyleA = style()

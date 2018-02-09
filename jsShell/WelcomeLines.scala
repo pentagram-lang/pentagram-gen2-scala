@@ -11,9 +11,9 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object WelcomeLines extends Render[html.Div] {
-  def render: RenderComponent = {
-    val root = div(
+object WelcomeLines extends RenderSimple[html.Div] {
+  def renderSimple: RenderTag =
+    div(
       Style.root,
       h1(
         Style.header,
@@ -56,12 +56,6 @@ object WelcomeLines extends Render[html.Div] {
         span(Style.highlight, "1 1 +")
       )
     )
-    (root, new Component(_))
-  }
-
-  final class Component(
-    val root: Root
-  )
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._

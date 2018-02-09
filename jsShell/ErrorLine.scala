@@ -10,17 +10,11 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object ErrorLine extends Render[html.Div] {
-  def render: RenderComponent = {
-    val root = div(
+object ErrorLine extends RenderSimple[html.Div] {
+  def renderSimple: RenderTag =
+    div(
       Style.root
     )
-    (root, new Component(_))
-  }
-
-  final class Component(
-    val root: Root
-  )
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._

@@ -10,18 +10,12 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object PromptSpan extends Render[html.Span] {
-  def render: RenderComponent = {
-    val root = span(
+object PromptSpan extends RenderSimple[html.Span] {
+  def renderSimple: RenderTag =
+    span(
       Style.root,
       "(repl)> "
     )
-    (root, new Component(_))
-  }
-
-  final class Component(
-    val root: Root
-  )
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._
