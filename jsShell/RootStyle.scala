@@ -1,8 +1,10 @@
 package tacit.jsShell
 
 import scala.language.postfixOps
+import scalacss.internal.Attr
 import scalacss.internal.FontFace
 import scalacss.internal.FontFace._
+import scalacss.internal.ValueT.TypedAttr_Color
 
 import CssSettings.Defaults._
 
@@ -15,8 +17,13 @@ object RootStyle extends StyleSheet.Inline {
     fontWeight._500,
     fontSize.large,
     color(Colors.normal),
+    caretColor(Colors.highlight),
     lineHeight(2.0 em)
   )
+
+  object caretColor extends TypedAttr_Color {
+    override val attr = Attr.real("caret-color")
+  }
 
   type FontStyleTransform =
     FontStyleBuilder[Option[String]] => FontFace[
