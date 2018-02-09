@@ -1,7 +1,9 @@
 package tacit.jsShell
 
 import org.scalajs.dom
+import org.scalajs.dom.document.body
 import org.scalajs.dom.html
+import org.scalajs.dom.window
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
 import scalatags.JsDom.all.{
@@ -42,9 +44,19 @@ object Repl extends Render[html.Div] {
         ReadEvalPrintChain.readEvalPrint(input)
       replOutput.writeBlock(outputBlock)
       replInput.reset()
+      scrollToEnd()
     }
 
-    def autofocus(): Unit = replInput.autofocus()
+    def scrollToEnd(): Unit =
+      window.scroll(0, maxScroll.toInt)
+
+    def maxScroll: Double =
+      body.scrollHeight - window.innerHeight
+
+    def autofocus(): Unit = {
+      replInput.autofocus()
+      scrollToEnd()
+    }
 
     replInput.onSubmit(handleSubmit(_))
   }

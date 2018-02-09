@@ -1,6 +1,7 @@
 package tacit.jsShell
 
 import org.scalajs.dom
+import org.scalajs.dom.document
 import org.scalajs.dom.html
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
@@ -34,7 +35,7 @@ object Shell extends Render[html.Div] {
     def handleClick(event: dom.MouseEvent): Unit = {
       val _ = event
 
-      val selection = dom.document.getSelection()
+      val selection = document.getSelection()
       val isSelectionEmpty = (
         selection.anchorNode == selection.focusNode
           && selection.anchorOffset == selection.focusOffset
@@ -48,7 +49,7 @@ object Shell extends Render[html.Div] {
       }
     }
 
-    dom.document.addEventListener(
+    document.addEventListener(
       "click",
       handleClick(_),
       useCapture = false)
