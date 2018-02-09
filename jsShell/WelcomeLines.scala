@@ -18,7 +18,7 @@ object WelcomeLines extends RenderSimple[html.Div] {
       h1(
         Style.header,
         "Welcome to ",
-        span(Style.highlight, "Tacit"),
+        HighlightGlow("Tacit").root,
         ", a new programming language"
       ),
       h2(

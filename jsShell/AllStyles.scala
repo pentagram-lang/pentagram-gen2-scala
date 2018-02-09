@@ -12,6 +12,7 @@ object AllStyles {
       EchoLine.Style,
       ErrorLine.Style,
       GlobalStyle,
+      HighlightGlow.Style,
       PromptSpan.Style,
       Repl.Style,
       ReplInput.Style,

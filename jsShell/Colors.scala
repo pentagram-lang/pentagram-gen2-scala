@@ -11,6 +11,7 @@ object Colors extends StyleSheet.Inline {
   val edgeHighlight: Color = c"rgba(229, 255, 229, 0.08)"
   val error: Color = c"#e82d2d"
   val highlight: Color = c"#d3a7ff"
+  val highlightGlow: Color = c"rgba(229, 255, 229, 0.41)"
   val link: Color = c"#9069b3"
   val normal: Color = c"#e5ffe5"
   val selection: Color = c"rgba(167, 140, 151, 0.99)"

@@ -10,18 +10,22 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object PromptSpan extends RenderSimple[html.Span] {
+object HighlightGlow extends RenderSimple[html.Span] {
   def renderSimple: RenderTag =
     span(
-      Style.root,
-      "(repl)> "
+      Style.root
     )
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
     val root: StyleA = style(
-      whiteSpace.pre
+      color(Colors.highlight),
+      textShadow :=
+        Seq(
+          s"0 0 2px ${Colors.background.value}",
+          s"0 0 0.6em ${Colors.highlightGlow.value}"
+        ).mkString(",")
     )
   }
 }

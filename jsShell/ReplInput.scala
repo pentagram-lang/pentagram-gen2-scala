@@ -51,7 +51,7 @@ object ReplInput extends Render[html.Form] {
     )
 
     val prompt: StyleA = style(
-      fontWeight._700
+      HighlightGlow.Style.root
     )
   }
 }
