@@ -20,7 +20,6 @@ object Shell extends Render[html.Div] {
     val root = div(
       Style.root,
       AllStyles.renderTags,
-      ScreenEdge().root,
       repl.root
     )
     (root, new Component(_, repl))

@@ -18,7 +18,6 @@ object AllStyles {
       ReplInput.Style,
       ReplOutput.Style,
       RootStyle,
-      ScreenEdge.Style,
       Shell.Style,
       TextInput.Style,
       ValueLine.Style,

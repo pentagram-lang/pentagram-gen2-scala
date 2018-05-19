@@ -69,8 +69,6 @@ object Repl extends Render[html.Div] {
       flexDirection.column,
       padding(6 em, `0`),
       width(60 ch),
-      mixBlendMode := "darken",
-      willChange := "transform"
     )
   }
 }
