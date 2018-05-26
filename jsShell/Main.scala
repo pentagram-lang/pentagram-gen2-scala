@@ -16,18 +16,16 @@ object Main extends App {
     shell.autofocus()
   }
 
-  private def loadShell(): Shell.Component = {
-    val mode = getMode()
+  private def loadShell(): Shell.Component =
     if (mode == "repl") {
       ReplShell()
     } else {
       HomeShell()
     }
-  }
 
   @SuppressWarnings(
     Array("org.wartremover.warts.AsInstanceOf"))
-  private def getMode(): String = {
+  private val mode: String = {
     val dynamicHtmlElement =
       Dynamic.global.document.documentElement
     val mode = dynamicHtmlElement.dataset.mode
