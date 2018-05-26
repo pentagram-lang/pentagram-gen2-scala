@@ -23,7 +23,7 @@ object EchoLine extends RenderSimple[html.Div] {
     val root: StyleA = style()
 
     val prompt: StyleA = style(
-      color(Colors.highlight)
+      color(Colors.Repl.highlight)
     )
   }
 }

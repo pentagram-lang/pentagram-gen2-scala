@@ -17,7 +17,7 @@ object RootStyle extends StyleSheet.Inline {
     fontWeight._400,
     fontSize.large,
     color(Colors.normal),
-    caretColor(Colors.highlight),
+    caretColor(Colors.caret),
     lineHeight(2.0 em)
   )
 

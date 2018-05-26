@@ -20,7 +20,7 @@ object ErrorLine extends RenderSimple[html.Div] {
     import Style.dsl._
 
     val root: StyleA = style(
-      color(Colors.error)
+      color(Colors.Repl.error)
     )
   }
 }

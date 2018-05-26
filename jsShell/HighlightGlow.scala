@@ -20,11 +20,11 @@ object HighlightGlow extends RenderSimple[html.Span] {
     import Style.dsl._
 
     val root: StyleA = style(
-      color(Colors.highlight),
+      color(Colors.Repl.highlight),
       textShadow :=
         Seq(
           s"0 0 2px ${Colors.background.value}",
-          s"0 0 0.6em ${Colors.highlightGlow.value}"
+          s"0 0 0.6em ${Colors.Repl.highlightGlow.value}"
         ).mkString(",")
     )
   }

@@ -69,7 +69,7 @@ object WelcomeLines extends RenderSimple[html.Div] {
     )
 
     val highlight: StyleA = style(
-      color(Colors.highlight)
+      color(Colors.Repl.highlight)
     )
 
     val note: StyleA = style(
@@ -85,14 +85,14 @@ object WelcomeLines extends RenderSimple[html.Div] {
     val nav: StyleA = style(
       marginLeft(1 ch),
       fontStyle.italic,
-      color(Colors.link)
+      color(Colors.Repl.link)
     )
 
     val navLink: StyleA = style(
       marginLeft(1 ch),
       color.inherit,
       &.selection(
-        color(Colors.highlight)
+        color(Colors.Repl.highlight)
       )
     )
   }

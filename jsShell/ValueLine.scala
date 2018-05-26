@@ -22,7 +22,7 @@ object ValueLine extends RenderSimple[html.Div] {
 
     val root: StyleA = style(
       marginLeft(2 ch),
-      color(Colors.value),
+      color(Colors.Repl.value),
       fontWeight._700,
       &.before(
         content := "\"▶ \"",
