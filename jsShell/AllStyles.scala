@@ -14,6 +14,7 @@ object AllStyles {
       HighlightGlow.Style,
       HomeShell.Style,
       HomeTitle.Style,
+      Mascot.Style,
       PromptSpan.Style,
       Repl.Style,
       ReplInput.Style,

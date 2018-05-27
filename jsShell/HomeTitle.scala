@@ -22,7 +22,7 @@ object HomeTitle extends RenderSimple[html.Heading] {
     import Style.dsl._
 
     val root: StyleA = style(
-      fontSize(2.2 em),
+      fontSize(2.6 em),
       fontWeight._400,
       margin.vertical(`0`)
     )

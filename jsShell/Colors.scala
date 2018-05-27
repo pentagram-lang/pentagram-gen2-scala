@@ -11,6 +11,7 @@ object Colors extends StyleSheet.Inline {
   val caret: Color = c"#000"
   val normal: Color = c"#000"
   val selection: Color = c"#ff5efa"
+  val special0: Color = c"#ffdeef"
 
   object Repl {
     val error: Color = normal

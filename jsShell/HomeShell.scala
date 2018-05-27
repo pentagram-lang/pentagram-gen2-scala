@@ -15,6 +15,7 @@ object HomeShell extends Render[html.Div] {
   def render: RenderComponent = {
     val root = div(
       Style.root,
+      Mascot().root,
       HomeTitle().root
     )
     (root, new Component(_))
@@ -29,9 +30,9 @@ object HomeShell extends Render[html.Div] {
 
     val root: StyleA = style(
       display.flex,
-      flexDirection.column,
+      flexDirection.row,
       padding.vertical(2.6 em),
-      padding.horizontal(8 ch)
+      padding.horizontal(3 ch)
     )
   }
 }
