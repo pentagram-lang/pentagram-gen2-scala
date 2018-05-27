@@ -11,27 +11,20 @@ import scalatags.JsDom.all.{
 
 import CssSettings.Defaults._
 
-object HomeShell extends Render[html.Div] {
-  def render: RenderComponent = {
-    val root = div(
+object HomeTitle extends RenderSimple[html.Heading] {
+  def renderSimple: RenderTag =
+    h1(
       Style.root,
-      HomeTitle().root
+      "Welcome to Tacit!"
     )
-    (root, new Component(_))
-  }
-
-  final class Component(
-    val root: Root
-  ) extends Shell.Component {}
 
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
     val root: StyleA = style(
-      display.flex,
-      flexDirection.column,
-      padding.vertical(2.6 em),
-      padding.horizontal(8 ch)
+      fontSize(2.2 em),
+      fontWeight._400,
+      margin.vertical(`0`)
     )
   }
 }

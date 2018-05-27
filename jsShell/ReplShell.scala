@@ -19,7 +19,6 @@ object ReplShell extends Render[html.Div] {
 
     val root = div(
       Style.root,
-      AllStyles.renderTags,
       repl.root
     )
     (root, new Component(_, repl))
