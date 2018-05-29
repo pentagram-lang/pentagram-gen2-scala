@@ -15,10 +15,10 @@ object RootStyle extends StyleSheet.Inline {
     backgroundColor(Colors.background),
     fontFamily.attr := "'Hack', 'DejaVu Sans Mono', 'Consolas', monospace",
     fontWeight._400,
-    fontSize.large,
+    fontSize(110 %%),
     color(Colors.normal),
     caretColor(Colors.caret),
-    lineHeight(2.0 em)
+    lineHeight(1.8)
   )
 
   object caretColor extends TypedAttr_Color {

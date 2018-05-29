@@ -8,6 +8,7 @@ import scalatags.JsDom.all.{
   Int2CssNumber => _,
   _
 }
+import scalatags.JsDom.tags2._
 
 import CssSettings.Defaults._
 
@@ -16,7 +17,11 @@ object HomeShell extends Render[html.Div] {
     val root = div(
       Style.root,
       Mascot().root,
-      HomeTitle().root
+      main(
+        Style.main,
+        HomeTitle().root,
+        HomeIntro().root
+      )
     )
     (root, new Component(_))
   }
@@ -33,6 +38,12 @@ object HomeShell extends Render[html.Div] {
       flexDirection.row,
       padding.vertical(2.6 em),
       padding.horizontal(3 ch)
+    )
+
+    val main: StyleA = style(
+      display.flex,
+      flexDirection.column,
+      maxWidth(45 ch)
     )
   }
 }

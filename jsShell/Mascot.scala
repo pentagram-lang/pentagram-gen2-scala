@@ -36,11 +36,11 @@ object Mascot extends RenderSimple[org.scalajs.dom.svg.SVG] {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
-    val outputWidthCh: Double = 11
+    val outputWidthCh: Double = 12
 
     val root: StyleA = style(
       marginTop(0.2 em),
-      marginRight(2 ch),
+      marginRight(1.7 ch),
       width(outputWidthCh ch),
       height((outputWidthCh * sourceHeight / sourceWidth) ch),
       svgFill := "none",
@@ -54,7 +54,7 @@ object Mascot extends RenderSimple[org.scalajs.dom.svg.SVG] {
     )
 
     val colorFill: StyleA = style(
-      svgFill := Colors.special0
+      svgFill := Colors.special0.pale
     )
   }
 

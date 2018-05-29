@@ -22,9 +22,11 @@ object HomeTitle extends RenderSimple[html.Heading] {
     import Style.dsl._
 
     val root: StyleA = style(
+      marginTop.`0`,
+      marginBottom(0.5 em),
       fontSize(2.6 em),
       fontWeight._400,
-      margin.vertical(`0`)
+      lineHeight(1)
     )
   }
 }
