@@ -5,13 +5,9 @@ import org.scalajs.dom.document
 import org.scalajs.dom.html
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
 
 object ReplShell extends Render[html.Div] {
   def render: RenderComponent = {

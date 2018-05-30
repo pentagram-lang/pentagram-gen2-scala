@@ -2,11 +2,8 @@ package tacit.jsShell
 
 import org.scalajs.dom
 import scalatags.JsDom.TypedTag
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
+
+import HtmlSettings.Defaults._
 
 trait Render[RootArg <: dom.Element] {
   type Root = RootArg

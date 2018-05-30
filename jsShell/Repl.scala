@@ -6,15 +6,11 @@ import org.scalajs.dom.html
 import org.scalajs.dom.window
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
 
 import tacit.core.ReadEvalPrintChain
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
 
 object Repl extends Render[html.Div] {
   def render: RenderComponent = {

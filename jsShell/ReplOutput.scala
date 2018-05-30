@@ -2,15 +2,11 @@ package tacit.jsShell
 
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
 
 import tacit.core.OutputBlock
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
 
 object ReplOutput extends Render[html.Div] {
   def render: RenderComponent = {

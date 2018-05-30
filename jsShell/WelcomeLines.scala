@@ -3,13 +3,9 @@ package tacit.jsShell
 import org.scalajs.dom.html
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
 
 object WelcomeLines extends RenderSimple[html.Div] {
   def renderSimple: RenderTag =

@@ -2,22 +2,19 @@ package tacit.jsShell
 
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
-import scalatags.JsDom.svgAttrs._
-import scalatags.JsDom.svgTags._
+import scalacss.internal.Length
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
+import HtmlSettings.Defaults.SvgAttrs._
+import HtmlSettings.Defaults.SvgTags._
 
 object Mascot extends RenderSimple[org.scalajs.dom.svg.SVG] {
   val sourceWidth: Double = 122
   val sourceHeight: Double = 210
 
   def renderSimple: RenderTag =
-    svg(
+    scalatags.JsDom.svgTags.svg(
       Style.root,
       viewBox := s"0 0 $sourceWidth $sourceHeight",
       path(
@@ -36,13 +33,13 @@ object Mascot extends RenderSimple[org.scalajs.dom.svg.SVG] {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
-    val outputWidthCh: Double = 12
+    val outputWidth: Length[Double] = 12.0 ch
 
     val root: StyleA = style(
       marginTop(0.2 em),
       marginRight(1.7 ch),
-      width(outputWidthCh ch),
-      height((outputWidthCh * sourceHeight / sourceWidth) ch),
+      width(outputWidth),
+      height(outputWidth * sourceHeight / sourceWidth),
       svgFill := "none",
       svgStroke(Colors.normal),
       svgStrokeWidth := "3"

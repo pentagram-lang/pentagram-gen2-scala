@@ -3,13 +3,9 @@ package tacit.jsShell
 import org.scalajs.dom
 import org.scalajs.dom.html
 import scalacss.ScalatagsCss._
-import scalatags.JsDom.all.{
-  Double2CssNumber => _,
-  Int2CssNumber => _,
-  _
-}
 
 import CssSettings.Defaults._
+import HtmlSettings.Defaults._
 
 object ReplInput extends Render[html.Form] {
   def render: RenderComponent = {
