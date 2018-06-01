@@ -17,7 +17,8 @@ object HomeShell extends Render[html.Div] {
         Style.main,
         HomeTitle().root,
         HomeIntro().root
-      )
+      ),
+      HomeNav().root
     )
     (root, new Component(_))
   }

@@ -8,11 +8,13 @@ object AllStyles {
   val renderTags: Seq[html.Style] = {
     val styles = Seq(
       BodyStyle,
+      Button.Style,
       EchoLine.Style,
       ErrorLine.Style,
       GlobalStyle,
       HighlightGlow.Style,
       HomeIntro.Style,
+      HomeNav.Style,
       HomeShell.Style,
       HomeTitle.Style,
       Mascot.Style,
