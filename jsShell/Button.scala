@@ -22,24 +22,29 @@ object Button extends RenderSimple[html.Anchor] {
       borderStyle.solid,
       borderWidth(3 px),
       borderRadius(4 px),
-      padding.vertical(0.4 em),
-      padding.horizontal(1.5 ch),
-      fontSize(1.08 em),
+      paddingTop(0.2 em),
+      paddingRight(1.0 ch),
+      paddingBottom(0.1 em),
+      paddingLeft(0.8 ch),
+      fontSize(1.24 em),
       textDecoration := "none"
     )
 
     val border0: StyleA = style(
       borderColor(Colors.special0.normal),
+      svgFill := Colors.special0.normal,
       color(Colors.special0.dark)
     )
 
     val border1: StyleA = style(
       borderColor(Colors.special1.normal),
+      svgFill := Colors.special1.normal,
       color(Colors.special1.dark)
     )
 
     val border2: StyleA = style(
       borderColor(Colors.special2.normal),
+      svgFill := Colors.special2.normal,
       color(Colors.special2.dark)
     )
   }

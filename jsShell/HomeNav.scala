@@ -20,6 +20,7 @@ object HomeNav extends RenderSimple[html.Element] {
         Button(
           Button.Style.border0,
           Style.buttonMarginSmall,
+          Icon.Install().root,
           "Install now"
         ).root,
         p(
@@ -34,11 +35,13 @@ object HomeNav extends RenderSimple[html.Element] {
         Button(
           Button.Style.border1,
           Style.buttonMarginLarge,
+          Icon.Search().root,
           "Browse docs"
         ).root,
         Button(
           Button.Style.border1,
           Style.buttonMarginSmall,
+          Icon.FriendlyPerson().root,
           "Get help"
         ).root,
         div(
@@ -47,10 +50,12 @@ object HomeNav extends RenderSimple[html.Element] {
         Button(
           Button.Style.border2,
           Style.buttonMarginLarge,
+          Icon.Cycle().root,
           "Launch REPL"
         ).root,
         Button(
           Button.Style.border2,
+          Icon.DevEnv().root,
           "Run web IDE"
         ).root
       )
@@ -82,7 +87,7 @@ object HomeNav extends RenderSimple[html.Element] {
     val installInfo: StyleA = style(
       marginTop(1.2 em),
       marginBottom(-0.1 em),
-      fontSize(0.6 em),
+      fontSize(0.65 em),
       fontStyle.italic,
       color(Colors.special0.dark)
     )

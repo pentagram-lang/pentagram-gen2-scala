@@ -60,8 +60,9 @@ object HomeIntro extends RenderSimple[html.Div] {
 
     val info: StyleA = style(
       marginTop.`0`,
-      padding.vertical(0.8 em),
+      paddingTop(0.8 em),
       padding.horizontal(2 ch),
+      paddingBottom(0.75 em),
       borderStyle.solid,
       borderWidth(2 px),
       borderRadius(4 px)

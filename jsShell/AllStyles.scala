@@ -17,6 +17,7 @@ object AllStyles {
       HomeNav.Style,
       HomeShell.Style,
       HomeTitle.Style,
+      Icon.Style,
       Mascot.Style,
       PromptSpan.Style,
       Repl.Style,
