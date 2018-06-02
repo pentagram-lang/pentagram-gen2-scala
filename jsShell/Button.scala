@@ -13,7 +13,7 @@ object Button extends RenderSimple[html.Anchor] {
   def renderSimple: RenderTag =
     a(
       Style.root,
-      href := "#"
+      href := "javascript:;"
     )
 
   object Style extends StyleSheet.Inline {

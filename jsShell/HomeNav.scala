@@ -7,6 +7,7 @@ import scalacss.ScalatagsCss._
 import CssSettings.Defaults._
 import HtmlSettings.Defaults._
 import HtmlSettings.Defaults.Tags2._
+import HtmlShortcuts._
 
 object HomeNav extends RenderSimple[html.Element] {
   def renderSimple: RenderTag =
@@ -27,7 +28,12 @@ object HomeNav extends RenderSimple[html.Element] {
           Style.installInfo,
           "Version 0.0.0 (February 31, 2018)",
           br(),
-          "Free and open source (MIT License)"
+          a(
+            Style.installInfoLink,
+            href := "https://github.com/tacit-lang/tacit",
+            targetBlank,
+            "Free and open source (MIT License)"
+          )
         ),
         div(
           Style.horizontalRule
@@ -51,7 +57,7 @@ object HomeNav extends RenderSimple[html.Element] {
           Button.Style.border2,
           Style.buttonMarginLarge,
           href := "repl-dev.html",
-          target := "_blank",
+          targetBlank,
           Icon.Cycle().root,
           "Launch REPL"
         ).root,
@@ -92,6 +98,14 @@ object HomeNav extends RenderSimple[html.Element] {
       fontSize(0.65 em),
       fontStyle.italic,
       color(Colors.special0.dark)
+    )
+
+    val installInfoLink: StyleA = style(
+      color.inherit,
+      textDecoration := "none",
+      &.hover(
+        textDecoration := "underline"
+      )
     )
 
     val verticalRule: StyleA = style(
