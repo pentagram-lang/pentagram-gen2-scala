@@ -16,6 +16,7 @@ object AllStyles {
       HomeIntro.Style,
       HomeNav.Style,
       HomeShell.Style,
+      HomeStart.Style,
       HomeTitle.Style,
       Icon.Style,
       Mascot.Style,

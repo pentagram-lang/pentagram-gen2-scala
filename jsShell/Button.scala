@@ -3,6 +3,7 @@ package tacit.jsShell
 import org.scalajs.dom.html
 import scala.language.postfixOps
 import scalacss.ScalatagsCss._
+import scalacss.internal.Macros.Color
 
 import CssSettings.Defaults._
 import HtmlSettings.Defaults._
@@ -17,11 +18,15 @@ object Button extends RenderSimple[html.Anchor] {
   object Style extends StyleSheet.Inline {
     import Style.dsl._
 
+    def makeBoxShadow(color: Color): String =
+      s"5px 5px 0px -1px ${color.value}"
+
     val root: StyleA = style(
-      boxShadow := s"5px 5px 0px -1px ${Colors.shadow.value}",
+      boxShadow := makeBoxShadow(Colors.shadow),
       borderStyle.solid,
       borderWidth(3 px),
       borderRadius(4 px),
+      backgroundColor(Colors.background),
       paddingTop(0.2 em),
       paddingRight(1.0 ch),
       paddingBottom(0.1 em),
@@ -46,6 +51,10 @@ object Button extends RenderSimple[html.Anchor] {
       borderColor(Colors.special2.normal),
       svgFill := Colors.special2.normal,
       color(Colors.special2.dark)
+    )
+
+    val darkShadow: StyleA = style(
+      boxShadow := makeBoxShadow(Colors.darkShadow),
     )
   }
 }

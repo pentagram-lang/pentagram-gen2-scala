@@ -35,9 +35,11 @@ object Mascot extends RenderSimple[org.scalajs.dom.svg.SVG] {
 
     val outputWidth: Length[Double] = 12.0 ch
 
+    val rightMargin: Length[Double] = 1.7 ch
+
     val root: StyleA = style(
       marginTop(0.2 em),
-      marginRight(1.7 ch),
+      marginRight(rightMargin),
       width(outputWidth),
       height(outputWidth * sourceHeight / sourceWidth),
       svgFill := "none",

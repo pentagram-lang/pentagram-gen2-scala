@@ -49,7 +49,8 @@ object HomeIntro extends RenderSimple[html.Div] {
 
     val root: StyleA = style(
       display.flex,
-      flexDirection.column
+      flexDirection.column,
+      marginBottom(1.5 em)
     )
 
     val tagline: StyleA = style(
@@ -60,12 +61,12 @@ object HomeIntro extends RenderSimple[html.Div] {
 
     val info: StyleA = style(
       marginTop.`0`,
-      paddingTop(0.8 em),
-      padding.horizontal(2 ch),
-      paddingBottom(0.75 em),
       borderStyle.solid,
       borderWidth(2 px),
-      borderRadius(4 px)
+      borderRadius(4 px),
+      paddingTop(0.8 em),
+      padding.horizontal(2 ch),
+      paddingBottom(0.75 em)
     )
 
     val info0: StyleA = style(

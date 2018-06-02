@@ -12,6 +12,7 @@ object Colors extends StyleSheet.Inline {
   val normal: Color = c"#000"
   val selection: Color = c"#ff5efa"
   val shadow: Color = c"#ebebeb"
+  val darkShadow: Color = c"#dedede"
 
   object special0 {
     val pale: Color = c"#ffdffe"
@@ -27,6 +28,8 @@ object Colors extends StyleSheet.Inline {
   }
 
   object special2 {
+    val pale: Color = c"#f3f0ff"
+    val light: Color = c"#af97f9"
     val normal: Color = c"#865eff"
     val dark: Color = c"#360bb9"
   }
