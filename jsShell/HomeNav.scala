@@ -50,6 +50,8 @@ object HomeNav extends RenderSimple[html.Element] {
         Button(
           Button.Style.border2,
           Style.buttonMarginLarge,
+          href := "repl-dev.html",
+          target := "_blank",
           Icon.Cycle().root,
           "Launch REPL"
         ).root,
