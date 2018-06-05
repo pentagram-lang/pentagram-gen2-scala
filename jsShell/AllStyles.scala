@@ -13,6 +13,7 @@ object AllStyles {
       ErrorLine.Style,
       GlobalStyle,
       HighlightGlow.Style,
+      HomeDetails.Style,
       HomeIntro.Style,
       HomeNav.Style,
       HomeShell.Style,

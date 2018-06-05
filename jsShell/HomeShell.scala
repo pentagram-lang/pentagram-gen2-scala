@@ -25,6 +25,9 @@ object HomeShell extends Render[html.Div] {
       ),
       HomeStart(
         Style.start
+      ).root,
+      HomeDetails(
+        Style.details
       ).root
     )
     (root, new Component(_))
@@ -63,5 +66,7 @@ object HomeShell extends Render[html.Div] {
       paddingRight(horizontalPadding),
       paddingLeft(fullLeftPadding)
     )
+
+    val details: StyleA = start
   }
 }
