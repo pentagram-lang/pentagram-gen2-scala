@@ -24,11 +24,14 @@ object HomeShell extends Render[html.Div] {
         HomeNav().root
       ),
       HomeStart(
-        Style.start
+        Style.defaultPadding,
       ).root,
-      HomeDetails(
-        Style.details
-      ).root
+      div(
+        Style.defaultPadding,
+        Style.bottom,
+        HomeDetails().root,
+        HomeExamples().root
+      )
     )
     (root, new Component(_))
   }
@@ -47,7 +50,8 @@ object HomeShell extends Render[html.Div] {
     val root: StyleA = style(
       display.flex,
       flexDirection.column,
-      padding.vertical(2.4 em)
+      paddingTop(2.4 em),
+      paddingBottom(1.2 em)
     )
 
     val top: StyleA = style(
@@ -62,11 +66,14 @@ object HomeShell extends Render[html.Div] {
       maxWidth(45 ch)
     )
 
-    val start: StyleA = style(
+    val defaultPadding: StyleA = style(
       paddingRight(horizontalPadding),
       paddingLeft(fullLeftPadding)
     )
 
-    val details: StyleA = start
+    val bottom: StyleA = style(
+      display.flex,
+      flexDirection.row
+    )
   }
 }

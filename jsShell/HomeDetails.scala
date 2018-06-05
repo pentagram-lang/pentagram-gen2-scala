@@ -18,7 +18,7 @@ object HomeDetails extends RenderSimple[html.Element] {
       ),
       p(
         Style.answer,
-        "As programmers, we immerse ourselves in programming languages every day as we communicate, think, organize, and bring our ideas to life."
+        "As programmers, we immerse ourselves in programming languages every day, as we communicate, think, organize, and bring our ideas to life."
       ),
       p(
         Style.answer,
@@ -62,7 +62,7 @@ object HomeDetails extends RenderSimple[html.Element] {
       ),
       p(
         Style.answer,
-        "Simple syntax rules aren’t just for easier learning, they make every code change easier. Functional programming is a full paradigm for reducing the cognitive complexity. And good error messages are important for everyone, because we all make coding mistakes.",
+        "Simple syntax rules aren’t just for easier learning, they make every code change easier. Functional programming is a full paradigm for reducing cognitive complexity. And good error messages are important for everyone, because we all make coding mistakes.",
       ),
       h2(
         Style.question,
@@ -76,7 +76,7 @@ object HomeDetails extends RenderSimple[html.Element] {
       ),
       p(
         Style.answer,
-        "Functional programming avoids side effects (a major source of unexpected program behavior), and fail-fast errors prevent problems from propagating past their source."
+        "Functional programming avoids side effects (a major source of unexpected program behavior), and fail-fast errors stop problems from propagating past their source."
       ),
       h2(
         Style.question,

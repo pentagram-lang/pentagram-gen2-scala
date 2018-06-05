@@ -74,6 +74,7 @@ object Icon {
       verticalAlign.middle,
       width(outputWidth),
       height(outputWidth),
+      marginLeft(-0.7 ch),
       marginRight(0.6 ch),
       marginBottom(0.1 em)
     )

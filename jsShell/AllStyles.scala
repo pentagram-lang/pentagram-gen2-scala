@@ -14,6 +14,7 @@ object AllStyles {
       GlobalStyle,
       HighlightGlow.Style,
       HomeDetails.Style,
+      HomeExamples.Style,
       HomeIntro.Style,
       HomeNav.Style,
       HomeShell.Style,
