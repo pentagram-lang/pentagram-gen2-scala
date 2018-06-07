@@ -8,8 +8,8 @@ object Colors extends StyleSheet.Inline {
   import Colors.dsl._
 
   val background: Color = c"#fff"
-  val caret: Color = c"#000"
-  val normal: Color = c"#000"
+  val caret: Color = c"#1f0c1e"
+  val normal: Color = c"#1f0c1e"
   val selection: Color = c"#ff5efa"
   val shadow: Color = c"#ebebeb"
   val darkShadow: Color = c"#dedede"
