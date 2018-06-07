@@ -48,7 +48,7 @@ object HomeDetails extends RenderSimple[html.Element] {
       ),
       p(
         Style.answer,
-        "For example, with significant whitespace, beginners are spared confusing syntax errors. With functional programming, beginners can focus on how values get calculated. And with high quality error messages, beginners get immediate and helpful feedback."
+        "For example, significant whitespace lets beginners skip confusing syntax errors. Functional programming brings the calculation of values into focus. And high quality error messages give beginners immediate and helpful feedback."
       ),
       h2(
         Style.question,
@@ -105,7 +105,7 @@ object HomeDetails extends RenderSimple[html.Element] {
       display.flex,
       flexDirection.column,
       paddingTop(1.5 em),
-      maxWidth(60 ch)
+      maxWidth(58 ch)
     )
 
     val question: StyleA = style(
