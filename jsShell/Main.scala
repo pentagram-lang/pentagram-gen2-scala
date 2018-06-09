@@ -2,7 +2,6 @@ package tacit.jsShell
 
 import org.scalajs.dom.document.body
 import org.scalajs.dom.raw.Node
-import scala.scalajs.js.Dynamic
 
 object Main extends App {
   private def run(): Unit = {
@@ -22,17 +21,8 @@ object Main extends App {
     val _ = body.appendChild(node)
   }
 
-  @SuppressWarnings(
-    Array("org.wartremover.warts.AsInstanceOf"))
-  private val mode: String = {
-    val dynamicHtmlElement =
-      Dynamic.global.document.documentElement
-    val dynamicMode = dynamicHtmlElement.dataset.mode
-    dynamicMode.asInstanceOf[String]
-  }
-
   private def loadShell(): Shell.Component =
-    if (mode == "repl") {
+    if (Mode.isRepl) {
       ReplShell()
     } else {
       HomeShell()

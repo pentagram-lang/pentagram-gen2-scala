@@ -1,4 +1,4 @@
-# Tacit <a href="https://github.com/tacit-lang/tacit" target="_blank"><img width="30" height="30" src="art/favicon.svg?raw=true"/></a>
+# Tacit <a href="https://github.com/tacit-lang/tacit" target="_blank"><img width="30" height="30" src="jsShell/art/favicon.svg?raw=true"/></a>
 
 ## About
 
@@ -45,6 +45,22 @@ When working on the web shell, you can use the included Browsersync + `sbt` wrap
 ### Code style
 
 For Scala code style, see the [Tacit wiki page](../../wiki/Scala-code-style).
+
+## Deploying
+
+To download dependencies, compile, test, check formatting, and build JavaScript:
+
+```
+sbt update
+sbt compileAll
+sbt test
+sbt fmtCheck
+sbt jsShell/fullOptJS
+```
+
+To deploy to GitHub pages, you can try using an automated script like this Gist:
+
+> https://gist.github.com/dcecile/b03ea8c5a807ca1ff8068908ce669d54
 
 ## License
 

@@ -63,6 +63,7 @@ object CustomSettings {
     customScalaVersion
       ++ benchSettings
       ++ fmtTaskSettings
+      ++ fmtCheckTaskSettings
       ++ compileAllTaskSettings
       ++ customSourceRules
       ++ customTestOptions

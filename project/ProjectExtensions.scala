@@ -6,7 +6,6 @@ import org.scalajs.sbtplugin.cross._
 import sbt._
 
 import BenchConfig._
-import FmtTask._
 import CustomSettings._
 import Dependencies._
 
