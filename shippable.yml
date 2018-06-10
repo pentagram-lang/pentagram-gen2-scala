@@ -1,0 +1,15 @@
+language: scala
+
+jdk:
+  - openjdk9
+
+scala:
+  - 2.12.4
+
+build:
+
+  ci:
+  - sbt update
+  - sbt compileAll
+  - sbt test
+  - sbt fmtCheck
