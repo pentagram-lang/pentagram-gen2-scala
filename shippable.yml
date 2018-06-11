@@ -6,8 +6,11 @@ jdk:
 scala:
   - 2.12.4
 
-build:
+branches:
+  only:
+    - master
 
+build:
   ci:
   - sbt update
   - sbt compileAll
