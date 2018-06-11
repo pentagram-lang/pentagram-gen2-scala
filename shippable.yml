@@ -12,7 +12,12 @@ branches:
 
 build:
   ci:
-  - sbt update
-  - sbt compileAll
-  - sbt test
-  - sbt fmtCheck
+    - sbt update
+    - sbt compileAll
+    - sbt test
+    - sbt fmtCheck
+
+  cache: true
+  cache_dir_list:
+    - $HOME/.ivy2
+    - $HOME/.sbt
