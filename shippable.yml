@@ -12,10 +12,7 @@ branches:
 
 build:
   ci:
-    - sbt update
-    - sbt compileAll
-    - sbt test
-    - sbt fmtCheck
+    - sbt update compileAll test fmtCheck
 
   cache: true
   cache_dir_list:
