@@ -10,11 +10,49 @@ branches:
   only:
     - master
 
+resources:
+  - name: tacit_ghPagesFiles
+    type: state
+
 build:
   ci:
-    - sbt update compileAll test fmtCheck
+    - sbt update compileAll coreJS/test:fastOptJS jsShell/test:fastOptJS jsShell/fullOptJS test fmtCheck
+    - TRANSFER=$(shipctl get_resource_state tacit_ghPagesFiles)
+    - echo "Writing to $TRANSFER"
+    - cp jsShell/.README-compiled.md $TRANSFER/README.md
+    - cp LICENSE.md jsShell/*.html jsShell/art/favicon.png jsShell/target/scala-2.12/jsshell-opt.js $TRANSFER/
 
   cache: true
   cache_dir_list:
     - $HOME/.ivy2
     - $HOME/.sbt
+
+jobs:
+  - name: tacit_runCI
+    type: runCI
+    steps:
+      - OUT: tacit_ghPagesFiles
+
+  - name: tacit_ghPagesDeploy
+    type: runSh
+    steps:
+      - IN: tacit_runCI
+        switch: on
+      - IN: tacit_ghPagesFiles
+        switch: on
+      - IN: tacit_ciRepo
+      - TASK:
+          script:
+            - git clone git@github.com:tacit-lang/tacit-lang.github.io.git gh-pages
+            - cd gh-pages
+            - git config user.name 'Shippable Build'
+            - git config user.email 'build@shippable.com'
+            - git rm -rf --ignore-unmatch *
+            - TRANSFER=$(shipctl get_resource_state tacit_ghPagesFiles)
+            - echo "Reading from $TRANSFER"
+            - cp $TRANSFER/* .
+            - git add .
+            - VERSION=$(shipctl get_resource_env tacit_ciRepo versionName)
+            - echo "Committing for $VERSION"
+            - git commit --allow-empty --message "Compiled from $VERSION :robot:"
+            - git push
