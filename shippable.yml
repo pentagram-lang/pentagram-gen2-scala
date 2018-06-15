@@ -20,7 +20,7 @@ build:
     - TRANSFER=$(shipctl get_resource_state tacit_ghPagesFiles)
     - echo "Writing to $TRANSFER"
     - cp jsShell/.README-compiled.md $TRANSFER/README.md
-    - cp LICENSE.md jsShell/*.html jsShell/art/favicon.png jsShell/target/scala-2.12/jsshell-opt.js $TRANSFER/
+    - cp LICENSE.md jsShell/{index,repl}.html jsShell/art/favicon.png jsShell/target/scala-2.12/jsshell-opt.js $TRANSFER/
 
   cache: true
   cache_dir_list:
