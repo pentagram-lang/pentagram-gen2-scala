@@ -12,15 +12,19 @@ branches:
 
 build:
   ci:
-    - sbt update compileAll coreJS/test:fastOptJS jsShell/test:fastOptJS jsShell/fullOptJS test fmtCheck
-    - mkdir gh-pages-files
-    - cp jsShell/.README-compiled.md gh-pages-files/README.md
-    - cp LICENSE.md jsShell/{index,repl}.html jsShell/art/favicon.png jsShell/target/scala-2.12/jsshell-opt.js gh-pages-files/
-    - du -sh gh-pages-files/
-    - TRANSFER=$(shipctl get_resource_state tacit_runCI)
-    - echo "Writing to $TRANSFER"
-    - tar cvfR - gh-pages-files/ | base64 > $TRANSFER/transfer.tar.b64
-    - sha1sum $TRANSFER/transfer.tar.b64
+    - |
+      sbt update compileAll coreJS/test:fastOptJS jsShell/test:fastOptJS jsShell/fullOptJS test fmtCheck
+      echo "Running for PR '$IS_PULL_REQUEST'"
+      if [ "$IS_PULL_REQUEST" == false ]; then
+        mkdir gh-pages-files
+        cp jsShell/.README-compiled.md gh-pages-files/README.md
+        cp LICENSE.md jsShell/{index,repl}.html jsShell/art/favicon.png jsShell/target/scala-2.12/jsshell-opt.js gh-pages-files/
+        du -sh gh-pages-files/
+        TRANSFER=$(shipctl get_resource_state tacit_runCI)
+        echo "Writing to $TRANSFER"
+        tar cvfR - gh-pages-files/ | base64 > $TRANSFER/transfer.tar.b64
+        sha1sum $TRANSFER/transfer.tar.b64
+      fi
 
   cache: true
   cache_dir_list:
@@ -41,18 +45,21 @@ jobs:
         switch: off
       - TASK:
           script:
-            - TRANSFER=$(shipctl get_resource_state tacit_runCI)
-            - echo "Reading from $TRANSFER"
-            - sha1sum $TRANSFER/transfer.tar.b64
-            - base64 -d $TRANSFER/transfer.tar.b64 | tar xvf -
-            - git clone git@github.com:tacit-lang/tacit-lang.github.io.git gh-pages
-            - cd gh-pages
-            - git config user.name 'Shippable Build'
-            - git config user.email 'build@shippable.com'
-            - git rm -rf --ignore-unmatch *
-            - cp ../gh-pages-files/* .
-            - git add .
-            - VERSION=$(shipctl get_resource_env tacit_ciRepo versionName)
-            - echo "Committing for $VERSION"
-            - git commit --allow-empty --message "Compiled from $VERSION :robot:"
-            - git push
+            - |
+              TRANSFER=$(shipctl get_resource_state tacit_runCI)
+              echo "Reading from $TRANSFER"
+              if [ -f $TRANSFER/transfer.tar.b64 ]; then
+                sha1sum $TRANSFER/transfer.tar.b64
+                base64 -d $TRANSFER/transfer.tar.b64 | tar xvf -
+                git clone git@github.com:tacit-lang/tacit-lang.github.io.git gh-pages
+                cd gh-pages
+                git config user.name 'Shippable Build'
+                git config user.email 'build@shippable.com'
+                git rm -rf --ignore-unmatch *
+                cp ../gh-pages-files/* .
+                git add .
+                VERSION=$(shipctl get_resource_env tacit_ciRepo versionName)
+                echo "Committing for $VERSION"
+                git commit --allow-empty --message "Compiled from $VERSION :robot:"
+                git push
+              fi
