@@ -11,7 +11,7 @@ object HomeTitle extends RenderSimple[html.Heading] {
   def renderSimple: RenderTag =
     h1(
       Style.root,
-      "Welcome to Tacit!"
+      "Welcome to Tacit! (PR4)"
     )
 
   object Style extends StyleSheet.Inline {
