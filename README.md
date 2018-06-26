@@ -10,6 +10,7 @@ Tacit is a friendly programming language that uses **ergonomics**, **determinism
 
 ### Status
 
+<a href="https://app.shippable.com/github/tacit-lang/tacit/dashboard" target="_blank"><img src="https://img.shields.io/shippable/5b1c522acd42f90700239776.svg?style=flat-square"/></a>
 <a href="https://www.codacy.com/app/tacit-lang/tacit" target="_blank"><img src="https://img.shields.io/codacy/grade/9c51ed7b9a0b4c49bdfdd073a0d2b1a3.svg?style=flat-square"/></a>
 
 _Almost all features are not yet implemented!_
