@@ -22,8 +22,8 @@ build:
         du -sh gh-pages-files/
         TRANSFER=$(shipctl get_resource_state tacit_runCI)
         echo "Writing to $TRANSFER"
-        tar cvfR - gh-pages-files/ | base64 > $TRANSFER/transfer.tar.b64
-        sha1sum $TRANSFER/transfer.tar.b64
+        tar cvfR - gh-pages-files/ > $TRANSFER/transfer.tar
+        sha1sum $TRANSFER/transfer.tar
       fi
 
   cache: true
@@ -48,9 +48,9 @@ jobs:
             - |
               TRANSFER=$(shipctl get_resource_state tacit_runCI)
               echo "Reading from $TRANSFER"
-              if [ -f $TRANSFER/transfer.tar.b64 ]; then
-                sha1sum $TRANSFER/transfer.tar.b64
-                base64 -d $TRANSFER/transfer.tar.b64 | tar xvf -
+              if [ -f $TRANSFER/transfer.tar ]; then
+                sha1sum $TRANSFER/transfer.tar
+                cat $TRANSFER/transfer.tar | tar xvf -
                 git clone git@github.com:tacit-lang/tacit-lang.github.io.git gh-pages
                 cd gh-pages
                 git config user.name 'Shippable Build'
